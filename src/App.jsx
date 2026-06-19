@@ -1,37 +1,29 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { 
   roadmapData, 
-  toolsData, 
   cheatSheetsData 
 } from "./data/roadmapData";
-import SubnetCalculator from "./components/SubnetCalculator";
-import AutomationScriptHub from "./components/AutomationScriptHub";
-import RaidCalculator from "./components/RaidCalculator";
-import FirewallGenerator from "./components/FirewallGenerator";
+import RoadmapPhase from "./components/RoadmapPhase";
+import CheatSheetsHub from "./components/CheatSheetsHub";
+import ReferenceHub from "./components/ReferenceHub";
 import ConfettiEffect from "./components/ConfettiEffect";
-import { interviewQuestions, troubleshootingLog } from "./data/referenceData";
 import { 
   Trophy, 
-  Youtube, 
   BookOpen, 
   ExternalLink, 
-  Search, 
   CheckCircle, 
   Menu, 
   X, 
   Upload, 
   Download, 
-  Terminal, 
-  Check, 
   Wrench,
   Award,
   Globe,
   RotateCcw,
   Book,
-  TerminalSquare,
+  Terminal,
   Star,
   Sparkles,
-  Compass,
   ArrowUp
 } from "lucide-react";
 
@@ -92,6 +84,21 @@ const accentColors = {
   }
 };
 
+const getPlatformIcon = (platform) => {
+  switch (platform.toLowerCase()) {
+    case "youtube":
+      return <Youtube className="w-4 h-4 text-red-550" />;
+    case "coursera":
+      return <BookOpen className="w-4 h-4 text-blue-450" />;
+    case "cisco":
+      return <Compass className="w-4 h-4 text-cyan-455" />;
+    case "microsoft":
+      return <Globe className="w-4 h-4 text-sky-455" />;
+    default:
+      return <Terminal className="w-4 h-4 text-slate-455" />;
+  }
+};
+
 // Precompute static lists outside the component to save CPU cycles on every render
 const allCheckboxIds = [];
 roadmapData.forEach((phase) => {
@@ -112,12 +119,9 @@ export default function App() {
   });
 
   const [activeFilter, setActiveFilter] = useState("all");
-  const [cheatSearch, setCheatSearch] = useState("");
-  const [cheatCategory, setCheatCategory] = useState("all");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [copiedCommand, setCopiedCommand] = useState("");
 
-  // New States
+  // User notes, bookmarked resources, and achievements state
   const [starredResources, setStarredResources] = useState(() => {
     const saved = localStorage.getItem("it_ninja_starred");
     return saved ? JSON.parse(saved) : [];
@@ -135,12 +139,6 @@ export default function App() {
 
   const [celebratedPhase, setCelebratedPhase] = useState(null);
   const [confettiActive, setConfettiActive] = useState(false);
-
-  // Tabs and search states for Reference Hub
-  const [refTab, setRefTab] = useState("interview");
-  const [interviewRole, setInterviewRole] = useState("all");
-  const [interviewSearch, setInterviewSearch] = useState("");
-  const [troubleshootSearch, setTroubleshootSearch] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
@@ -191,8 +189,8 @@ export default function App() {
     return items;
   }, [starredResources]);
 
-  // Toggle item status
-  const toggleItem = (id) => {
+  // Toggle item status - Stable references using useCallback
+  const toggleItem = useCallback((id) => {
     setCompletedItems((prev) => {
       const updated = { ...prev };
       if (updated[id]) {
@@ -202,25 +200,26 @@ export default function App() {
       }
       return updated;
     });
-  };
+  }, []);
 
-  // Toggle all items in a phase (Master state)
-  const isPhaseCompleted = (phase) => {
+  // Check if all items in a phase are completed
+  const isPhaseCompleted = useCallback((phase) => {
     const phaseItemIds = [
       ...phase.subtopics.map((t) => t.id),
       ...phase.resources.map((r) => r.id)
     ];
     return phaseItemIds.every((id) => completedItems[id]);
-  };
+  }, [completedItems]);
 
-  const togglePhaseMaster = (phase) => {
+  // Toggle phase completion status
+  const togglePhaseMaster = useCallback((phase) => {
     const phaseItemIds = [
       ...phase.subtopics.map((t) => t.id),
       ...phase.resources.map((r) => r.id)
     ];
-    const isCompleted = isPhaseCompleted(phase);
 
     setCompletedItems((prev) => {
+      const isCompleted = phaseItemIds.every((id) => prev[id]);
       const updated = { ...prev };
       phaseItemIds.forEach((id) => {
         if (isCompleted) {
@@ -231,9 +230,9 @@ export default function App() {
       });
       return updated;
     });
-  };
+  }, []);
 
-  const getPhaseCompletionStats = (phase) => {
+  const getPhaseCompletionStats = useCallback((phase) => {
     const ids = [
       ...phase.subtopics.map((t) => t.id),
       ...phase.resources.map((r) => r.id)
@@ -242,7 +241,7 @@ export default function App() {
     const total = ids.length;
     const percent = total > 0 ? Math.round((done / total) * 100) : 0;
     return { done, total, percent };
-  };
+  }, [completedItems]);
 
   const badgeNames = {
     itbasics: { title: "بطل التأسيس 💻", sub: "IT Starter Ninja", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
@@ -277,9 +276,9 @@ export default function App() {
         }, 5000);
       }
     });
-  }, [completedItems]);
+  }, [completedItems, earnedBadges, getPhaseCompletionStats]);
 
-  const toggleStar = (resId) => {
+  const toggleStar = useCallback((resId) => {
     setStarredResources((prev) => {
       if (prev.includes(resId)) {
         return prev.filter((id) => id !== resId);
@@ -287,14 +286,14 @@ export default function App() {
         return [...prev, resId];
       }
     });
-  };
+  }, []);
 
-  const updateNote = (phaseId, noteText) => {
+  const updateNote = useCallback((phaseId, noteText) => {
     setNotebookNotes((prev) => ({
       ...prev,
       [phaseId]: noteText
     }));
-  };
+  }, []);
 
   const handleScrollTo = (id) => {
     const element = document.getElementById(id);
@@ -304,16 +303,6 @@ export default function App() {
     setSidebarOpen(false);
   };
 
-  // Filters logic
-  const filterResource = (res) => {
-    if (activeFilter === "all") return true;
-    if (activeFilter === "ar") return res.lang === "ar";
-    if (activeFilter === "en") return res.lang === "en";
-    if (activeFilter === "practice") return res.type === "practice";
-    return true;
-  };
-
-  // Cert progress helper
   const handleCertChange = (key, value) => {
     setCertProgress((prev) => ({
       ...prev,
@@ -357,27 +346,6 @@ export default function App() {
     reader.readAsText(file);
   };
 
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text);
-    setCopiedCommand(text);
-    setTimeout(() => setCopiedCommand(""), 2000);
-  };
-
-  const getPlatformIcon = (platform) => {
-    switch (platform.toLowerCase()) {
-      case "youtube":
-        return <Youtube className="w-4 h-4 text-red-550" />;
-      case "coursera":
-        return <BookOpen className="w-4 h-4 text-blue-450" />;
-      case "cisco":
-        return <Compass className="w-4 h-4 text-cyan-455" />;
-      case "microsoft":
-        return <Globe className="w-4 h-4 text-sky-455" />;
-      default:
-        return <Terminal className="w-4 h-4 text-slate-450" />;
-    }
-  };
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans select-none">
       <ConfettiEffect active={confettiActive} />
@@ -393,22 +361,23 @@ export default function App() {
                 <Sparkles className="w-3.5 h-3.5" /> إنجاز جديد مذهل! <Sparkles className="w-3.5 h-3.5" />
               </span>
               <h3 className="text-xl font-black text-slate-100">تهانينا! لقد أكملت {celebratedPhase.shortTitle}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                لقد قمت بإتمام كافة الدروس والمشاريع والتطبيقات الخاصة بهذه المرحلة. لقد حصلت بجدارة على شارة:
+              <p className="text-xs text-slate-400">
+                لقد أنجزت كافة المتطلبات والمصادر التعليمية لهذه المرحلة بنجاح. تم الفوز بشارة:
               </p>
-              <div className="my-2.5 p-3 rounded-xl bg-slate-950 border border-slate-850/80">
-                <span className="text-lg font-black block text-emerald-400">
-                  {badgeNames[celebratedPhase.id]?.title}
-                </span>
-                <span className="text-[10px] text-slate-500 font-mono font-bold">
-                  {badgeNames[celebratedPhase.id]?.sub}
-                </span>
+              
+              <div className="my-3 p-4 bg-slate-950 border border-slate-800 rounded-xl flex flex-col items-center gap-2.5">
+                <span className="text-4xl">🏆</span>
+                <div>
+                  <h4 className="font-extrabold text-sm text-slate-100">{(badgeNames[celebratedPhase.id] || {}).title}</h4>
+                  <p className="text-[10px] text-slate-500 font-bold mt-1 font-mono">{(badgeNames[celebratedPhase.id] || {}).sub}</p>
+                </div>
               </div>
-              <button
+
+              <button 
                 onClick={() => setCelebratedPhase(null)}
-                className="mt-2 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-slate-950 font-bold text-xs py-2.5 px-6 rounded-xl transition-all cursor-pointer shadow-md shadow-emerald-500/10"
+                className="mt-2 w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-450 hover:to-cyan-450 font-bold text-slate-950 text-xs shadow-md shadow-emerald-500/10 cursor-pointer"
               >
-                متابعة رحلة النينجا 🥷
+                متابعة التعلم
               </button>
             </div>
           </div>
@@ -491,7 +460,7 @@ export default function App() {
                 onClick={() => setActiveFilter("en")}
                 className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
                   activeFilter === "en" 
-                    ? "bg-amber-500/10 border-amber-500/30 text-amber-400 shadow-md" 
+                    ? "bg-amber-500/10 border-emerald-500/0 border-amber-500/30 text-amber-400 shadow-md" 
                     : "border-slate-900 text-slate-400 hover:text-slate-200 hover:border-slate-700"
                 }`}
               >
@@ -604,7 +573,7 @@ export default function App() {
               
               <button 
                 onClick={() => handleScrollTo("tools")}
-                className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold"
+                className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold font-sans"
               >
                 <Wrench className="w-4 h-4 text-slate-400" />
                 <span>أوامر وأدوات المساعدة</span>
@@ -612,7 +581,7 @@ export default function App() {
               
               <button 
                 onClick={() => handleScrollTo("certifications")}
-                className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold"
+                className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold font-sans"
               >
                 <Award className="w-4 h-4 text-slate-400" />
                 <span>متتبع الشهادات الدولية</span>
@@ -620,7 +589,7 @@ export default function App() {
 
               <button 
                 onClick={() => handleScrollTo("courses-hub")}
-                className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold"
+                className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold font-sans"
               >
                 <Book className="w-4 h-4 text-slate-400" />
                 <span>جدول المسارات الشامل</span>
@@ -628,7 +597,7 @@ export default function App() {
 
               <button 
                 onClick={() => handleScrollTo("reference-hub")}
-                className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold"
+                className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold font-sans"
               >
                 <BookOpen className="w-4 h-4 text-slate-400" />
                 <span>حقيبة النينجا المرجعية</span>
@@ -786,374 +755,23 @@ export default function App() {
           </section>
 
           {/* Curriculum Phases */}
-          {roadmapData.map((phase) => {
-            const styles = accentColors[phase.accent] || accentColors.cyan;
-            const { done, total, percent } = getPhaseCompletionStats(phase);
-            const isPhaseDone = percent === 100;
-            const filteredResources = phase.resources.filter(filterResource);
-
-            return (
-              <section 
-                key={phase.id} 
-                id={phase.id}
-                className="bg-slate-900/20 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28 relative shadow-md hover:border-slate-800 transition-all duration-300"
-              >
-                
-                {/* Phase Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black font-mono text-lg shadow-lg ${styles.bg} ${styles.text}`}>
-                      {phase.phaseNumber}
-                    </div>
-                    <div>
-                      <h3 className="font-extrabold text-base text-slate-100">{phase.title}</h3>
-                      <p className="text-xs text-slate-400 mt-0.5">{phase.description}</p>
-                    </div>
-                  </div>
-
-                  {/* Phase Master Tracker */}
-                  <div className="flex items-center gap-3 bg-slate-950/80 border border-slate-850 px-3.5 py-1.5 rounded-xl">
-                    <div className="flex items-center gap-2">
-                      <input 
-                        type="checkbox"
-                        id={`master-${phase.id}`}
-                        checked={isPhaseDone}
-                        onChange={() => togglePhaseMaster(phase)}
-                        className={`w-4 h-4 rounded border-slate-800 bg-slate-900 cursor-pointer focus:ring-offset-slate-950 ${styles.checkbox}`}
-                      />
-                      <label 
-                        htmlFor={`master-${phase.id}`}
-                        className="text-xs font-bold text-slate-350 cursor-pointer select-none"
-                      >
-                        تم إنجاز المرحلة
-                      </label>
-                    </div>
-                    <div className="w-px h-4 bg-slate-800" />
-                    <span className="font-mono text-xs font-semibold text-slate-400">{done}/{total}</span>
-                  </div>
-                </div>
-
-                {/* Sub-topics Checklist */}
-                <div className="flex flex-col gap-3">
-                  <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">موضوعات الدراسة والتطبيق الأساسية:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 bg-slate-950/40 p-4 rounded-xl border border-slate-900/60">
-                    {phase.subtopics.map((topic) => {
-                      const isChecked = !!completedItems[topic.id];
-                      return (
-                        <div 
-                          key={topic.id}
-                          onClick={() => toggleItem(topic.id)}
-                          className={`flex items-center gap-3 p-2 rounded-lg border transition-all cursor-pointer ${
-                            isChecked 
-                              ? "bg-slate-900/40 border-slate-800/80 text-slate-300" 
-                              : "bg-transparent border-slate-900 hover:border-slate-850 text-slate-400 hover:text-slate-300"
-                          }`}
-                        >
-                          <input 
-                            type="checkbox"
-                            checked={isChecked}
-                            onChange={() => {}} 
-                            className={`w-4 h-4 rounded border-slate-850 bg-slate-950 cursor-pointer focus:ring-offset-slate-950 ${styles.checkbox}`}
-                          />
-                          <span className={`text-xs font-semibold ${isChecked ? "line-through opacity-50" : ""}`}>
-                            {topic.text}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Subnet Calculator widget in networking phase */}
-                {phase.id === "networks" && (
-                  <div className="my-1">
-                    <SubnetCalculator />
-                  </div>
-                )}
-
-                {/* RAID Calculator widget in virtualization phase */}
-                {phase.id === "virtualization" && (
-                  <div className="my-1">
-                    <RaidCalculator />
-                  </div>
-                )}
-
-                {/* Firewall Generator widget in security phase */}
-                {phase.id === "security" && (
-                  <div className="my-1">
-                    <FirewallGenerator />
-                  </div>
-                )}
-
-                {/* Automation script hub in scripting phase */}
-                {phase.id === "specialization" && (
-                  <div className="my-1">
-                    <AutomationScriptHub />
-                  </div>
-                )}
-
-                {/* Learning Resources Preview Cards */}
-                <div className="flex flex-col gap-3">
-                  <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">روابط ومصادر التعلم المعتمدة (عربي / إنجليزي):</h4>
-                  {filteredResources.length === 0 ? (
-                    <div className="bg-slate-950/40 border border-slate-900 rounded-xl p-4 text-center text-xs text-slate-500">
-                      لا توجد مصادر دراسية تطابق خيار التصفية المختار.
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {filteredResources.map((res) => {
-                        const isChecked = !!completedItems[res.id];
-                        return (
-                          <div 
-                            key={res.id}
-                            className={`flex flex-col justify-between border bg-slate-950/60 p-4 rounded-xl transition-all duration-300 relative group ${
-                              isChecked 
-                                ? "border-emerald-500/20 shadow-lg shadow-emerald-950/5" 
-                                : "border-slate-850 hover:border-slate-700"
-                            } ${styles.glow} hover:scale-[1.02]`}
-                          >
-                            <div className="flex items-start justify-between gap-3 mb-2">
-                              <div className="flex items-center gap-1.5 flex-wrap">
-                                <span className={`px-2 py-0.5 rounded text-[9px] font-extrabold uppercase ${
-                                  res.type === "practice" 
-                                    ? "bg-purple-500/10 text-purple-400 border border-purple-500/20" 
-                                    : res.type === "course"
-                                    ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
-                                    : "bg-slate-900 text-slate-400 border border-slate-850"
-                                }`}>
-                                  {res.type === "practice" ? "عملي" : res.type === "course" ? "كورس" : "فيديو"}
-                                </span>
-                                <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
-                                  res.lang === "ar" ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"
-                                }`}>
-                                  {res.lang === "ar" ? "عربي 🇪🇬" : "إنجليزي 🇬🇧"}
-                                </span>
-                              </div>
-
-                              <div className="flex items-center gap-2">
-                                <button 
-                                  onClick={() => toggleStar(res.id)}
-                                  className="p-1 rounded hover:bg-slate-900 text-slate-500 hover:text-amber-400 transition-colors cursor-pointer"
-                                  title="إضافة للمفضلة"
-                                >
-                                  <Star className={`w-3.5 h-3.5 ${starredResources.includes(res.id) ? "fill-amber-400 text-amber-400" : ""}`} />
-                                </button>
-                                <button 
-                                  onClick={() => toggleItem(res.id)}
-                                  className={`w-5 h-5 rounded flex items-center justify-center border transition-all ${
-                                    isChecked 
-                                      ? "bg-emerald-500 border-emerald-500 text-slate-950" 
-                                      : "border-slate-750 bg-slate-900/60 text-transparent hover:border-slate-650"
-                                  }`}
-                                >
-                                  <Check className="w-3.5 h-3.5 stroke-[3]" />
-                                </button>
-                              </div>
-                            </div>
-
-                            <div className="mb-4">
-                              <h5 className="font-extrabold text-sm text-slate-100 group-hover:text-cyan-400 transition-colors line-clamp-1">
-                                {res.title}
-                              </h5>
-                              <div className="flex items-center gap-1 text-[11px] text-slate-450 font-semibold mt-1">
-                                {getPlatformIcon(res.platform)}
-                                <span>{res.platform}</span>
-                              </div>
-                              <p className="text-xs text-slate-400 leading-relaxed mt-2 line-clamp-2">
-                                {res.desc}
-                              </p>
-                            </div>
-
-                            <div className="border-t border-slate-900 pt-3 flex justify-between items-center mt-auto">
-                              <span className="text-[10px] text-slate-500 font-medium">خطوات المذاكرة</span>
-                              <a 
-                                href={res.url} 
-                                target="_blank" 
-                                rel="noreferrer"
-                                className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
-                              >
-                                <span>زيارة المصدر</span>
-                                <ExternalLink className="w-3.5 h-3.5" />
-                              </a>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-
-                {/* Practical Lab Projects Block */}
-                {phase.projects && phase.projects.length > 0 && (
-                  <div className="bg-slate-950/60 border border-amber-500/10 rounded-xl p-4 flex flex-col gap-2">
-                    <div className="flex items-center gap-1.5 text-amber-400 font-extrabold text-xs">
-                      <TerminalSquare className="w-4.5 h-4.5 text-amber-500" />
-                      <span>المشاريع والمختبرات التطبيقية (Practical Labs & Projects):</span>
-                    </div>
-                    <ul className="list-disc list-inside space-y-1">
-                      {phase.projects.map((proj, idx) => (
-                        <li key={idx} className="text-xs text-slate-350 leading-relaxed font-semibold pr-2">
-                          {proj}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Personal Notebook per Phase */}
-                <div className="mt-4 border-t border-slate-900/60 pt-4">
-                  <details className="group">
-                    <summary className="flex items-center justify-between text-xs font-extrabold text-slate-400 hover:text-slate-200 cursor-pointer select-none">
-                      <div className="flex items-center gap-1.5">
-                        <BookOpen className="w-4 h-4 text-purple-400" />
-                        <span>📝 ملاحظاتي الشخصية للمرحلة</span>
-                      </div>
-                      <span className="text-[10px] text-slate-500 font-bold group-open:hidden">عرض ▽</span>
-                      <span className="text-[10px] text-slate-500 font-bold hidden group-open:inline">إخفاء △</span>
-                    </summary>
-                    <div className="mt-3 flex flex-col gap-2">
-                      <textarea
-                        className="w-full bg-slate-950 border border-slate-850 rounded-xl p-3 text-xs text-slate-350 placeholder-slate-650 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 font-mono leading-relaxed"
-                        rows="3"
-                        placeholder="اكتب هنا ملخصك للمرحلة، أو الأوامر الهامة التي تريد تدوينها..."
-                        value={notebookNotes[phase.id] || ""}
-                        onChange={(e) => updateNote(phase.id, e.target.value)}
-                      />
-                      <div className="flex justify-between items-center text-[10px] text-slate-500">
-                        <span>تم الحفظ تلقائياً في المتصفح</span>
-                        <span>{(notebookNotes[phase.id] || "").length} حرف</span>
-                      </div>
-                    </div>
-                  </details>
-                </div>
-
-              </section>
-            );
-          })}
+          {roadmapData.map((phase) => (
+            <RoadmapPhase
+              key={phase.id}
+              phase={phase}
+              completedItems={completedItems}
+              starredResources={starredResources}
+              notebookNotes={notebookNotes}
+              activeFilter={activeFilter}
+              toggleItem={toggleItem}
+              togglePhaseMaster={togglePhaseMaster}
+              toggleStar={toggleStar}
+              updateNote={updateNote}
+            />
+          ))}
 
           {/* Cheat Sheets and Command Finder */}
-          <section 
-            id="tools" 
-            className="bg-slate-900/20 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28"
-          >
-            <div className="border-b border-slate-800 pb-4">
-              <h3 className="font-extrabold text-base text-slate-100 flex items-center gap-2">
-                <Terminal className="w-5 h-5 text-purple-400" />
-                مستودع بطاقات الأوامر السريعة والبحث الذكي (Cheat Sheets)
-              </h3>
-            </div>
-
-            {/* Search and Category Filter */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <div className="relative flex-grow">
-                <input 
-                  type="text" 
-                  className="w-full bg-slate-950 border border-slate-850 rounded-xl pl-3 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20"
-                  placeholder="ابحث عن أمر أو دالة (vlan, chmod, ip, AD)..."
-                  value={cheatSearch}
-                  onChange={(e) => setCheatSearch(e.target.value)}
-                />
-                <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-3.5" />
-              </div>
-              
-              <div className="flex gap-1 overflow-x-auto">
-                {["all", "cisco", "linux", "powershell"].map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setCheatCategory(cat)}
-                    className={`text-xs px-3.5 py-2 rounded-xl font-bold uppercase transition-all cursor-pointer ${
-                      cheatCategory === cat
-                        ? "bg-purple-500/10 border border-purple-500/30 text-purple-400 shadow-md"
-                        : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-250"
-                    }`}
-                  >
-                    {cat === "all" ? "الكل" : cat === "cisco" ? "Cisco" : cat === "linux" ? "Linux" : "PowerShell"}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Commands Table */}
-            <div className="bg-slate-950 border border-slate-900 rounded-xl overflow-hidden">
-              <div className="max-h-[300px] overflow-y-auto">
-                <table className="w-full text-right border-collapse">
-                  <thead>
-                    <tr className="bg-slate-900/80 text-[10px] text-slate-400 uppercase tracking-wider border-b border-slate-850">
-                      <th className="p-3 text-right">القسم</th>
-                      <th className="p-3 text-right">الأمر (Command)</th>
-                      <th className="p-3 text-right">الوصف والوظيفة</th>
-                      <th className="p-3 text-center w-24">إجراء</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cheatSheetsData
-                      .filter((item) => {
-                        const matchesCategory = cheatCategory === "all" || item.category === cheatCategory;
-                        const matchesSearch = item.command.toLowerCase().includes(cheatSearch.toLowerCase()) || 
-                                              item.desc.includes(cheatSearch);
-                        return matchesCategory && matchesSearch;
-                      })
-                      .map((item, idx) => (
-                        <tr 
-                          key={idx} 
-                          className="text-xs border-b border-slate-900/60 hover:bg-slate-900/30 transition-colors"
-                        >
-                          <td className="p-3 font-semibold text-slate-400">
-                            {item.category === "cisco" ? "Cisco IOS" : item.category === "linux" ? "Linux" : "PowerShell"}
-                          </td>
-                          <td className="p-3 font-mono text-purple-400 font-bold select-all text-left" dir="ltr">
-                            {item.command}
-                          </td>
-                          <td className="p-3 text-slate-300 leading-relaxed">
-                            {item.desc}
-                          </td>
-                          <td className="p-3 text-center">
-                            <button
-                              onClick={() => copyToClipboard(item.command)}
-                              className="text-[10px] font-bold px-2 py-1 rounded bg-slate-900 hover:bg-purple-500/10 border border-slate-800 hover:border-purple-500/30 text-slate-400 hover:text-purple-400 transition-all cursor-pointer"
-                            >
-                              {copiedCommand === item.command ? "تم!" : "نسخ"}
-                            </button>
-                          </td>
-                        </tr>
-                      ))
-                    }
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Essential Tools list */}
-            <div className="flex flex-col gap-3">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">الأدوات والبرامج الأساسية للمحاكاة والتطبيقات:</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {toolsData.map((tool, idx) => (
-                  <div key={idx} className="bg-slate-950 border border-slate-900 rounded-xl p-4 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-extrabold text-sm text-slate-200">{tool.name}</span>
-                        <span className="text-[9px] font-extrabold px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-850">
-                          {tool.category}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-400 leading-relaxed mb-4">{tool.desc}</p>
-                    </div>
-                    <div className="border-t border-slate-900 pt-3 flex justify-end">
-                      <a 
-                        href={tool.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1 cursor-pointer"
-                      >
-                        <span>تحميل / زيارة</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
+          <CheatSheetsHub />
 
           {/* Certifications Tracker */}
           <section 
@@ -1218,148 +836,7 @@ export default function App() {
           </section>
 
           {/* IT Interview Prep & Troubleshooting Hub */}
-          <section 
-            id="reference-hub" 
-            className="bg-slate-900/20 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28"
-          >
-            <div className="border-b border-slate-800 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <h3 className="font-extrabold text-base text-slate-100 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-emerald-450" />
-                حقيبة النينجا المرجعية (IT Interview Prep & Troubleshooting Hub)
-              </h3>
-              <div className="flex gap-1.5 self-end sm:self-auto">
-                <button
-                  onClick={() => setRefTab("interview")}
-                  className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
-                    refTab === "interview"
-                      ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 shadow-md"
-                      : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200"
-                  }`}
-                >
-                  أسئلة المقابلات الشخصية (50 Q&A)
-                </button>
-                <button
-                  onClick={() => setRefTab("troubleshoot")}
-                  className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
-                    refTab === "troubleshoot"
-                      ? "bg-rose-500/10 border border-rose-500/30 text-rose-455 shadow-md"
-                      : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200"
-                  }`}
-                >
-                  كتيب الأخطاء الشائعة (Troubleshooting Log)
-                </button>
-              </div>
-            </div>
-
-            {refTab === "interview" ? (
-              <div className="flex flex-col gap-4">
-                {/* Role Filters */}
-                <div className="flex gap-2 overflow-x-auto pb-2 border-b border-slate-900 scrollbar-none">
-                  {[
-                    { id: "all", label: "جميع الأسئلة" },
-                    { id: "helpdesk", label: "الدعم الفني (Help Desk)" },
-                    { id: "sysadmin", label: "إدارة الأنظمة (SysAdmin)" },
-                    { id: "network", label: "هندسة الشبكات (Network Eng)" }
-                  ].map((role) => (
-                    <button
-                      key={role.id}
-                      onClick={() => setInterviewRole(role.id)}
-                      className={`text-[11px] px-3 py-1.5 rounded-lg border font-bold transition-all flex-shrink-0 cursor-pointer ${
-                        interviewRole === role.id
-                          ? "bg-cyan-500/10 border-cyan-500/35 text-cyan-400"
-                          : "border-slate-900 text-slate-500 hover:text-slate-350"
-                      }`}
-                    >
-                      {role.label}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Search in Interview Prep */}
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="ابحث في أسئلة المقابلات (مثال: DHCP, Active Directory, Nginx)..."
-                    className="w-full bg-slate-950 border border-slate-850 rounded-xl pl-3 pr-10 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/20"
-                    value={interviewSearch}
-                    onChange={(e) => setInterviewSearch(e.target.value)}
-                  />
-                  <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-3" />
-                </div>
-
-                {/* Questions grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[500px] overflow-y-auto pr-1">
-                  {interviewQuestions
-                    .filter((q) => interviewRole === "all" || q.role === interviewRole)
-                    .filter((q) => {
-                      const query = interviewSearch.toLowerCase();
-                      return q.question.toLowerCase().includes(query) || q.answer.toLowerCase().includes(query);
-                    })
-                    .map((q, idx) => (
-                      <div key={q.id} className="bg-slate-950/40 border border-slate-900 rounded-xl p-4 flex flex-col gap-3 hover:border-slate-800 transition-all duration-300">
-                        <div className="flex items-start justify-between gap-3 border-b border-slate-900 pb-2">
-                          <span className={`px-2 py-0.5 rounded text-[9px] font-extrabold uppercase ${
-                            q.role === "helpdesk"
-                              ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                              : q.role === "sysadmin"
-                              ? "bg-purple-500/10 text-purple-400 border border-purple-500/20"
-                              : "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
-                          }`}>
-                            {q.role === "helpdesk" ? "Help Desk" : q.role === "sysadmin" ? "SysAdmin" : "Network Eng"}
-                          </span>
-                          <span className="font-mono text-[10px] text-slate-500">سؤال {idx + 1}</span>
-                        </div>
-                        <h4 className="font-extrabold text-xs text-slate-200 leading-relaxed text-right">{q.question}</h4>
-                        <p className="text-xs text-slate-400 leading-relaxed bg-slate-950/60 p-3 rounded-lg border border-slate-900/60 mt-1 select-text text-right whitespace-pre-wrap">
-                          {q.answer}
-                        </p>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-4">
-                {/* Troubleshooting search */}
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="ابحث في سجل الأخطاء والحلول (مثال: DNS, SSH, 403 Forbidden)..."
-                    className="w-full bg-slate-950 border border-slate-850 rounded-xl pl-3 pr-10 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20"
-                    value={troubleshootSearch}
-                    onChange={(e) => setTroubleshootSearch(e.target.value)}
-                  />
-                  <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-3" />
-                </div>
-
-                {/* Troubleshooting Cards */}
-                <div className="flex flex-col gap-4 max-h-[500px] overflow-y-auto pr-1">
-                  {troubleshootingLog
-                    .filter((item) => {
-                      const query = troubleshootSearch.toLowerCase();
-                      return item.error.toLowerCase().includes(query) || item.scenario.toLowerCase().includes(query) || item.solution.toLowerCase().includes(query);
-                    })
-                    .map((item) => (
-                      <div key={item.id} className="bg-slate-950/40 border border-rose-500/10 rounded-xl p-5 flex flex-col gap-3.5 hover:border-rose-500/25 transition-all duration-300">
-                        <div className="flex items-center justify-between border-b border-slate-900 pb-2">
-                          <span className="font-black text-xs text-rose-400">{item.error}</span>
-                          <span className="text-[9px] font-extrabold bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-0.5 rounded">خطأ شائع وجذري</span>
-                        </div>
-                        <div className="text-xs text-slate-350 leading-relaxed text-right">
-                          <span className="font-extrabold text-slate-400 block mb-1">السيناريو والأعراض:</span>
-                          <p className="bg-slate-950/40 p-3 rounded border border-slate-900/60 leading-relaxed">{item.scenario}</p>
-                        </div>
-                        <div className="text-xs text-slate-350 leading-relaxed text-right">
-                          <span className="font-extrabold text-slate-400 block mb-1">خطوات الحل والحل السريع:</span>
-                          <div className="p-3 bg-[#070b12] text-slate-200 rounded-lg font-mono text-left whitespace-pre-wrap select-text border border-rose-500/5 leading-relaxed" dir="ltr">
-                            {item.solution}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            )}
-          </section>
+          <ReferenceHub />
 
           {/* Course list table - "جدول المسارات والمصادر الشامل" */}
           <section 
