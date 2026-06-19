@@ -3,120 +3,74 @@ export const roadmapData = [
     id: "itbasics",
     phaseNumber: "0",
     title: "المرحلة 0: أساسيات تكنولوجيا المعلومات (IT Basics & A+)",
-    description: "بناء أساس قوي في مبادئ تكنولوجيا المعلومات، الأجهزة، والبرمجيات الأساسية قبل الانتقال للشبكات.",
-    accent: "emerald", // emerald, cyan, amber, purple, blue, red
+    shortTitle: "أساسيات الـ IT",
+    description: "تأسيس قوي في الأجهزة، أنظمة التشغيل، وصيانة الحاسوب.",
+    accent: "emerald",
     subtopics: [
-      { id: "itb_hw", text: "فهم عتاد الكمبيوتر (Computer Hardware)" },
-      { id: "itb_os", text: "أنظمة التشغيل ومبادئ عملها (Operating Systems)" },
-      { id: "itb_assembly", text: "تجميع مكونات الكمبيوتر وصيانته (PC Assembly & Maintenance)" },
-      { id: "itb_quiz", text: "اختبار ترقية المرحلة (CompTIA A+ Quiz)" }
+      { id: "itb_hw", text: "عتاد الكمبيوتر والمكونات الداخلية (Hardware)" },
+      { id: "itb_os", text: "تثبيت وإعداد أنظمة التشغيل Windows & Linux" },
+      { id: "itb_trouble", text: "استكشاف أخطاء الأجهزة وصيانتها العملية" },
+      { id: "itb_quiz", text: "اختبار ترقية التأسيس (A+ Mini Exam)" }
+    ],
+    projects: [
+      "مشروع 1: تفكيك وتجميع جهاز كمبيوتر افتراضي وتحديد وتثبيت المكونات التالفة ونظام تشغيل مزدوج."
     ],
     resources: [
       {
-        id: "res_itb_google",
-        title: "Google IT Support Professional Certificate",
-        type: "course", // course, video, doc, practice
-        lang: "en", // ar, en
-        platform: "Coursera",
-        desc: "الشهادة الاحترافية الأشهر عالمياً للتأسيس والدخول في مجال الدعم الفني وتكنولوجيا المعلومات من جوجل.",
-        url: "https://www.coursera.org/professional-certificates/google-it-support"
+        id: "res_itb_ar",
+        title: "كورس CompTIA A+ بالعربي - أحمد حسن",
+        type: "video",
+        lang: "ar",
+        platform: "YouTube",
+        desc: "دورة عربية شاملة لشرح منهج A+ والجانب العملي في تجميع وصيانة الحواسب.",
+        url: "https://www.youtube.com/playlist?list=PL77yNtB4-LjnN2FU3h1v5hIJOHZfW9ugq"
       },
       {
-        id: "res_itb_messer",
+        id: "res_itb_en",
         title: "CompTIA A+ Course - Professor Messer",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "أقوى كورس مراجعة مجاني ومكثف وموثوق لاجتياز اختبار شهادة CompTIA A+ العالمية بقسميها.",
+        desc: "Official playlist for A+ 220-1101 & 1102 exam preparation by Messer.",
         url: "https://www.youtube.com/playlist?list=PLG49S3nxzAnlGHYsF9IaPf9A8H85GBsJ1"
-      },
-      {
-        id: "res_itb_fcc",
-        title: "Computer Fundamentals - FreeCodeCamp",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "شرح مرئي ممتاز يبسط جميع المفاهيم الأساسية لنظام عمل الكمبيوتر والمعالجات والذاكرة في فيديو واحد.",
-        url: "https://www.youtube.com/watch?v=kYJ-4n5z6m4"
-      },
-      {
-        id: "res_itb_ms",
-        title: "Microsoft Learn Windows Client Fundamentals",
-        type: "doc",
-        lang: "en",
-        platform: "Microsoft",
-        desc: "المسار المرجعي والتوثيق الرسمي من مايكروسوفت لتعلم أساسيات إدارة وإعداد أنظمة تشغيل ويندوز.",
-        url: "https://learn.microsoft.com/en-us/training/paths/windows-client-fundamentals/"
       }
     ]
   },
   {
     id: "networks",
     phaseNumber: "1",
-    title: "المرحلة الأولى: الشبكات (Networking)",
-    description: "تعتبر الشبكات العمود الفقري لتكنولوجيا المعلومات. ستتعلم في هذه المرحلة كيفية توصيل الأجهزة وتبادل البيانات.",
+    title: "المرحلة الأولى: الشبكات والراوترات (Networking)",
+    shortTitle: "الشبكات والراوترات",
+    description: "فهم بروتوكولات الاتصال، تقسيم عناوين الـ IP، وأنظمة تشغيل الراوترات المتقدمة.",
     accent: "cyan",
     subtopics: [
       { id: "net_osi", text: "أساسيات وبروتوكولات الشبكات (OSI & TCP/IP)" },
-      { id: "net_subnet", text: "تقسيم الشبكات وعناوين الـ IP (Subnetting & IP Addressing)" },
-      { id: "net_packet_tracer", text: "تكوين وإدارة الأجهزة (Cisco Packet Tracer)" },
-      { id: "net_routing", text: "إعداد بروتوكولات التوجيه والتقسيم (VLANs & OSPF)" },
-      { id: "net_services", text: "تحليل خدمات الشبكة الأساسية (DHCP & DNS)" }
+      { id: "net_subnet", text: "تقسيم الشبكات وعناوين الـ IP (Subnetting & VLSM)" },
+      { id: "net_devices", text: "إعداد أجهزة الراوتر والسويتش (Cisco Packet Tracer)" },
+      { id: "net_openwrt", text: "تثبيت وإعداد نظام تشغيل الراوتر المفتوح OpenWrt Firmware" },
+      { id: "net_zyxel_tplink", text: "تخصيص وتحسين وتطوير أجهزة راوترات Zyxel و TP-Link" }
+    ],
+    projects: [
+      "مشروع 1: تصميم وتقسيم شبكة شركة ذات 3 فروع وحساب العناوين (Subnetting) برمجياً ومحاكاتها بالكامل داخل Cisco Packet Tracer."
     ],
     resources: [
       {
-        id: "res_net_nazmy",
-        title: "كورس CCNA 200-301 - المهندس أحمد نظمي",
+        id: "res_net_ar",
+        title: "كورس CCNA 200-301 بالعربي - أحمد نظمي",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "شرح عربي رائع ومبسط لأساسيات التوجيه والتبديل وبناء الشبكات وإعداد أجهزة سيسكو.",
+        desc: "سلسلة شرح عربي كاملة ومبسطة لأساسيات التوجيه والتبديل وبناء الشبكات.",
         url: "https://www.youtube.com/playlist?list=PLB560a63H3_a1P9H13pL5v-8oP_T42T0p"
       },
       {
-        id: "res_net_jeremy",
+        id: "res_net_en",
         title: "CCNA Course - Jeremy's IT Lab",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "أقوى وأدق كورس مجاني شامل للـ CCNA 200-301 مع مختبرات عملية وتدريبات يومية وبطاقات فلاش.",
+        desc: "Comprehensive CCNA 200-301 course including configuration labs.",
         url: "https://www.youtube.com/playlist?list=PLxbivXZeScB9h11oG1Y4eBwHh2n2-d_0E"
-      },
-      {
-        id: "res_net_chuck",
-        title: "NetworkChuck Networking Course",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "سلسلة مشوقة وحماسية جداً لتبسيط بروتوكولات الشبكات وعناوين الـ IP والـ Subnetting للمبتدئين.",
-        url: "https://www.youtube.com/playlist?list=PLIhvC56v6FUPwP3C7z5HhjF5hC3x-N4G0"
-      },
-      {
-        id: "res_net_messer",
-        title: "CompTIA Network+ - Professor Messer",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "كورس مجاني بالكامل يركز على المفاهيم المنهجية للشبكات وبروتوكولاتها بشكل عام وغير منحاز لشركة معينة.",
-        url: "https://www.youtube.com/playlist?list=PLG49S3nxzAnlGeBsMYOzqKbUYdLyUN9gp"
-      },
-      {
-        id: "res_net_cisco",
-        title: "Cisco Networking Academy",
-        type: "practice",
-        lang: "en",
-        platform: "Cisco",
-        desc: "موقع أكاديمية سيسكو الرسمي للتسجيل وتحميل أداة Cisco Packet Tracer لمحاكاة وتصميم الشبكات.",
-        url: "https://www.netacad.com/"
-      },
-      {
-        id: "res_net_subnet_practice",
-        title: "SubnettingPractice.com",
-        type: "practice",
-        lang: "en",
-        platform: "Web",
-        desc: "أداة تدريبية وتفاعلية ممتازة لتحديات حسابات الـ Subnetting وتحديد الـ Network ID و IP Addresses.",
-        url: "https://www.subnettingpractice.com/"
       }
     ]
   },
@@ -124,69 +78,36 @@ export const roadmapData = [
     id: "linux",
     phaseNumber: "2",
     title: "المرحلة الثانية: إدارة خوادم لينكس (Linux Server)",
-    description: "إدارة السيرفرات باستخدام نظام التشغيل لينكس المفتوح المصدر والمستخدم على نطاق واسع في الخوادم والبيئات الإنتاجية.",
+    shortTitle: "خوادم لينكس",
+    description: "إدارة الخوادم باستخدام سطر الأوامر وإعداد الصلاحيات والخدمات.",
     accent: "amber",
     subtopics: [
-      { id: "lin_cli", text: "تعلم التنقل وإدارة الملفات بالـ Terminal" },
-      { id: "lin_perms", text: "فهم الصلاحيات والمستخدمين (chmod, chown)" },
-      { id: "lin_services", text: "إدارة الخدمات (systemctl) وتثبيت الحزم" },
-      { id: "lin_nginx", text: "تثبيت خادم ويب Nginx وإعداده" },
-      { id: "lin_ssh", text: "تأمين الاتصال عن بعد باستخدام SSH Key Pairs" }
+      { id: "lin_cli", text: "سطر أوامر لينكس وإدارة الملفات بالـ Terminal" },
+      { id: "lin_perms", text: "إدارة الصلاحيات والمستخدمين (chmod, chown)" },
+      { id: "lin_services", text: "إدارة الخدمات وحزم البرامج (systemctl, apt)" },
+      { id: "lin_ssh", text: "تأمين خوادم لينكس والاتصال الآمن عبر SSH Keys" }
+    ],
+    projects: [
+      "مشروع 1: إعداد سيرفر ويب Nginx على نظام Ubuntu Server وتأمينه باستخدام جدار الحماية UFW وتفعيل مفاتيح SSH للدخول الآمن."
     ],
     resources: [
       {
-        id: "res_lin_abeer",
-        title: "كورس Linux RHCSA - المهندسة عبير حسني",
+        id: "res_lin_ar",
+        title: "كورس Linux RHCSA - عبير حسني",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "شرح متميز ومبسط لمنهج سيرفرات ريد هات لينكس (RH124/RH134) مع المختبرات العملية خطوة بخطوة.",
+        desc: "شرح عربي كامل لمنهج Red Hat Linux وإدارة الخوادم عملياً.",
         url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK1f8p8ajyYtXP9GxdFH7WIU"
       },
       {
-        id: "res_lin_ramzy",
-        title: "CompTIA Linux+ Course - المهندس ياسر رمزي",
-        type: "video",
-        lang: "ar",
-        platform: "YouTube",
-        desc: "شرح منهج شهادة Linux+ الشهيرة باللغة العربية مع التركيز على الجوانب العملية لإدارة خوادم لينكس.",
-        url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK1FBi3pLVAmilLvMwWHw-84"
-      },
-      {
-        id: "res_lin_tv",
-        title: "Learn Linux TV",
+        id: "res_lin_en",
+        title: "Linux Server Administration - Learn Linux TV",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "قناة متخصصة تقدم شروحات ممتازة جداً تغطي إدارة النظام من الصفر للاحتراف وسكربتات Bash.",
+        desc: "Detailed Linux administration guide from basics to advanced server setups.",
         url: "https://www.youtube.com/playlist?list=PLT98CRl2KxGGPLw0KHb5F4N5ypgcUXsLy"
-      },
-      {
-        id: "res_lin_journey",
-        title: "Linux Journey",
-        type: "practice",
-        lang: "en",
-        platform: "Web",
-        desc: "موقع تعليمي تفاعلي، مجاني ومبسط جداً لتعلم سطر أوامر لينكس بالخطوات والمراحل المتدرجة.",
-        url: "https://linuxjourney.com/"
-      },
-      {
-        id: "res_lin_bandit",
-        title: "OverTheWire (Bandit Game)",
-        type: "practice",
-        lang: "en",
-        platform: "Web",
-        desc: "لعبة تفاعلية لحل الألغاز والمهام داخل الـ Terminal لتدريبك على استخدام الأوامر وتحديات الصلاحيات.",
-        url: "https://overthewire.org/wargames/bandit/"
-      },
-      {
-        id: "res_lin_sad",
-        title: "SadServers Sandbox",
-        type: "practice",
-        lang: "en",
-        platform: "Web",
-        desc: "موقع رائع لحل المشاكل واستكشاف الأخطاء داخل خوادم لينكس حقيقية في متصفحك (Linux Troubleshoot).",
-        url: "https://sadservers.com/"
       }
     ]
   },
@@ -194,120 +115,72 @@ export const roadmapData = [
     id: "windows",
     phaseNumber: "3",
     title: "المرحلة الثالثة: خوادم ويندوز والـ Active Directory",
-    description: "إدارة خوادم ويندوز وبناء الدليل النشط لإدارة المستخدمين، الأجهزة، والصلاحيات مركزيًا وتطبيق سياسات الأمن.",
+    shortTitle: "خوادم ويندوز",
+    description: "إدارة بيئات ويندوز سيرفر، بناء الدليل النشط، وتطبيق سياسات الأمن.",
     accent: "purple",
     subtopics: [
-      { id: "win_install", text: "تثبيت نظام Windows Server 2022/2025" },
-      { id: "win_ad", text: "تثبيت وإعداد الدليل النشط (Active Directory Domain Services)" },
-      { id: "win_users", text: "بناء الوحدات التنظيمية وإدارة المستخدمين والصلاحيات" },
-      { id: "win_gpo", text: "تطبيق سياسات الأمان والمجموعة (GPOs)" },
-      { id: "win_client", text: "ربط نظام Windows Client بالدومين" }
+      { id: "win_install", text: "تثبيت وإعداد نظام Windows Server" },
+      { id: "win_ad", text: "بناء وإعداد خادم الدليل النشط (Active Directory AD)" },
+      { id: "win_gpo", text: "تطبيق سياسات المجموعة الأمنية (GPOs) على الأجهزة" },
+      { id: "win_domain", text: "ربط أجهزة العميل بالدومين وإدارة حسابات المستخدمين" }
+    ],
+    projects: [
+      "مشروع 2: تثبيت نسخة ويندوز سيرفر محلية، إعداد خادم الدليل النشط (AD Domain Controller)، وتطبيق سياسات مجموعة (GPOs) هرمية على أقسام الشركة."
     ],
     resources: [
       {
-        id: "res_win_tanany",
-        title: "Windows Server AD - المهندس محمد الطناني",
+        id: "res_win_ar",
+        title: "ويندوز سيرفر بالعربي - محمد الطناني",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "كورس شامل باللغة العربية لتعلم إعداد الدليل النشط (Active Directory) وسياسات المجموعة GPOs وخوادم ويندوز.",
+        desc: "كورس متكامل يغطي إعداد خوادم ويندوز وإدارة الـ Active Directory وصلاحيات الشبكة.",
         url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK1llkvqlu4DSqtYN46fQo92"
       },
       {
-        id: "res_win_saqr",
-        title: "Windows Server Administration - محمود صقر",
-        type: "video",
-        lang: "ar",
-        platform: "YouTube",
-        desc: "سلسلة شروحات ممتازة تغطي أدوار الملقمات (Roles) والشبكات وإعداد وإدارة خدمات الـ AD بالتفصيل.",
-        url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK3pa63FTK2D2_vfjQiyxi5k"
-      },
-      {
-        id: "res_win_kevtech",
-        title: "Kevtech AD Support & Labs",
+        id: "res_win_en",
+        title: "Active Directory & IT Support - Kevtech",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "قناة تركز على السيناريوهات العملية والدعم الفني وإدارة حسابات الموظفين وسير العمل داخل نظام الـ AD.",
+        desc: "Hands-on guide to AD DS setup, user administration, and enterprise ticketing scenarios.",
         url: "https://www.youtube.com/@kevtechitsupport"
-      },
-      {
-        id: "res_win_mslearn",
-        title: "Microsoft Learn AD DS Path",
-        type: "doc",
-        lang: "en",
-        platform: "Microsoft",
-        desc: "المسار المرجعي والتعليمي الرسمي من مايكروسوفت لتعلم إدارة الهوية والـ Active Directory Domain Services.",
-        url: "https://learn.microsoft.com/en-us/training/paths/manage-identity-access/"
       }
     ]
   },
   {
     id: "virtualization",
     phaseNumber: "4",
-    title: "المرحلة الرابعة: الافتراضية والخدمات والشبكات",
-    description: "فهم مبادئ الافتراضية وإدارة الـ Hypervisors وإعداد الخدمات الأساسية للشبكة كخوادم الويب وقواعد البيانات.",
+    title: "المرحلة الرابعة: الافتراضية والخدمات (Virtualization)",
+    shortTitle: "الافتراضية والخدمات",
+    description: "إدارة الأنظمة الافتراضية وخوادم قواعد البيانات والويب.",
     accent: "blue",
     subtopics: [
-      { id: "virt_hypervisors", text: "فهم مبادئ الافتراضية وإدارة الـ Hypervisors (VMware, Hyper-V, Proxmox)" },
-      { id: "virt_web", text: "إعداد وتكوين خوادم الويب (IIS, Apache, Nginx)" },
-      { id: "virt_db", text: "إعداد خوادم قواعد البيانات والبريد الإلكتروني (Database & Mail Servers)" },
-      { id: "virt_ec2", text: "فهم أساسيات السحابة وإنشاء سيرفر افتراضي (EC2 / VM)" }
+      { id: "virt_hyper", text: "الافتراضية والـ Hypervisors (VMware, Hyper-V, Proxmox)" },
+      { id: "virt_web", text: "إعداد خوادم الويب وقواعد البيانات (Nginx, Apache, SQL)" },
+      { id: "virt_cloud", text: "التحول السحابي وإنشاء السيرفرات الافتراضية (EC2 / VMs)" }
+    ],
+    projects: [
+      "مشروع 1: بناء بيئة افتراضية متكاملة باستخدام Proxmox VE تشمل خادم ويب وخادم قاعدة بيانات SQL مع إعداد مصفوفة RAID 1 للتخزين."
     ],
     resources: [
       {
-        id: "res_virt_zohdy",
-        title: "كورس Cloud & Azure - المهندس محمد زهدي",
+        id: "res_virt_ar",
+        title: "شرح الحوسبة السحابية و Azure - محمد زهدي",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "سلسلة احترافية باللغة العربية تغطي شهادة AZ-104 وبناء وإدارة الأنظمة الافتراضية السحابية.",
+        desc: "دورة شاملة باللغة العربية تشرح الأنظمة الافتراضية وخدمات سحابة مايكروسوفت.",
         url: "https://www.youtube.com/@mohamedzohdy"
       },
       {
-        id: "res_virt_savill",
-        title: "John Savill's Technical Training",
+        id: "res_virt_en",
+        title: "Azure & Virtualization Fundamentals - John Savill",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "أفضل قناة لشرح خدمات سحابة Azure والبنية التحتية والافتراضية بالكامل من الصفر بأسلوب شيق وبصري.",
+        desc: "Deep technical guide on virtualization engines, networking, and cloud models.",
         url: "https://www.youtube.com/@ntfaqguy"
-      },
-      {
-        id: "res_virt_cantrill",
-        title: "Adrian Cantrill AWS Architect",
-        type: "course",
-        lang: "en",
-        platform: "Web",
-        desc: "موقع يقدم كورسات متقدمة جداً تركز على الفهم العميق وتصميم معمارية البنية السحابية في AWS والافتراضية.",
-        url: "https://cantrill.io/"
-      },
-      {
-        id: "res_virt_vmware",
-        title: "Virtualization Course (VMware & Hyper-V)",
-        type: "video",
-        lang: "ar",
-        platform: "YouTube",
-        desc: "شروحات باللغة العربية لإدارة أنظمة VMware vSphere 8.0 و Hyper-V لبناء بيئات العمل الافتراضية.",
-        url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK2q80zTIHCtSh_8df1Uy-m7"
-      },
-      {
-        id: "res_virt_webservers",
-        title: "Web Servers Setup (IIS, Nginx, Apache)",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "فيديو تفصيلي من FreeCodeCamp لتعلم أساسيات خوادم الويب Nginx وكيفية تثبيتها وضبطها.",
-        url: "https://www.youtube.com/watch?v=JKxlYmG-b5Y"
-      },
-      {
-        id: "res_virt_dbs",
-        title: "Database & Mail Servers (SQL Complete Course)",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "دورة تعليمية شاملة لتعلم لغة SQL وإدارة خوادم قواعد البيانات للمبتدئين من قناة FreeCodeCamp.",
-        url: "https://www.youtube.com/watch?v=HXV3zeQKqGY"
       }
     ]
   },
@@ -315,311 +188,252 @@ export const roadmapData = [
     id: "security",
     phaseNumber: "5",
     title: "المرحلة الخامسة: الأمن السيبراني (Cyber Security)",
-    description: "حماية الأنظمة والشبكات وإدارة الهوية والوصول وتطبيق سياسات الأمن وتقييم المخاطر والثغرات.",
+    shortTitle: "الأمن السيبراني",
+    description: "تأمين وحماية الشبكات والأنظمة وإدارة الهوية والتشفير.",
     accent: "red",
     subtopics: [
-      { id: "sec_cia", text: "فهم مبادئ الأمن السيبراني والـ CIA Triad" },
-      { id: "sec_risk", text: "تطبيق سياسات الأمان وتقييم المخاطر السيبرانية" },
-      { id: "sec_firewall", text: "إعداد وتكوين جدران الحماية (Firewalls & IDS/IPS)" },
-      { id: "sec_iam", text: "إدارة الهوية والوصول وتأمين التوصيل (IAM, Cryptography & Wireless)" }
+      { id: "sec_fundamentals", text: "مبادئ الأمن السيبراني ونموذج الحماية (CIA Triad)" },
+      { id: "sec_firewalls", text: "إعداد وتكوين جدران الحماية (Firewalls & IDS/IPS)" },
+      { id: "sec_crypt", text: "التشفير، إدارة الهوية والوصول وتأمين الاتصالات" }
+    ],
+    projects: [
+      "مشروع 1: إعداد جدار حماية PfSense للتحكم في حركة المرور، تشغيل نظام كشف التسلل Snort، وحل ثغرات أمنية في معامل PortSwigger."
     ],
     resources: [
       {
-        id: "res_sec_free4arab",
-        title: "كورس CompTIA Security+ - أكاديمية Free4Arab",
+        id: "res_sec_ar",
+        title: "كورس CompTIA Security+ بالعربي - Free4Arab",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "سلسلة شرح عربي كامل لمنهج شهادة Security+ لتغطية كافة أساسيات أمن الشبكات والأنظمة.",
+        desc: "سلسلة شروحات كاملة لتأمين الأنظمة، تحليل المخاطر، وفهم الهندسة الاجتماعية.",
         url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK0G8jXNlL-tHR-7FO4vgXkb"
       },
       {
-        id: "res_sec_messer",
-        title: "Professor Messer Security+ Course",
+        id: "res_sec_en",
+        title: "CompTIA Security+ Course - Professor Messer",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "أقوى كورس مراجعة مجاني ومكثف وموثوق لاجتياز اختبار CompTIA Security+ بنجاح.",
+        desc: "Industry-standard free preparation course for Security+ certification.",
         url: "https://www.youtube.com/user/professormesser"
-      },
-      {
-        id: "res_sec_google",
-        title: "Google Cybersecurity Professional Certificate",
-        type: "course",
-        lang: "en",
-        platform: "Coursera",
-        desc: "المسار الاحترافي من جوجل لتعلم الأمن السيبراني وتحليل المخاطر والتعامل مع الثغرات عملياً.",
-        url: "https://www.coursera.org/professional-certificates/google-cybersecurity"
-      },
-      {
-        id: "res_sec_tcm",
-        title: "The Cyber Mentor Security Academy",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "قناة متميزة تقدم دورات قوية في الاختراق الأخلاقي، أمن الشبكات، وأمن أنظمة Active Directory.",
-        url: "https://www.youtube.com/@TCMSecurityAcademy"
-      },
-      {
-        id: "res_sec_harvard",
-        title: "Harvard Network Security Course",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "شرح مفصل ومسجل لمحاضرات جامعة هارفارد المرموقة في أمن الاتصالات وتأمين الأنظمة والشبكات.",
-        url: "https://www.youtube.com/watch?v=N6O3qw9QyqU"
-      },
-      {
-        id: "res_sec_portswigger",
-        title: "PortSwigger Web Security Academy",
-        type: "practice",
-        lang: "en",
-        platform: "Web",
-        desc: "الأكاديمية الأقوى عالمياً لتعلم ثغرات الويب واختراق المواقع وحلها عملياً في معامل مجانية تماماً.",
-        url: "https://portswigger.net/web-security"
       }
     ]
   },
   {
     id: "specialization",
     phaseNumber: "6",
-    title: "المرحلة السادسة: التخصص والتقدم (Specialization & Advancement)",
-    description: "الحوسبة السحابية المتقدمة، البرمجة وأتمتة المهام، والتعرف على بقية التخصصات المتاحة لتحديد مسارك النهائي.",
+    title: "المرحلة السادسة: الأتمتة والسحابة (Scripting & Cloud)",
+    shortTitle: "الأتمتة والسحابة",
+    description: "كتابة سكربتات الأتمتة وإدارة الخدمات السحابية الأساسية.",
     accent: "emerald",
     subtopics: [
-      { id: "spec_cloud", text: "فهم مفاهيم الحوسبة السحابية (IaaS, PaaS, SaaS) والخدمات السحابية" },
-      { id: "spec_python", text: "تعلم أساسيات البرمجة بلغة بايثون (Python)" },
-      { id: "spec_ps", text: "كتابة سكربتات أتمتة باستخدام باورشيل (PowerShell)" },
-      { id: "spec_others", text: "استكشاف مجالات وتخصصات الـ IT الأخرى (DevOps, SRE, SysAdmin)" }
+      { id: "spec_python", text: "أساسيات لغة بايثون (Python) لأتمتة المهام" },
+      { id: "spec_powershell", text: "أتمتة وإدارة أنظمة ويندوز باستخدام PowerShell" },
+      { id: "spec_aws", text: "الحوسبة السحابية وشهادة AWS Cloud Practitioner" }
+    ],
+    projects: [
+      "مشروع 1: كتابة سكربت PowerShell لمراقبة استهلاك الموارد للسيرفرات وإرسال تنبيهات بريدية آلياً، وسكربت Python لأتمتة النسخ الاحتياطي."
     ],
     resources: [
       {
-        id: "res_spec_aws",
-        title: "AWS Certified Cloud Practitioner Course",
+        id: "res_spec_ar",
+        title: "تعلم لغة بايثون للأنظمة - الزيرو ويب سكول",
+        type: "video",
+        lang: "ar",
+        platform: "YouTube",
+        desc: "دورة برمجية مبسطة وممتازة للتأسيس في البرمجة وتصميم السكربتات التلقائية.",
+        url: "https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mSry"
+      },
+      {
+        id: "res_spec_en",
+        title: "AWS Cloud Practitioner Course - FreeCodeCamp",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "كورس معتمد وشامل من FreeCodeCamp للتحضير لشهادة AWS Cloud Practitioner الأساسية في الحوسبة السحابية.",
+        desc: "Full certification course covering Amazon Web Services core concepts.",
         url: "https://www.youtube.com/watch?v=7HKot-brXFE"
-      },
-      {
-        id: "res_spec_python",
-        title: "Python for Beginners - FreeCodeCamp",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "كورس شامل لتعلم لغة بايثون من الصفر للمبتدئين لبناء السكربتات وأتمتة المهام الإدارية.",
-        url: "https://www.youtube.com/watch?v=kqtD5dpnC-k"
-      },
-      {
-        id: "res_spec_powershell",
-        title: "PowerShell Tutorial for Beginners",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "سلسلة شروحات ممتازة لتعلم أساسيات PowerShell وكيفية التفاعل مع أنظمة ويندوز وأتمتة المهام بها.",
-        url: "https://www.youtube.com/watch?v=kU5bS-161w4"
       }
     ]
   },
   {
     id: "kubernetes",
     phaseNumber: "7",
-    title: "المرحلة السابعة: إدارة وتشغيل الحاويات (Kubernetes)",
-    description: "إدارة وتوزيع الحاويات وضمان توافرها العالي في البيئات الإنتاجية الضخمة باستخدام Kubernetes و Docker.",
+    title: "المرحلة السابعة: الحاويات و Kubernetes",
+    shortTitle: "الحاويات K8s",
+    description: "بناء وتشغيل وإدارة الحاويات السحابية وتوزيع الخدمات.",
     accent: "cyan",
     subtopics: [
-      { id: "k8s_arch", text: "فهم معمارية Kubernetes Cluster بشكل تفصيلي" },
-      { id: "k8s_local", text: "إنشاء كلوستر محلي (Minikube / K3s) للتدريب" },
-      { id: "k8s_objects", text: "كتابة ملفات Deployments و Services لتشغيل التطبيقات" },
-      { id: "k8s_helm", text: "إدارة التطبيقات وإطلاقها باستخدام Helm Charts" }
+      { id: "k8s_docker", text: "بناء الحاويات وتشغيل التطبيقات باستخدام Docker" },
+      { id: "k8s_cluster", text: "معمارية وإعداد كلوستر Kubernetes" },
+      { id: "k8s_deploy", text: "إدارة وتوزيع الحزم ونشر الخدمات بـ Helm" }
+    ],
+    projects: [
+      "مشروع 1: تحويل تطبيق ويب إلى حاوية Docker ورفعه على Docker Hub، ثم نشره وإدارته داخل كلوستر Kubernetes محلي باستخدام Helm."
     ],
     resources: [
       {
-        id: "res_k8s_docker_ar",
-        title: "Docker Tutorial - المهندس عبد أبوغزالة",
+        id: "res_k8s_ar",
+        title: "دورة دوكر وكوبيرنيتس بالعربي - عبد أبوغزالة",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "دورة ممتازة باللغة العربية تشرح أساسيات الحاويات وكيفية بناء وتشغيل البيئات البرمجية عملياً.",
+        desc: "سلسلة شروحات عملية رائعة تبسط مفاهيم الحاويات وإدارة كتل الخدمات.",
         url: "https://www.youtube.com/playlist?list=PLm2M9B6tHnF63jZ6H6yP59iP1J-7g2-8C"
       },
       {
-        id: "res_k8s_nana",
-        title: "TechWorld with Nana DevOps Course",
+        id: "res_k8s_en",
+        title: "Kubernetes Tutorial - TechWorld with Nana",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "شرح مرئي مبسط جداً لأدوات الـ Docker و Kubernetes للمبتدئين وتوضيح سريان العمل بالـ DevOps.",
-        url: "https://www.youtube.com/@TechWorldwithNana"
-      },
-      {
-        id: "res_k8s_kodekloud",
-        title: "KodeKloud DevOps Platform",
-        type: "practice",
-        lang: "en",
-        platform: "Web",
-        desc: "أقوى منصة تفاعلية تحتوي على معامل حقيقية في المتصفح لتعلم الـ Docker والـ Kubernetes والأتمتة.",
-        url: "https://kodekloud.com/"
-      },
-      {
-        id: "res_k8s_ar",
-        title: "Kubernetes Course - المهندس عبد أبوغزالة",
-        type: "video",
-        lang: "ar",
-        platform: "YouTube",
-        desc: "دورة كوبيرنيتس متكاملة باللغة العربية تشرح معمارية وإدارة كتل الحاويات والتشغيل الفعلي للـ Pods.",
-        url: "https://www.youtube.com/playlist?list=PL_c9Y2aJm_Uf85wP0jB4dF5Jq4yR_s8Ng"
-      },
-      {
-        id: "res_k8s_kunal",
-        title: "Kubernetes Playlist - Kunal Kushwaha",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "دورة مبسطة وعميقة جداً لتعلم Kubernetes كلياً من الأساسيات إلى الاحتراف مع التطبيق العملي الكامل.",
-        url: "https://www.youtube.com/playlist?list=PL9gnSGHSqcnoqBXdMwUTRod4Gi3eac2Ak"
+        desc: "Visual walkthrough of K8s configuration, pods, deployment, and service architectures.",
+        url: "https://www.youtube.com/watch?v=X48VuDVv0do"
       }
     ]
   },
   {
     id: "gitops",
     phaseNumber: "8",
-    title: "المرحلة الثامنة: البنية التحتية ككود والـ GitOps (GitOps & IaC)",
-    description: "أتمتة بناء وإعداد خوادم وشبكات السحاب عبر الأكواد وإدارتها بمرونة باستخدام Terraform و Ansible و ArgoCD.",
+    title: "المرحلة الثامنة: البنية التحتية ككود والـ GitOps",
+    shortTitle: "GitOps & IaC",
+    description: "إدارة البنية التحتية من خلال الأكواد وتفعيل دورة المزامنة التلقائية.",
     accent: "amber",
     subtopics: [
-      { id: "git_tf", text: "تعلم أساسيات Terraform وإدارة الحالة (Terraform State)" },
-      { id: "git_ansible", text: "أتمتة تهيئة السيرفرات وإعداد التكوينات باستخدام Ansible Playbooks" },
-      { id: "git_argo", text: "إعداد ArgoCD لمزامنة أكواد Kubernetes وإجراء الـ GitOps" }
+      { id: "git_iac", text: "إدارة البنية ككود باستخدام Terraform" },
+      { id: "git_config", text: "أتمتة تكوين السيرفرات باستخدام Ansible" },
+      { id: "git_sync", text: "تطبيق دورة الـ GitOps والمزامنة بـ ArgoCD" }
+    ],
+    projects: [
+      "مشروع 1: كتابة أكواد Terraform لبناء خادم سحابي شبكي، وكتابة Ansible Playbooks لتهيئة الخادم وتثبيت الخدمات تلقائياً."
     ],
     resources: [
       {
-        id: "res_git_tf_ar",
-        title: "Terraform - المهندس محمد الشريف",
+        id: "res_git_ar",
+        title: "شرح أداة Terraform بالعربي - محمد الشريف",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "دليل متكامل لتصميم وإدارة البنية التحتية ككود (Infrastructure as Code) باستخدام Terraform بالعربي.",
+        desc: "دليل متكامل لتصميم وإدارة البنية التحتية ككود باللغة العربية.",
         url: "https://www.youtube.com/playlist?list=PLCIJjtxA3eXT4O8QYm0f4u73Z9Z0lE1vJ"
       },
       {
-        id: "res_git_ansible_en",
-        title: "Ansible Automation - Jeff Geerling",
+        id: "res_git_en",
+        title: "Ansible 101 Course - Jeff Geerling",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "أقوى كورس لتعلم أتمتة إدارة السيرفرات وإعداد التكوينات آلياً باستخدام Ansible من الخبير جيف جيرلينج.",
+        desc: "Practical Ansible playbook writing, host management, and configuration tasks by a legend.",
         url: "https://www.youtube.com/playlist?list=PL2_OB-tmK9Y9p2E17w58m6sFq-s15Q9_C"
-      },
-      {
-        id: "res_git_tf_fcc",
-        title: "FreeCodeCamp Terraform Course",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "كورس شامل وعملي لتعلم أداة Terraform للمبتدئين وتطبيقها لبناء الموارد في السحابة.",
-        url: "https://www.youtube.com/watch?v=SLB_c_ayRCo"
-      },
-      {
-        id: "res_git_argocd",
-        title: "ArgoCD Docs & Getting Started",
-        type: "doc",
-        lang: "en",
-        platform: "Web",
-        desc: "التوثيق الرسمي والموقع المرجعي لتعلم أداة ArgoCD لإجراء عمليات المزامنة المستمرة (GitOps).",
-        url: "https://argo-cd.readthedocs.io/"
       }
     ]
   },
   {
     id: "sre",
     phaseNumber: "9",
-    title: "المرحلة التاسعة: هندسة الموثوقية والمراقبة (SRE & Observability Stack)",
-    description: "الحفاظ على سرعة واستقرار السيرفرات والتطبيقات والشبكات ومتابعة حالتها الصحية على مدار الساعة باستخدام Prometheus و Grafana.",
+    title: "المرحلة التاسعة: المراقبة والموثوقية (SRE)",
+    shortTitle: "SRE & المراقبة",
+    description: "متابعة الحالة الصحية للسيرفرات وبناء لوحات المتابعة وقياس مستوى الخدمة.",
     accent: "purple",
     subtopics: [
-      { id: "sre_sli", text: "تعلم صياغة مقاييس الخدمة وحساب الموثوقية (SLIs & SLOs)" },
-      { id: "sre_prom", text: "تثبيت وإعداد Prometheus لجمع مقاييس السيرفرات والشبكة" },
-      { id: "sre_grafana", text: "بناء لوحات تحكم رسومية متطورة باستخدام Grafana لمراقبة الأداء" }
+      { id: "sre_metrics", text: "صياغة مؤشرات الخدمة ومقاييس الأداء (SLIs & SLOs)" },
+      { id: "sre_prom", text: "جمع مقاييس أداء النظام باستخدام Prometheus" },
+      { id: "sre_grafana", text: "بناء لوحات التحكم ورصد البيانات بـ Grafana" }
+    ],
+    projects: [
+      "مشروع 1: تثبيت Prometheus لجمع مقاييس أداء السيرفرات وربطه بـ Grafana لتصميم لوحة تحكم حية تعكس حالة النظام والذاكرة."
     ],
     resources: [
       {
         id: "res_sre_ar",
-        title: "Prometheus & Grafana - DevOps in Arabic",
+        title: "Prometheus & Grafana - DevOps Area",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "شرح رائع باللغة العربية لمفاهيم المراقبة الفنية للسيرفرات وجمع المقاييس ورسم لوحات المتابعة.",
+        desc: "دورة ممتازة باللغة العربية تشرح كيفية إعداد بيئات المراقبة للسيرفرات.",
         url: "https://www.youtube.com/@DevOpsArea"
       },
       {
-        id: "res_sre_nana",
-        title: "SRE & Monitoring - TechWorld with Nana",
+        id: "res_sre_en",
+        title: "Prometheus & Grafana Setup - TechWorld with Nana",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "تبسيط مذهل لكيفية إعداد Prometheus و Grafana لمراقبة أداء التطبيقات والحاويات وشرح المقاييس.",
+        desc: "Direct hands-on tutorial for metric parsing, alerts, and dashboard styling.",
         url: "https://www.youtube.com/watch?v=h4Sl21mGIG8"
-      },
-      {
-        id: "res_sre_book",
-        title: "Google SRE Official Book",
-        type: "doc",
-        lang: "en",
-        platform: "Google",
-        desc: "الكتاب الأسطوري المجاني من جوجل لتعلم فلسفة وممارسات هندسة موثوقية الأنظمة الكبرى.",
-        url: "https://sre.google/sre-book/table-of-contents/"
-      },
-      {
-        id: "res_sre_grafana_crash",
-        title: "Grafana Crash Course",
-        type: "video",
-        lang: "en",
-        platform: "YouTube",
-        desc: "شروحات مبسطة وعملية لربط مصادر البيانات المختلفة وبناء لوحات عرض الأداء بصرياً.",
-        url: "https://www.youtube.com/watch?v=k81-pIOgZ0M"
       }
     ]
   },
   {
     id: "zerotrust",
     phaseNumber: "10",
-    title: "المرحلة العاشرة: الشبكات المتقدمة والأمن الصِفري (Zero Trust Security)",
-    description: "تطبيق معمارية الأمن الصِفري وبناء شبكات اتصالات مشفرة وآمنة بالكامل عن بعد لحماية أجهزة وسيرفرات المؤسسة.",
+    title: "المرحلة العاشرة: الأمن الصِفري (Zero Trust)",
+    shortTitle: "الأمن الصِفري",
+    description: "تطبيق معمارية الأمن الصِفري وتأمين شبكة الاتصالات والولوج للسيرفرات.",
     accent: "red",
     subtopics: [
-      { id: "zt_concepts", text: "فهم وتطبيق هندسة الأمن الصِفري (Zero Trust - ZTNA)" },
-      { id: "zt_vpn", text: "بناء شبكة VPN مشفرة وفائقة السرعة باستخدام WireGuard/Tailscale" },
-      { id: "zt_ssl", text: "إعداد Let's Encrypt لتأمين الـ Web Servers وإصدار وتجديد الشهادات" }
+      { id: "zt_model", text: "مفهوم الأمن الصِفري ومنع الثقة الافتراضية" },
+      { id: "zt_vpn", text: "بناء شبكات VPN مشفرة وآمنة باستخدام WireGuard" },
+      { id: "zt_proxy", text: "إعداد بوابات الويب الآمنة والـ Reverse Proxies" }
+    ],
+    projects: [
+      "مشروع 1: بناء شبكة VPN مشفرة للربط بين أجهزة الشركة وسيرفراتها عن بعد باستخدام WireGuard مع تطبيق سياسة التحقق الصفرية (Zero Trust)."
     ],
     resources: [
       {
-        id: "res_zt_nasser",
-        title: "Hussein Nasser Web Networks",
+        id: "res_zt_ar",
+        title: "تأمين الشبكات والاتصال الآمن - قناة هارفارد عربي",
+        type: "video",
+        lang: "ar",
+        platform: "YouTube",
+        desc: "شرح مبادئ أمن الشبكات والـ Cryptography وكيفية تشفير قنوات الاتصال.",
+        url: "https://www.youtube.com/watch?v=N6O3qw9QyqU"
+      },
+      {
+        id: "res_zt_en",
+        title: "Web Networks & Security - Hussein Nasser",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "قناة ممتازة جداً لتعلم خبايا شبكات الويب وتفاصيل بروتوكول HTTP والـ Reverse Proxies والـ DNS.",
+        desc: "Deep backend networks architecture, proxies, load balancing, and SSL concepts.",
         url: "https://www.youtube.com/@hnasr"
+      }
+    ]
+  },
+  {
+    id: "clouddep",
+    phaseNumber: "11",
+    title: "المرحلة الحادية عشرة: استضافة ونشر الخدمات السحابية (Cloud Deployment)",
+    shortTitle: "النشر السحابي",
+    description: "استضافة ونشر تطبيقات الويب، قواعد البيانات، وإدارة بيئات الإنتاج السحابية الحديثة.",
+    accent: "emerald",
+    subtopics: [
+      { id: "cdp_static", text: "نشر وإدارة مواقع الويب والخدمات الثابتة عبر Vercel & Netlify" },
+      { id: "cdp_backend", text: "نشر تطبيقات الخلفية (Backend) وقواعد البيانات باستخدام Railway" },
+      { id: "cdp_firebase", text: "بناء وتكامل الخدمات السحابية وقواعد البيانات مع Firebase" },
+      { id: "cdp_domains", text: "إعداد وتكوين نطاقات المواقع (Domains) وتفعيل شهادات SSL" }
+    ],
+    projects: [
+      "مشروع 1: استضافة وتأمين لوحة تحكم الـ IT الخاصة بك ونشرها على Vercel مع ربطها بقاعدة بيانات سحابية مستضافة على Railway."
+    ],
+    resources: [
+      {
+        id: "res_cdp_ar",
+        title: "شرح نشر وتطوير خوادم الويب السحابية - يوتيوب",
+        type: "video",
+        lang: "ar",
+        platform: "YouTube",
+        desc: "سلسلة مبسطة باللغة العربية تشرح كيفية إطلاق ونشر المواقع للإنتاج واستخدام النطاقات.",
+        url: "https://www.youtube.com/watch?v=2H-L7S6yX7w"
       },
       {
-        id: "res_zt_tailscale",
-        title: "Tailscale Zero Trust Guide",
-        type: "doc",
-        lang: "en",
-        platform: "Tailscale",
-        desc: "شروحات مذهلة ومبسطة لكيفية بناء شبكة VPN آمنة ومشفرة بالكامل لجميع أجهزتك وسيرفراتك.",
-        url: "https://tailscale.com/blog/zero-trust-guide/"
-      },
-      {
-        id: "res_zt_savill",
-        title: "Zero Trust & Cloud Security - John Savill",
+        id: "res_cdp_en",
+        title: "Modern Web Deployment & Firebase - Net Ninja",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "شرح تفصيلي رائع لمفاهيم الأمن الصِفري وتأمين الهوية والولوج للأنظمة السحابية بشكل آمن.",
-        url: "https://www.youtube.com/watch?v=0k5u9aL_Tiw"
+        desc: "Step-by-step tutorial on Firebase integrations, Vercel deploys, and DNS mapping.",
+        url: "https://www.youtube.com/watch?v=sBws8MSXN7A"
       }
     ]
   }

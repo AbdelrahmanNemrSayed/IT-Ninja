@@ -13,23 +13,18 @@ import {
   ExternalLink, 
   Search, 
   CheckCircle, 
-  Lock, 
   Menu, 
   X, 
   Upload, 
   Download, 
   Terminal, 
   Check, 
-  Trash2, 
-  ChevronRight, 
-  Compass, 
-  Briefcase, 
-  Book,
   Wrench,
   Award,
   Globe,
-  MonitorPlay,
-  RotateCcw
+  RotateCcw,
+  Book,
+  TerminalSquare
 } from "lucide-react";
 
 const accentColors = {
@@ -105,8 +100,6 @@ export default function App() {
   const [cheatCategory, setCheatCategory] = useState("all");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [copiedCommand, setCopiedCommand] = useState("");
-
-  const sectionRefs = useRef({});
 
   useEffect(() => {
     localStorage.setItem("it_ninja_completed", JSON.stringify(completedItems));
@@ -250,15 +243,15 @@ export default function App() {
   const getPlatformIcon = (platform) => {
     switch (platform.toLowerCase()) {
       case "youtube":
-        return <Youtube className="w-4 h-4 text-red-500" />;
+        return <Youtube className="w-4 h-4 text-red-550" />;
       case "coursera":
-        return <BookOpen className="w-4 h-4 text-blue-400" />;
+        return <BookOpen className="w-4 h-4 text-blue-450" />;
       case "cisco":
-        return <Compass className="w-4 h-4 text-cyan-400" />;
+        return <Compass className="w-4 h-4 text-cyan-455" />;
       case "microsoft":
-        return <Globe className="w-4 h-4 text-sky-400" />;
+        return <Globe className="w-4 h-4 text-sky-455" />;
       default:
-        return <Terminal className="w-4 h-4 text-slate-400" />;
+        return <Terminal className="w-4 h-4 text-slate-450" />;
     }
   };
 
@@ -266,7 +259,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans select-none">
       
       {/* Sticky Progress & Header Bar */}
-      <header className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+      <header className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-900">
         {/* Progress Bar */}
         <div className="w-full bg-slate-900 h-1.5 relative overflow-hidden">
           <div 
@@ -307,7 +300,7 @@ export default function App() {
         </div>
 
         {/* Quick Filters Sticky sub-bar */}
-        <div className="bg-slate-900/60 border-t border-slate-900 py-2.5 px-4">
+        <div className="bg-slate-900/60 border-t border-slate-900/40 py-2.5 px-4">
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto scrollbar-none">
               <span className="text-xs text-slate-400 font-bold flex-shrink-0">تصفية المصادر:</span>
@@ -316,7 +309,7 @@ export default function App() {
                 className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
                   activeFilter === "all" 
                     ? "bg-cyan-500/10 border-cyan-500/30 text-cyan-400 shadow-md" 
-                    : "border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700"
+                    : "border-slate-900 text-slate-400 hover:text-slate-200 hover:border-slate-700"
                 }`}
               >
                 الكل (All)
@@ -326,7 +319,7 @@ export default function App() {
                 className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
                   activeFilter === "ar" 
                     ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400 shadow-md" 
-                    : "border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700"
+                    : "border-slate-900 text-slate-400 hover:text-slate-200 hover:border-slate-700"
                 }`}
               >
                 عربي فقط (Arabic Only)
@@ -336,7 +329,7 @@ export default function App() {
                 className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
                   activeFilter === "en" 
                     ? "bg-amber-500/10 border-amber-500/30 text-amber-400 shadow-md" 
-                    : "border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700"
+                    : "border-slate-900 text-slate-400 hover:text-slate-200 hover:border-slate-700"
                 }`}
               >
                 إنجليزي فقط (English Only)
@@ -346,7 +339,7 @@ export default function App() {
                 className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
                   activeFilter === "practice" 
                     ? "bg-purple-500/10 border-purple-500/30 text-purple-400 shadow-md" 
-                    : "border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700"
+                    : "border-slate-900 text-slate-400 hover:text-slate-200 hover:border-slate-700"
                 }`}
               >
                 معامل تطبيقية (Practice Labs)
@@ -409,19 +402,19 @@ export default function App() {
                   <button 
                     key={phase.id}
                     onClick={() => handleScrollTo(phase.id)}
-                    className="flex flex-col gap-1 text-right p-2.5 rounded-lg border border-transparent hover:bg-slate-900/60 hover:border-slate-800 transition-all group cursor-pointer"
+                    className="flex flex-col gap-1 text-right p-2 rounded-lg border border-transparent hover:bg-slate-900/60 hover:border-slate-800 transition-all group cursor-pointer"
                   >
                     <div className="flex items-center justify-between w-full">
                       <div className="flex items-center gap-2">
-                        <span className={`text-[10px] px-1.5 py-0.2 rounded font-bold ${
+                        <span className={`text-[9px] px-1.5 py-0.2 rounded font-bold ${
                           isDone 
                             ? "bg-emerald-500/20 text-emerald-300" 
                             : "bg-slate-900 text-slate-400"
                         }`}>
                           {phase.phaseNumber}
                         </span>
-                        <span className="text-xs font-bold text-slate-300 group-hover:text-cyan-400 transition-colors">
-                          {phase.id === "itbasics" ? "أساسيات الـ IT" : phase.id === "networks" ? "الشبكات" : phase.id === "linux" ? "خوادم لينكس" : phase.id === "windows" ? "خوادم ويندوز" : phase.id === "virtualization" ? "الافتراضية" : phase.id === "security" ? "الأمن السيبراني" : phase.id === "specialization" ? "الأتمتة والسحابة" : phase.id === "kubernetes" ? "Kubernetes" : phase.id === "gitops" ? "GitOps & IaC" : phase.id === "sre" ? "SRE" : "Zero Trust"}
+                        <span className="text-xs font-bold text-slate-350 group-hover:text-cyan-400 transition-colors">
+                          {phase.shortTitle}
                         </span>
                       </div>
                       
@@ -451,7 +444,7 @@ export default function App() {
                 className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold"
               >
                 <Wrench className="w-4 h-4 text-slate-400" />
-                <span>أدوات مهندس السيرفرات المرجعية</span>
+                <span>أوامر وأدوات المساعدة</span>
               </button>
               
               <button 
@@ -459,7 +452,7 @@ export default function App() {
                 className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold"
               >
                 <Award className="w-4 h-4 text-slate-400" />
-                <span>متتبع الشهادات المهنية العالمية</span>
+                <span>متتبع الشهادات الدولية</span>
               </button>
 
               <button 
@@ -467,31 +460,73 @@ export default function App() {
                 className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold"
               >
                 <Book className="w-4 h-4 text-slate-400" />
-                <span>جدول المسارات والمصادر الشامل</span>
+                <span>جدول المسارات الشامل</span>
               </button>
             </nav>
           </div>
         </aside>
 
         {/* Content Area */}
-        <main className="flex-grow w-full lg:max-w-[calc(100%-17rem)] flex flex-col gap-10">
+        <main className="flex-grow w-full lg:max-w-[calc(100%-17rem)] flex flex-col gap-8">
           
           {/* Dashboard Intro Hero Card */}
-          <section className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-6 relative overflow-hidden shadow-2xl">
+          <section className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-900 rounded-2xl p-6 relative overflow-hidden shadow-xl">
             <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full filter blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/5 rounded-full filter blur-3xl pointer-events-none" />
             
-            <div className="flex flex-col gap-3 relative z-10">
+            <div className="flex flex-col gap-2 relative z-10">
               <div className="flex items-center gap-2">
-                <Trophy className="w-5 h-5 text-amber-400 animate-bounce" />
-                <span className="text-xs font-extrabold text-amber-400 uppercase tracking-widest">توجيهات ومحاكاة مدمجة</span>
+                <Trophy className="w-4.5 h-4.5 text-amber-400" />
+                <span className="text-[10px] font-extrabold text-amber-400 uppercase tracking-widest">لوحة تحكم تفاعلية للمهندسين</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black leading-tight bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent">
-                الخطة التفاعلية المهنية لمهندس السيرفرات والشبكات
+              <h2 className="text-2xl font-black leading-tight text-slate-100">
+                لوحة تحكم المسار المهني لمهندس الأنظمة والشبكات (IT Ninja)
               </h2>
-              <p className="text-slate-400 text-sm leading-relaxed max-w-3xl">
-                مرحباً بك يا بطل! هذا لوحة التحكم التفاعلية المخصصة لتتبع تقدمك المذاكرة والتطبيق العملي. يمكنك وضع علامة صح على كل موضوع فرعي أو كورس تنهيه لحساب نسبة تقدمك تلقائياً والوصول فوراً إلى أفضل الروابط التعليمية المباشرة الموثوقة.
-              </p>
+            </div>
+          </section>
+
+          {/* SysAdmin Essential Toolkit */}
+          <section className="bg-slate-900/30 border border-slate-900 rounded-2xl p-6 flex flex-col gap-4 shadow-md">
+            <div className="border-b border-slate-800 pb-3">
+              <h3 className="font-extrabold text-sm text-slate-100 flex items-center gap-2">
+                <Wrench className="w-4.5 h-4.5 text-cyan-400 animate-pulse" />
+                أدوات العمل اليومية لمهندس الأنظمة (Essential Daily Tools for IT Professionals)
+              </h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                {
+                  name: "PuTTY",
+                  desc: "محاكي طرفي آمن لبروتوكولات SSH/Telnet للاتصال بالسيرفرات وإدارة أجهزة الشبكة برمجياً.",
+                  url: "https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html"
+                },
+                {
+                  name: "Tftpd64",
+                  desc: "خادم وعميل TFTP خفيف الوزن ومتوافق مع IPv6 لنقل أنظمة التشغيل والترقيات لأجهزة الشبكة.",
+                  url: "https://tftpd64.toomedim.fr/"
+                },
+                {
+                  name: "Git for Windows",
+                  desc: "نظام إدارة الإصدارات وتتبع التغييرات للأكواد والسكربتات وتشغيل أوامر Bash على نظام ويندوز.",
+                  url: "https://gitforwindows.org/"
+                }
+              ].map((t) => (
+                <div key={t.name} className="bg-slate-950 border border-slate-850 p-4 rounded-xl flex flex-col justify-between hover:border-cyan-500/40 hover:scale-[1.02] transition-all duration-300">
+                  <div className="mb-4">
+                    <span className="font-extrabold text-sm text-cyan-400 block mb-1">{t.name}</span>
+                    <p className="text-xs text-slate-400 leading-relaxed">{t.desc}</p>
+                  </div>
+                  <a 
+                    href={t.url} 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="text-xs font-bold text-slate-350 hover:text-white flex items-center justify-center gap-1 py-1.5 bg-slate-900 border border-slate-800 rounded-lg hover:bg-cyan-500/10 hover:border-cyan-500/20 transition-all cursor-pointer"
+                  >
+                    <span>تحميل الأداة</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              ))}
             </div>
           </section>
 
@@ -506,7 +541,7 @@ export default function App() {
               <section 
                 key={phase.id} 
                 id={phase.id}
-                className="bg-slate-900/30 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28 relative shadow-lg hover:border-slate-850 transition-all duration-300"
+                className="bg-slate-900/20 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28 relative shadow-md hover:border-slate-800 transition-all duration-300"
               >
                 
                 {/* Phase Header */}
@@ -516,29 +551,29 @@ export default function App() {
                       {phase.phaseNumber}
                     </div>
                     <div>
-                      <h3 className="font-extrabold text-lg text-slate-100">{phase.title}</h3>
-                      <p className="text-xs text-slate-400">{phase.description}</p>
+                      <h3 className="font-extrabold text-base text-slate-100">{phase.title}</h3>
+                      <p className="text-xs text-slate-400 mt-0.5">{phase.description}</p>
                     </div>
                   </div>
 
                   {/* Phase Master Tracker */}
-                  <div className="flex items-center gap-3 bg-slate-950/80 border border-slate-850 px-4 py-2 rounded-xl">
+                  <div className="flex items-center gap-3 bg-slate-950/80 border border-slate-850 px-3.5 py-1.5 rounded-xl">
                     <div className="flex items-center gap-2">
                       <input 
                         type="checkbox"
                         id={`master-${phase.id}`}
                         checked={isPhaseDone}
                         onChange={() => togglePhaseMaster(phase)}
-                        className={`w-4.5 h-4.5 rounded border-slate-800 bg-slate-900 cursor-pointer focus:ring-offset-slate-950 ${styles.checkbox}`}
+                        className={`w-4 h-4 rounded border-slate-800 bg-slate-900 cursor-pointer focus:ring-offset-slate-950 ${styles.checkbox}`}
                       />
                       <label 
                         htmlFor={`master-${phase.id}`}
-                        className="text-xs font-bold text-slate-300 cursor-pointer select-none"
+                        className="text-xs font-bold text-slate-350 cursor-pointer select-none"
                       >
-                        اكتمال المرحلة
+                        تم إنجاز المرحلة
                       </label>
                     </div>
-                    <div className="w-px h-5 bg-slate-800" />
+                    <div className="w-px h-4 bg-slate-800" />
                     <span className="font-mono text-xs font-semibold text-slate-400">{done}/{total}</span>
                   </div>
                 </div>
@@ -553,19 +588,19 @@ export default function App() {
                         <div 
                           key={topic.id}
                           onClick={() => toggleItem(topic.id)}
-                          className={`flex items-center gap-3 p-2.5 rounded-lg border transition-all cursor-pointer ${
+                          className={`flex items-center gap-3 p-2 rounded-lg border transition-all cursor-pointer ${
                             isChecked 
                               ? "bg-slate-900/40 border-slate-800/80 text-slate-300" 
-                              : "bg-transparent border-slate-900 hover:border-slate-800 text-slate-400 hover:text-slate-350"
+                              : "bg-transparent border-slate-900 hover:border-slate-850 text-slate-400 hover:text-slate-300"
                           }`}
                         >
                           <input 
                             type="checkbox"
                             checked={isChecked}
-                            onChange={() => {}} // Controlled via parent click
-                            className={`w-4 h-4 rounded border-slate-800 bg-slate-950 cursor-pointer focus:ring-offset-slate-950 ${styles.checkbox}`}
+                            onChange={() => {}} 
+                            className={`w-4 h-4 rounded border-slate-850 bg-slate-950 cursor-pointer focus:ring-offset-slate-950 ${styles.checkbox}`}
                           />
-                          <span className={`text-xs font-medium ${isChecked ? "line-through opacity-60" : ""}`}>
+                          <span className={`text-xs font-semibold ${isChecked ? "line-through opacity-50" : ""}`}>
                             {topic.text}
                           </span>
                         </div>
@@ -574,25 +609,25 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Embedded Widget logic if networking section */}
+                {/* Subnet Calculator widget in networking phase */}
                 {phase.id === "networks" && (
-                  <div className="my-2">
+                  <div className="my-1">
                     <SubnetCalculator />
                   </div>
                 )}
 
-                {/* Embedded Automation Script Hub inside Advancement section */}
+                {/* Automation script hub in scripting phase */}
                 {phase.id === "specialization" && (
-                  <div className="my-2">
+                  <div className="my-1">
                     <AutomationScriptHub />
                   </div>
                 )}
 
                 {/* Learning Resources Preview Cards */}
                 <div className="flex flex-col gap-3">
-                  <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">أهم المصادر التعليمية والمختبرات المقترحة:</h4>
+                  <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">روابط ومصادر التعلم المعتمدة (عربي / إنجليزي):</h4>
                   {filteredResources.length === 0 ? (
-                    <div className="bg-slate-950/40 border border-slate-900 rounded-xl p-6 text-center text-xs text-slate-500">
+                    <div className="bg-slate-950/40 border border-slate-900 rounded-xl p-4 text-center text-xs text-slate-500">
                       لا توجد مصادر دراسية تطابق خيار التصفية المختار.
                     </div>
                   ) : (
@@ -602,23 +637,22 @@ export default function App() {
                         return (
                           <div 
                             key={res.id}
-                            className={`flex flex-col justify-between border bg-slate-950/60 p-4.5 rounded-xl transition-all duration-300 relative group ${
+                            className={`flex flex-col justify-between border bg-slate-950/60 p-4 rounded-xl transition-all duration-300 relative group ${
                               isChecked 
                                 ? "border-emerald-500/20 shadow-lg shadow-emerald-950/5" 
                                 : "border-slate-850 hover:border-slate-700"
                             } ${styles.glow} hover:scale-[1.02]`}
                           >
                             <div className="flex items-start justify-between gap-3 mb-2">
-                              {/* Platforms & Badges */}
                               <div className="flex items-center gap-1.5 flex-wrap">
-                                <span className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase ${
+                                <span className={`px-2 py-0.5 rounded text-[9px] font-extrabold uppercase ${
                                   res.type === "practice" 
                                     ? "bg-purple-500/10 text-purple-400 border border-purple-500/20" 
                                     : res.type === "course"
                                     ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
                                     : "bg-slate-900 text-slate-400 border border-slate-850"
                                 }`}>
-                                  {res.type === "practice" ? "معمل عملي" : res.type === "course" ? "شهادة/كورس" : res.type === "doc" ? "توثيق" : "فيديو"}
+                                  {res.type === "practice" ? "عملي" : res.type === "course" ? "كورس" : "فيديو"}
                                 </span>
                                 <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
                                   res.lang === "ar" ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"
@@ -627,13 +661,12 @@ export default function App() {
                                 </span>
                               </div>
 
-                              {/* Card Checkbox */}
                               <button 
                                 onClick={() => toggleItem(res.id)}
-                                className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${
+                                className={`w-5 h-5 rounded flex items-center justify-center border transition-all ${
                                   isChecked 
                                     ? "bg-emerald-500 border-emerald-500 text-slate-950" 
-                                    : "border-slate-700 bg-slate-900/60 text-transparent hover:border-slate-500"
+                                    : "border-slate-750 bg-slate-900/60 text-transparent hover:border-slate-650"
                                 }`}
                               >
                                 <Check className="w-3.5 h-3.5 stroke-[3]" />
@@ -644,7 +677,7 @@ export default function App() {
                               <h5 className="font-extrabold text-sm text-slate-100 group-hover:text-cyan-400 transition-colors line-clamp-1">
                                 {res.title}
                               </h5>
-                              <div className="flex items-center gap-1 text-[11px] text-slate-400 font-semibold mt-1">
+                              <div className="flex items-center gap-1 text-[11px] text-slate-450 font-semibold mt-1">
                                 {getPlatformIcon(res.platform)}
                                 <span>{res.platform}</span>
                               </div>
@@ -659,7 +692,7 @@ export default function App() {
                                 href={res.url} 
                                 target="_blank" 
                                 rel="noreferrer"
-                                className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors"
+                                className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
                               >
                                 <span>زيارة المصدر</span>
                                 <ExternalLink className="w-3.5 h-3.5" />
@@ -671,6 +704,24 @@ export default function App() {
                     </div>
                   )}
                 </div>
+
+                {/* Practical Lab Projects Block */}
+                {phase.projects && phase.projects.length > 0 && (
+                  <div className="bg-slate-950/60 border border-amber-500/10 rounded-xl p-4 flex flex-col gap-2">
+                    <div className="flex items-center gap-1.5 text-amber-400 font-extrabold text-xs">
+                      <TerminalSquare className="w-4.5 h-4.5 text-amber-500" />
+                      <span>المشاريع والمختبرات التطبيقية (Practical Labs & Projects):</span>
+                    </div>
+                    <ul className="list-disc list-inside space-y-1">
+                      {phase.projects.map((proj, idx) => (
+                        <li key={idx} className="text-xs text-slate-350 leading-relaxed font-semibold pr-2">
+                          {proj}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
               </section>
             );
           })}
@@ -678,16 +729,13 @@ export default function App() {
           {/* Cheat Sheets and Command Finder */}
           <section 
             id="tools" 
-            className="bg-slate-900/30 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28"
+            className="bg-slate-900/20 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28"
           >
             <div className="border-b border-slate-800 pb-4">
-              <h3 className="font-extrabold text-lg text-slate-100 flex items-center gap-2">
-                <Wrench className="w-5 h-5 text-purple-400" />
+              <h3 className="font-extrabold text-base text-slate-100 flex items-center gap-2">
+                <Terminal className="w-5 h-5 text-purple-400" />
                 مستودع بطاقات الأوامر السريعة والبحث الذكي (Cheat Sheets)
               </h3>
-              <p className="text-xs text-slate-400">
-                ابحث بشكل فوري وسريع عن الأكواد والسطور البرمجية المستخدمة في إدارة الأنظمة والشبكات.
-              </p>
             </div>
 
             {/* Search and Category Filter */}
@@ -695,8 +743,8 @@ export default function App() {
               <div className="relative flex-grow">
                 <input 
                   type="text" 
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-3 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20"
-                  placeholder="ابحث عن أمر أو دالة (vlan, chmod, ip, Active Directory)..."
+                  className="w-full bg-slate-950 border border-slate-850 rounded-xl pl-3 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20"
+                  placeholder="ابحث عن أمر أو دالة (vlan, chmod, ip, AD)..."
                   value={cheatSearch}
                   onChange={(e) => setCheatSearch(e.target.value)}
                 />
@@ -708,13 +756,13 @@ export default function App() {
                   <button
                     key={cat}
                     onClick={() => setCheatCategory(cat)}
-                    className={`text-xs px-3.5 py-2 rounded-xl font-bold uppercase transition-all ${
+                    className={`text-xs px-3.5 py-2 rounded-xl font-bold uppercase transition-all cursor-pointer ${
                       cheatCategory === cat
                         ? "bg-purple-500/10 border border-purple-500/30 text-purple-400 shadow-md"
-                        : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200"
+                        : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-250"
                     }`}
                   >
-                    {cat === "all" ? "الكل" : cat === "cisco" ? "Cisco IOS" : cat === "linux" ? "Linux CLI" : "PowerShell"}
+                    {cat === "all" ? "الكل" : cat === "cisco" ? "Cisco" : cat === "linux" ? "Linux" : "PowerShell"}
                   </button>
                 ))}
               </div>
@@ -728,7 +776,7 @@ export default function App() {
                     <tr className="bg-slate-900/80 text-[10px] text-slate-400 uppercase tracking-wider border-b border-slate-850">
                       <th className="p-3 text-right">القسم</th>
                       <th className="p-3 text-right">الأمر (Command)</th>
-                      <th className="p-3 text-right">الوصف الفني والوظيفة</th>
+                      <th className="p-3 text-right">الوصف والوظيفة</th>
                       <th className="p-3 text-center w-24">إجراء</th>
                     </tr>
                   </thead>
@@ -759,7 +807,7 @@ export default function App() {
                               onClick={() => copyToClipboard(item.command)}
                               className="text-[10px] font-bold px-2 py-1 rounded bg-slate-900 hover:bg-purple-500/10 border border-slate-800 hover:border-purple-500/30 text-slate-400 hover:text-purple-400 transition-all cursor-pointer"
                             >
-                              {copiedCommand === item.command ? "تم النسخ!" : "نسخ الأمر"}
+                              {copiedCommand === item.command ? "تم!" : "نسخ"}
                             </button>
                           </td>
                         </tr>
@@ -772,16 +820,14 @@ export default function App() {
 
             {/* Essential Tools list */}
             <div className="flex flex-col gap-3">
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">الأدوات والبرامج الأساسية لمحاكاة وإدارة السيرفرات والشبكات:</h4>
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">الأدوات والبرامج الأساسية للمحاكاة والتطبيقات:</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {toolsData.map((tool, idx) => (
                   <div key={idx} className="bg-slate-950 border border-slate-900 rounded-xl p-4 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-extrabold text-sm text-slate-200">{tool.name}</span>
-                        <span className={`text-[9px] font-extrabold px-2 py-0.5 rounded-full ${
-                          tool.type === "local" ? "bg-cyan-500/10 text-cyan-400" : "bg-emerald-500/10 text-emerald-400"
-                        }`}>
+                        <span className="text-[9px] font-extrabold px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-850">
                           {tool.category}
                         </span>
                       </div>
@@ -792,7 +838,7 @@ export default function App() {
                         href={tool.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1"
+                        className="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1 cursor-pointer"
                       >
                         <span>تحميل / زيارة</span>
                         <ExternalLink className="w-3.5 h-3.5" />
@@ -807,16 +853,13 @@ export default function App() {
           {/* Certifications Tracker */}
           <section 
             id="certifications" 
-            className="bg-slate-900/30 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28"
+            className="bg-slate-900/20 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28"
           >
             <div className="border-b border-slate-800 pb-4">
-              <h3 className="font-extrabold text-lg text-slate-100 flex items-center gap-2">
+              <h3 className="font-extrabold text-base text-slate-100 flex items-center gap-2">
                 <Award className="w-5 h-5 text-amber-400" />
                 متتبع الشهادات المهنية العالمية (IT Certifications Track)
               </h3>
-              <p className="text-xs text-slate-400">
-                راقب مدى استعدادك وجاهزيتك للتقدم للاختبارات الدولية بناءً على معدل دراستك للمنهج.
-              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -847,17 +890,17 @@ export default function App() {
                     </div>
 
                     <div className="flex items-center justify-between border-t border-slate-900 pt-2.5 mt-1.5">
-                      <span className="font-mono text-sm text-slate-300 font-bold">{certProgress[cert.key]}%</span>
+                      <span className="font-mono text-sm text-slate-350 font-bold">{certProgress[cert.key]}%</span>
                       <div className="flex gap-1">
                         <button 
                           onClick={() => handleCertChange(cert.key, certProgress[cert.key] + 10)}
-                          className="px-2 py-0.5 rounded bg-slate-900 border border-slate-850 text-[10px] text-slate-400 hover:text-white"
+                          className="px-2 py-0.5 rounded bg-slate-900 border border-slate-850 text-[10px] text-slate-400 hover:text-white cursor-pointer"
                         >
                           +10%
                         </button>
                         <button 
                           onClick={() => handleCertChange(cert.key, 0)}
-                          className="px-2 py-0.5 rounded bg-slate-900 border border-slate-850 text-[10px] text-rose-500 hover:bg-rose-500/10"
+                          className="px-2 py-0.5 rounded bg-slate-900 border border-slate-850 text-[10px] text-rose-500 hover:bg-rose-500/10 cursor-pointer"
                         >
                           تصفير
                         </button>
@@ -872,16 +915,13 @@ export default function App() {
           {/* Course list table - "جدول المسارات والمصادر الشامل" */}
           <section 
             id="courses-hub" 
-            className="bg-slate-900/30 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28"
+            className="bg-slate-900/20 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28"
           >
             <div className="border-b border-slate-800 pb-4">
-              <h3 className="font-extrabold text-lg text-slate-100 flex items-center gap-2">
+              <h3 className="font-extrabold text-base text-slate-100 flex items-center gap-2">
                 <Book className="w-5 h-5 text-emerald-400" />
                 جدول المسارات والمصادر الشامل (Courses & Path Hub)
               </h3>
-              <p className="text-xs text-slate-400">
-                مرجع كامل ومهيكل لجميع الكورسات والروابط المقترحة في خطة الطريق.
-              </p>
             </div>
 
             <div className="bg-slate-950 border border-slate-900 rounded-xl overflow-hidden">
@@ -892,7 +932,7 @@ export default function App() {
                       <th className="p-3.5 text-right w-28">المرحلة</th>
                       <th className="p-3.5 text-right">المصدر / الكورس</th>
                       <th className="p-3.5 text-right">اللغة</th>
-                      <th className="p-3.5 text-right">الفائدة والوصف</th>
+                      <th className="p-3.5 text-right">الوصف</th>
                       <th className="p-3.5 text-center w-28">الحالة</th>
                       <th className="p-3.5 text-center w-28">الرابط</th>
                     </tr>
@@ -919,7 +959,7 @@ export default function App() {
                                 {res.lang === "ar" ? "عربي 🇪🇬" : "إنجليزي 🇬🇧"}
                               </span>
                             </td>
-                            <td className="p-3 text-slate-450 leading-relaxed max-w-sm line-clamp-2">
+                            <td className="p-3 text-slate-400 leading-relaxed max-w-sm line-clamp-2">
                               {res.desc}
                             </td>
                             <td className="p-3 text-center">
@@ -939,9 +979,9 @@ export default function App() {
                                 href={res.url} 
                                 target="_blank" 
                                 rel="noreferrer"
-                                className="text-cyan-400 hover:text-cyan-300 font-bold flex items-center justify-center gap-1"
+                                className="text-cyan-400 hover:text-cyan-300 font-bold flex items-center justify-center gap-1 cursor-pointer"
                               >
-                                <span>الكورس</span>
+                                <span>زيارة</span>
                                 <ExternalLink className="w-3 h-3" />
                               </a>
                             </td>
@@ -963,8 +1003,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>© 2026 IT Ninja Career Roadmap. تصميم وتطوير احترافي تفاعلي بالكامل.</p>
           <div className="flex items-center gap-4">
-            <span className="text-[10px] bg-slate-900 border border-slate-850 px-2 py-0.5 rounded text-slate-400 font-bold">V2.0 React Edition</span>
-            <span className="text-[10px] bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded text-emerald-400 font-bold">Tailwind v4 Powered</span>
+            <span className="text-[10px] bg-slate-900 border border-slate-850 px-2 py-0.5 rounded text-slate-455 font-bold">React Edition V3.0</span>
+            <span className="text-[10px] bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded text-emerald-450 font-bold">Tailwind CSS Powered</span>
           </div>
         </div>
       </footer>

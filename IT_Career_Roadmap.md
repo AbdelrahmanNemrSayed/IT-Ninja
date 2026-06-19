@@ -1,177 +1,144 @@
-# 🚀 الخطة الشاملة والمسار المهني الاحترافي لمهندس الأنظمة والشبكات (IT Systems & Network Engineer)
+# 🚀 دليل المسار المهني لمهندس الأنظمة والشبكات (IT Systems & Network Engineer)
 
-مرحباً بك يا صديقي في هذا المسار الاحترافي! الانتقال من الدعم الفني العام (IT Support) إلى التخصص في **السيرفرات والشبكات** هو خطوة ذكية جداً ومطلوبة بقوة في سوق العمل.
-
-هذه خطة عملية، تفصيلية، ومبنية على متطلبات سوق العمل لعام 2026. الخطة تعتمد على المبدأ الذهبي في الـ IT: **"التطبيق العملي والمختبرات المنزلية (Hands-on Practice & Home Labs) تفوق الشهادات النظرية بمراحل."**
+دليل فني عملي مهيكل ومطور لتوجيه الطلاب والمهندسين من التأسيس إلى بناء البنية التحتية وإدارة السحابة والنشر الفعلي.
 
 ---
 
-## 📌 القواعد الذهبية للتعلم والتطور السريع في الـ IT
-1. **لا تحفظ الأوامر:** افهم فلسفة عمل البروتوكول أو النظام. جوجل والذكاء الاصطناعي موجودان لتذكيرك بالأوامر، لكنهما لن يفهموا معمارية شبكتك بدلاً منك.
-2. **ابنِ مختبرك الخاص (Home Lab) فوراً:** كل مفهوم تدرسه نظرياً، طبقه عملياً في بيئة وهمية.
-3. **وثّق ما تتعلمه:** اكتب خطوات إعداد كل سيرفر أو شبكة على مدونة خاصة بك، أو على GitHub. التوثيق هو وسيلتك الأقوى للحصول على وظائف ممتازة.
+## 🛠️ أدوات النظام اليومية الأساسية (SysAdmin Essential Toolkit)
+1. **PuTTY**: محاكي طرفي آمن (SSH/Telnet) للاتصال بالسيرفرات وإدارة الأجهزة برمجياً. [تحميل الأداة](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+2. **Tftpd64**: خادم وعميل TFTP خفيف الوزن ومتوافق مع IPv6 لنقل أنظمة التشغيل والترقيات لأجهزة الشبكة. [تحميل الأداة](https://tftpd64.toomedim.fr/)
+3. **Git for Windows**: نظام إدارة الإصدارات وتتبع التغييرات للأكواد والسكربتات وتشغيل أوامر Bash على ويندوز. [تحميل الأداة](https://gitforwindows.org/)
 
 ---
 
-## 🗺️ خريطة الطريق المحدثة المكونة من 9 مراحل (Roadmap Phases)
+## 🗺️ مراحل خريطة الطريق المحدثة المكونة من 12 مرحلة (Roadmap Phases)
 
-```mermaid
-graph TD
-    A0[المرحلة الأولى: أساسيات الـ IT - A+] --> A[المرحلة الثانية: الشبكات - CCNA]
-    A --> B[المرحلة الثالثة: السيرفرات وأنظمة التشغيل المتقدمة]
-    
-    subgraph B [المرحلة الثالثة: السيرفرات وأنظمة التشغيل المتقدمة]
-        B1[3-أ: خوادم لينكس - Linux Server]
-        B2[3-ب: خوادم ويندوز والـ AD - Windows Server]
-        B3[3-ج: الافتراضية والخدمات - Virtualization & Services]
-    end
-    
-    B1 --> C[المرحلة الرابعة: الأمن السيبراني - Cyber Security]
-    B2 --> C
-    B3 --> C
-    
-    C --> D[المرحلة الخامسة: التخصص والتقدم - Specialization & Advancement]
-    D --> E[المرحلة السادسة: إدارة وتشغيل الحاويات - K8s]
-    E --> F[المرحلة السابعة: البنية التحتية ككود والـ GitOps]
-    F --> G[المرحلة الثامنة: هندسة الموثوقية والمراقبة - SRE]
-    G --> H[المرحلة التاسعة: الأمن الصِفري - Zero Trust]
-```
+### 🖥️ المرحلة 0: أساسيات تكنولوجيا المعلومات (IT Basics & A+)
+تأسيس قوي في الأجهزة، أنظمة التشغيل، وصيانة الحاسوب.
+* **مواضيع الدراسة:** عتاد الكمبيوتر (Hardware)، تثبيت وإعداد أنظمة التشغيل Windows & Linux، وصيانة الأجهزة العملية.
+* **المشاريع والمختبرات:**
+  * *مشروع عملي:* تفكيك وتجميع جهاز كمبيوتر افتراضي وتحديد وتثبيت المكونات ونظام تشغيل مزدوج.
+* **المصادر المعتمدة:**
+  * كورس CompTIA A+ بالعربي - أحمد حسن: [رابط يوتيوب](https://www.youtube.com/playlist?list=PL77yNtB4-LjnN2FU3h1v5hIJOHZfW9ugq)
+  * CompTIA A+ Course - Professor Messer: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLG49S3nxzAnlGHYsF9IaPf9A8H85GBsJ1)
 
 ---
 
-## 📂 تفاصيل المراحل والمصادر والروابط
-
-### 🖥️ المرحلة الأولى: أساسيات تكنولوجيا المعلومات (IT Basics & A+)
-بناء أساس قوي في مبادئ تكنولوجيا المعلومات، الأجهزة، والبرمجيات الأساسية.
-* **ماذا تتعلم؟** مكونات الكمبيوتر الداخلية والخارجية (CPU، RAM، Storage، Motherboard)، كيفية عمل الكمبيوتر، أنواع أنظمة التشغيل، تجميع الكمبيوتر وصيانته.
-* **المصادر:**
-  * **Google IT Support Professional Certificate:** [رابط الكورس على Coursera](https://www.coursera.org/professional-certificates/google-it-support)
-  * **CompTIA A+ Course:** [كورس A+ على يوتيوب](https://www.youtube.com/playlist?list=PLG49S3nxzAnlGHYsF9IaPf9A8H85GBsJ1)
-  * **FreeCodeCamp (Computer Fundamentals):** [شرح أساسيات الكمبيوتر](https://www.youtube.com/watch?v=N6O3qw9QyqU)
-
----
-
-### 🌐 المرحلة الثانية: الشبكات (Networking)
-تعتبر الشبكات العمود الفقري لتكنولوجيا المعلومات. ستتعلم في هذه المرحلة كيفية توصيل الأجهزة وتبادل البيانات.
-* **ماذا تتعلم؟** بروتوكول IP (IPv4 & IPv6)، نموذج OSI & TCP/IP، أنواع الشبكات (LAN، WAN)، أجهزة الشبكات (Switch، Router، Access Point)، تكوين الـ IP، إعدادات الـ Switch والـ Router، أساسيات الـ Subnetting، خدمات الشبكة (DHCP، DNS).
-* **المصادر:**
-  * **CompTIA Network+ (Professor Messer):** [كورس CompTIA Network+ مجاني](https://www.youtube.com/playlist?list=PLG49S3nxzAnlGeBsMYOzqKbUYdLyUN9gp)
-  * **NetworkChuck (YouTube):** [قناة NetworkChuck للشبكات](https://www.youtube.com/playlist?list=PLIhvC56v6FUPwP3C7z5HhjF5hC3x-N4G0)
-  * **CCNA - Jeremy's IT Lab:** [كورس CCNA مجاني بالكامل](https://www.youtube.com/playlist?list=PLxbivXZeScB9h11oG1Y4eBwHh2n2-d_0E)
-  * **Cisco Networking Academy:** [موقع أكاديمية سيسكو](https://www.netacad.com/) لتنزيل Cisco Packet Tracer.
-  * **Subnetting Practice:** موقع [SubnettingPractice.com](https://www.subnettingpractice.com/) للتدريب اليومي على حسابات الـ Subnetting.
+### 🌐 المرحلة الأولى: الشبكات والراوترات (Networking)
+بروتوكولات الاتصال، تقسيم الشبكات، وأنظمة تشغيل الراوترات المتقدمة.
+* **مواضيع الدراسة:** OSI & TCP/IP، عناوين IP وتقسيم الشبكات (Subnetting & VLSM)، أجهزة سيسكو (Packet Tracer)، وتثبيت وتخصيص أنظمة OpenWrt وراوترات Zyxel/TP-Link.
+* **المشاريع والمختبرات:**
+  * *مشروع 1:* تصميم وتقسيم شبكة شركة ذات 3 فروع وحساب العناوين (Subnetting) برمجياً ومحاكاتها بالكامل داخل Cisco Packet Tracer.
+* **المصادر المعتمدة:**
+  * كورس CCNA بالعربي - أحمد نظمي: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLB560a63H3_a1P9H13pL5v-8oP_T42T0p)
+  * CCNA Course - Jeremy's IT Lab: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLxbivXZeScB9h11oG1Y4eBwHh2n2-d_0E)
 
 ---
 
-### 🖥️ المرحلة الثالثة: السيرفرات وأنظمة التشغيل المتقدمة (Servers & Advanced OS)
-ستنتقل الآن إلى تعلم كيفية إدارة السيرفرات التي تقدم الخدمات للشبكة وإدارة الافتراضية.
-
-#### 🐧 3-أ: إدارة خوادم لينكس (Linux Server)
-* **ماذا تتعلم؟** أساسيات سطر الأوامر CLI، التنقل وتعديل الملفات، إدارة المستخدمين والصلاحيات (chmod, chown)، تثبيت الحزم وإدارة الخدمات (systemctl, Package Managers like apt/yum).
-* **المصادر:**
-  * **CompTIA Linux+ Course:** [بحث كورس Linux+ على يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK1FBi3pLVAmilLvMwWHw-84)
-  * **Linux Journey:** [موقع مجاني ومبسط جداً لتعلم لينكس بالخطوات](https://linuxjourney.com/).
-  * **Learn Linux TV (YouTube):** [كورس تعلم لينكس من الصفر](https://www.youtube.com/playlist?list=PLT98CRl2KxGGPLw0KHb5F4N5ypgcUXsLy).
-  * **OverTheWire (Bandit):** [لعبة تفاعلية ممتعة لتعلم أوامر لينكس](https://overthewire.org/wargames/bandit/).
-  * **SadServers:** [موقع رائع لحل مشاكل لينكس الحقيقية](https://sadservers.com/).
-
-#### 🪟 3-ب: خوادم ويندوز والـ Active Directory (Windows Server)
-* **ماذا تتعلم؟** إدارة Windows Server، إنشاء وإعداد الدليل النشط (Active Directory Domain Services - AD DS)، إدارة المستخدمين والمجموعات والصلاحيات، سياسات المجموعة (Group Policy Objects - GPOs)، وإدارة خدمات DNS و DHCP على ويندوز سيرفر.
-* **المصادر:**
-  * **Windows Server Administration:** [بحث كورسات Windows Server على يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK3pa63FTK2D2_vfjQiyxi5k)
-  * **Kevtech IT Support (YouTube):** [تعلم الجانب العملي من Active Directory](https://www.youtube.com/@kevtechitsupport).
-  * **Microsoft Learn AD DS:** [المسار الرسمي لتعلم إدارة الهوية والـ Active Directory](https://learn.microsoft.com/en-us/training/paths/manage-identity-access/).
-
-#### ☁️ 3-ج: الافتراضية والخدمات (Virtualization & Services)
-* **ماذا تتعلم؟** إعداد خدمات خادم الويب (IIS, Apache, Nginx)، خادم البريد (Mail Server)، خادم قواعد البيانات (Database Server)، إدارة الافتراضية (Hypervisors Type-1 & Type-2 مثل VMware ESXi, Hyper-V, Proxmox VE).
-* **المصادر:**
-  * **Virtualization (VMware & Hyper-V):** [بحث شروحات VMware و Hyper-V على يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK2q80zTIHCtSh_8df1Uy-m7)
-  * **Web Servers Setup (IIS, Apache, Nginx):** [بحث إعداد خوادم الويب على يوتيوب](https://www.youtube.com/watch?v=JKxlYmG-b5Y)
-  * **Database & Mail Servers:** [بحث إعداد خوادم قواعد البيانات والبريد](https://www.youtube.com/watch?v=HXV3zeQKqGY)
+### 🐧 المرحلة الثانية: إدارة خوادم لينكس (Linux Server)
+إدارة الخوادم باستخدام سطر الأوامر وإعداد الصلاحيات والخدمات.
+* **مواضيع الدراسة:** سطر أوامر لينكس بالكامل، الصلاحيات والمستخدمين (chmod, chown)، إدارة الخدمات (systemctl, apt)، وتأمين خوادم لينكس بـ SSH Keys.
+* **المشاريع والمختبرات:**
+  * *مشروع عملي:* إعداد سيرفر ويب Nginx على نظام Ubuntu Server وتأمينه باستخدام جدار الحماية UFW وتفعيل مفاتيح SSH للدخول الآمن.
+* **المصادر المعتمدة:**
+  * كورس Linux RHCSA - عبير حسني: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK1f8p8ajyYtXP9GxdFH7WIU)
+  * Linux Server Administration - Learn Linux TV: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLT98CRl2KxGGPLw0KHb5F4N5ypgcUXsLy)
 
 ---
 
-### 🛡️ المرحلة الرابعة: الأمن السيبراني (Cyber Security)
-حماية الأنظمة والشبكات هي مسؤولية أساسية لكل متخصص IT.
-
-#### 🔒 1. أساسيات الأمن السيبراني (Cyber Security Fundamentals)
-* **ماذا تتعلم؟** مبادئ الأمن (Confidentiality, Integrity, Availability - CIA Triad)، أنواع الهجمات (Phishing, Malware, DoS/DDoS)، تقييم المخاطر وثغرات الأنظمة، وسياسات الأمن الإلكتروني وقوانين الأمان.
-* **المصادر:**
-  * **Google Cybersecurity Professional Certificate:** [رابط الشهادة الاحترافية على Coursera](https://www.coursera.org/professional-certificates/google-cybersecurity)
-  * **CompTIA Security+ (Free4Arab):** [سلسلة شرح عربي كامل لـ Security+](https://www.youtube.com/playlist?list=PLLlr6jKKdyK0G8jXNlL-tHR-7FO4vgXkb)
-  * **Professor Messer Security+:** [كورس Security+ الشهير على يوتيوب](https://www.youtube.com/user/professormesser)
-  * **The Cyber Mentor (YouTube):** [قناة The Cyber Mentor لتعلم الأمن السيبراني والاختراق الأخلاقي](https://www.youtube.com/@TCMSecurityAcademy)
-
-#### 🛡️ 2. أمن الشبكات والأنظمة (Network & System Security)
-* **ماذا تتعلم؟** جدران الحماية (Firewalls مثل PfSense)، أنظمة كشف ومنع التسلل (IDS/IPS)، أمن الشبكات اللاسلكية (Wireless Security)، التشفير ومفاتيح الحماية (Cryptography & SSL/TLS)، وإدارة الهوية والوصول (Identity & Access Management - IAM).
-* **المصادر:**
-  * **Harvard Network Security Course:** [كورس هارفارد لأمن الأنظمة والشبكات على يوتيوب](https://www.youtube.com/watch?v=N6O3qw9QyqU)
-  * **PortSwigger Web Security Academy:** [أكاديمية بورت سويجر لتعلم أمن الويب](https://portswigger.net/web-security)
+### 🪟 المرحلة الثالثة: خوادم ويندوز والـ Active Directory
+إدارة بيئات ويندوز سيرفر، بناء الدليل النشط، وتطبيق سياسات الأمن.
+* **مواضيع الدراسة:** تثبيت وإعداد نظام Windows Server، بناء وإعداد خادم الدليل النشط (Active Directory AD)، تطبيق سياسات المجموعة الأمنية (GPOs)، وربط الأجهزة بالدومين.
+* **المشاريع والمختبرات:**
+  * *مشروع 2:* تثبيت نسخة ويندوز سيرفر محلية، إعداد خادم الدليل النشط (AD Domain Controller)، وتطبيق سياسات مجموعة (GPOs) هرمية على أقسام الشركة.
+* **المصادر المعتمدة:**
+  * ويندوز سيرفر بالعربي - محمد الطناني: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK1llkvqlu4DSqtYN46fQo92)
+  * Active Directory & IT Support - Kevtech: [رابط يوتيوب](https://www.youtube.com/@kevtechitsupport)
 
 ---
 
-### 🚀 المرحلة الخامسة: التخصص والتقدم (Specialization & Advancement)
-في هذه المرحلة، يمكنك اختيار التخصص في مجال معين وتطوير مهاراتك بشكل أعمق في الحوسبة السحابية، البرمجة والأتمتة، والمسارات المهنية.
-* **الحوسبة السحابية (Cloud Computing):**
-  * **ماذا تتعلم؟** مفاهيم السحابة الأساسية (IaaS, PaaS, SaaS)، والخدمات السحابية الرئيسية لمزودي الخدمات مثل AWS و Azure و Google Cloud.
-  * **المصادر:** كورسات شهادات AWS Certified Cloud Practitioner، أو Azure Fundamentals، أو GCP Digital Leader، وقنوات يوتيوب الرسمية لـ AWS و Azure.
-* **البرمجة والأتمتة (Scripting & Automation):**
-  * **ماذا تتعلم؟** أساسيات البرمجة باستخدام لغتي Python و PowerShell، وكيفية كتابة سكربتات لتسهيل وأتمتة المهام المتكررة في إدارة الأنظمة والشبكات.
-  * **المصادر:** كورس Python for Beginners (FreeCodeCamp / Codecademy)، وكورسات PowerShell للمبتدئين على Udemy أو يوتيوب.
-* **التخصصات الأخرى:**
-  * **ماذا تتعلم؟** استكشاف مسارات التخصص المتقدمة الأخرى لاختيار التخصص النهائي، مثل الـ DevOps، أو إدارة المشاريع (Project Management)، أو تحليل البيانات (Data Analysis) في قطاع تكنولوجيا المعلومات.
+### ☁️ المرحلة الرابعة: الافتراضية والخدمات (Virtualization)
+إدارة الأنظمة الافتراضية وخوادم قواعد البيانات والويب.
+* **مواضيع الدراسة:** الافتراضية والـ Hypervisors (VMware, Hyper-V, Proxmox)، خوادم الويب وقواعد البيانات (Nginx, Apache, SQL)، وإنشاء خوادم افتراضية سحابية (EC2 / VMs).
+* **المشاريع والمختبرات:**
+  * *مشروع عملي:* بناء بيئة افتراضية متكاملة باستخدام Proxmox VE تشمل خادم ويب وخادم قاعدة بيانات SQL مع إعداد مصفوفة RAID 1 للتخزين.
+* **المصادر المعتمدة:**
+  * شرح الحوسبة السحابية و Azure - محمد زهدي: [رابط يوتيوب](https://www.youtube.com/@mohamedzohdy)
+  * Azure & Virtualization Fundamentals - John Savill: [رابط يوتيوب](https://www.youtube.com/@ntfaqguy)
 
 ---
 
-### 📦 المرحلة السادسة: إدارة وتشغيل الحاويات المتقدمة (Kubernetes)
-إدارة وتوزيع الحاويات وضمان توافرها العالي في البيئات الإنتاجية الضخمة.
-* **ماذا تتعلم؟** معمارية Kubernetes Cluster، الكائنات الأساسية (Pods, Deployments, Services, Ingress)، وإدارة الحزم Helm Charts.
-* **المصادر:**
-  * **TechWorld with Nana (K8s Course):** [كورس Kubernetes كامل للمبتدئين](https://www.youtube.com/watch?v=X48VuDVv0do)
-  * **KodeKloud CKA Course:** دورة التحضير لشهادة CKA مع مختبرات عملية تفاعلية.
+### 🛡️ المرحلة الخامسة: الأمن السيبراني (Cyber Security)
+تأمين وحماية الشبكات والأنظمة وإدارة الهوية والتشفير.
+* **مواضيع الدراسة:** مبادئ الأمن السيبراني (CIA Triad)، إعداد وتكوين جدران الحماية (Firewalls & IDS/IPS)، التشفير، وإدارة الوصول والمخاطر.
+* **المشاريع والمختبرات:**
+  * *مشروع عملي:* إعداد جدار حماية PfSense للتحكم في حركة المرور، تشغيل نظام كشف التسلل Snort، وحل ثغرات أمنية في معامل PortSwigger.
+* **المصادر المعتمدة:**
+  * كورس CompTIA Security+ بالعربي - Free4Arab: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK0G8jXNlL-tHR-7FO4vgXkb)
+  * CompTIA Security+ Course - Professor Messer: [رابط يوتيوب](https://www.youtube.com/user/professormesser)
 
 ---
 
-### 🔄 المرحلة السابعة: البنية التحتية ككود والـ GitOps (GitOps & IaC)
-تحويل كتابة إعدادات السيرفرات وشبكات السحابة من واجهات رسومية إلى أكواد برمجية يتم حفظها وإدارتها في Git.
-* **ماذا تتعلم؟** لغة Terraform لبناء الموارد السحابية، إدارة الحالات (Terraform State)، فلسفة الـ GitOps ومزامنة إعدادات Kubernetes باستخدام ArgoCD.
-* **المصادر:**
-  * **FreeCodeCamp Terraform Course:** كورس شامل لتعلم الـ Terraform للمبتدئين عملياً على يوتيوب.
-  * **ArgoCD Docs:** [موقع ArgoCD الرسمي](https://argo-cd.readthedocs.io/).
+### 🚀 المرحلة السادسة: الأتمتة والسحابة (Scripting & Cloud)
+كتابة سكربتات الأتمتة وإدارة الخدمات السحابية الأساسية.
+* **مواضيع الدراسة:** أساسيات بايثون (Python) للسكربتات والأتمتة، أتمتة ويندوز بـ PowerShell، والحوسبة السحابية لشهادة AWS Cloud Practitioner.
+* **المشاريع والمختبرات:**
+  * *مشروع عملي:* كتابة سكربت PowerShell لمراقبة استهلاك الموارد للسيرفرات وإرسال تنبيهات بريدية آلياً، وسكربت Python لأتمتة النسخ الاحتياطي.
+* **المصادر المعتمدة:**
+  * تعلم لغة بايثون للأنظمة - الزيرو ويب سكول: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mSry)
+  * AWS Cloud Practitioner Course - FreeCodeCamp: [رابط يوتيوب](https://www.youtube.com/watch?v=7HKot-brXFE)
 
 ---
 
-### 📊 المرحلة الثامنة: هندسة الموثوقية والمراقبة (SRE & Observability Stack)
-الحفاظ على استقرار السيرفرات والشبكات وسرعتها ومتابعة حالتها الصحية على مدار الساعة.
-* **ماذا تتعلم؟** حساب نسبة التوافر ومؤشرات الأداء (SLIs, SLOs, Error Budgets)، جمع مقاييس السيرفرات باستخدام Prometheus، بناء لوحات تحكم بصري باستخدام Grafana، وتجميع السجلات عبر Loki.
-* **المصادر:**
-  * **Grafana Crash Course (YouTube):** شروحات مبسطة لربط خوادمك وعرض أدائها بصرياً.
-  * **SRE Book by Google:** الكتاب الأسطوري المجاني من جوجل لتعلم فلسفة هندسة موثوقية الأنظمة.
+### 📦 المرحلة السابعة: الحاويات و Kubernetes
+بناء وتشغيل وإدارة الحاويات السحابية وتوزيع الخدمات.
+* **مواضيع الدراسة:** بناء الحاويات باستخدام Docker، معمارية وإعداد كلوستر Kubernetes، ونشر وإدارة الحزم بـ Helm.
+* **المشاريع والمختبرات:**
+  * *مشروع عملي:* تحويل تطبيق ويب إلى حاوية Docker ورفعه على Docker Hub، ثم نشره وإدارته داخل كلوستر Kubernetes محلي باستخدام Helm.
+* **المصادر المعتمدة:**
+  * دورة دوكر وكوبيرنيتس بالعربي - عبد أبوغزالة: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLm2M9B6tHnF63jZ6H6yP59iP1J-7g2-8C)
+  * Kubernetes Tutorial - TechWorld with Nana: [رابط يوتيوب](https://www.youtube.com/watch?v=X48VuDVv0do)
 
 ---
 
-### 🛡️ المرحلة التاسعة: الشبكات المتقدمة والأمن الصِفري (Zero Trust Security)
-تطبيق معمارية الأمن الصِفري وبناء شبكات اتصالات مشفرة بالكامل عن بعد لحماية البيانات.
-* **ماذا تتعلم؟** معمارية الأمن الصِفري (Zero Trust - ZTNA)، بناء شبكات VPN مشفرة وفائقة السرعة بـ WireGuard/Tailscale، إدارة شهادات SSL/TLS وتجديدها بـ Let's Encrypt، وجدران حماية الويب WAF.
-* **المصادر:**
-  * **Hussein Nasser (YouTube):** [قناة ممتازة لتعلم خبايا شبكات الويب والـ Backend](https://www.youtube.com/@hnasr).
-  * **Tailscale Docs:** شروحات مذهلة لكيفية بناء شبكة VPN آمنة ومشفرة بالكامل لجميع أجهزتك.
+### 🔄 المرحلة الثامنة: البنية التحتية ككود والـ GitOps
+إدارة البنية التحتية من خلال الأكواد وتفعيل دورة المزامنة التلقائية.
+* **مواضيع الدراسة:** إدارة البنية ككود (Terraform)، أتمتة تكوين السيرفرات (Ansible)، وتطبيق دورة الـ GitOps والمزامنة (ArgoCD).
+* **المشاريع والمختبرات:**
+  * *مشروع عملي:* كتابة أكواد Terraform لبناء خادم سحابي شبكي، وكتابة Ansible Playbooks لتهيئة الخادم وتثبيت الخدمات تلقائياً.
+* **المصادر المعتمدة:**
+  * شرح أداة Terraform بالعربي - محمد الشريف: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLCIJjtxA3eXT4O8QYm0f4u73Z9Z0lE1vJ)
+  * Ansible 101 Course - Jeff Geerling: [رابط يوتيوب](https://www.youtube.com/playlist?list=PL2_OB-tmK9Y9p2E17w58m6sFq-s15Q9_C)
 
 ---
 
-## 🏗️ كيف تبني مختبرك المنزلي بأقل التكاليف (Your Free/Low-Cost Home Lab)
-التدريب العملي الحقيقي يحتاج بيئة متكاملة. إليك طريقتين لعمل ذلك:
+### 📊 المرحلة التاسعة: المراقبة والموثوقية (SRE)
+متابعة الحالة الصحية للسيرفرات وبناء لوحات المتابعة وقياس مستوى الخدمة.
+* **مواضيع الدراسة:** صياغة مؤشرات الخدمة (SLIs & SLOs)، جمع مقاييس أداء النظام (Prometheus)، وبناء لوحات التحكم ورصد البيانات (Grafana).
+* **المشاريع والمختبرات:**
+  * *مشروع عملي:* تثبيت Prometheus لجمع مقاييس أداء السيرفرات وربطه بـ Grafana لتصميم لوحة تحكم حية تعكس حالة النظام والذاكرة.
+* **المصادر المعتمدة:**
+  * Prometheus & Grafana - DevOps Area: [رابط يوتيوب](https://www.youtube.com/@DevOpsArea)
+  * Prometheus & Grafana Setup - TechWorld with Nana: [رابط يوتيوب](https://www.youtube.com/watch?v=h4Sl21mGIG8)
 
-### 💻 الخيار الأول: المختبر الافتراضي بالكامل (على لابتوبك الحالي)
-* **المتطلبات:** لابتوب بمعالج Core i5/i7 على الأقل، ورامات لا تقل عن 16 جيجابايت (يفضل 32 جيجابايت لتشغيل عدة سيرفرات معاً)، وهارد ديسك SSD سريع.
-* **الخطوات:**
-  1. قم بتثبيت برنامج **VirtualBox** أو تفعيل **Hyper-V** على جهازك.
-  2. قم بتحميل نظام **Ubuntu Server ISO** ونظام **Windows Server Evaluation ISO** (نسخة مجانية للتجربة لمدة 180 يوماً من مايكروسوفت).
-  3. ابنِ شبكة داخلية (Internal Network) داخل برنامج الـ VMs، واجعل الويندوز سيرفر يوزع عناوين IP (DHCP) لباقي الأجهزة الافتراضية.
+---
 
-### 🖥️ الخيار الثاني: السيرفر المنزلي المستقل (Home Lab Server) - *موصى به جداً مستقبلاً*
-* **المتطلبات:** كمبيوتر مكتبي قديم أو مستعمل (مثل أجهزة الـ OptiPlex المستعملة رخيصة الثمن) مع زيادة الرامات وهارد SSD.
-* **الخطوات:**
-  1. قم بتثبيت نظام **Proxmox VE** كنظام تشغيل أساسي للجهاز (Bare-Metal Hypervisor).
-  2. قم بإدارة الجهاز عن بعد بالكامل من متصفح لابتوبك الأساسي.
-  3. يمكنك الآن تشغيل 10-15 سيرفر افتراضي صغير (VMs / LXC Containers) على هذا الجهاز دون التأثير على أداء لابتوبك الشخصي.
+### 🛡️ المرحلة العاشرة: الأمن الصِفري (Zero Trust)
+تطبيق معمارية الأمن الصِفري وتأمين شبكة الاتصالات والولوج للسيرفرات.
+* **مواضيع الدراسة:** مفهوم الأمن الصِفري ومنع الثقة الافتراضية، بناء شبكات VPN مشفرة (WireGuard)، وإعداد بوابات الويب الآمنة والـ Reverse Proxies.
+* **المشاريع والمختبرات:**
+  * *مشروع عملي:* بناء شبكة VPN مشفرة للربط بين أجهزة الشركة وسيرفراتها عن بعد باستخدام WireGuard مع تطبيق سياسة التحقق الصفرية (Zero Trust).
+* **المصادر المعتمدة:**
+  * تأمين الشبكات والاتصال الآمن - قناة هارفارد عربي: [رابط يوتيوب](https://www.youtube.com/watch?v=N6O3qw9QyqU)
+  * Web Networks & Security - Hussein Nasser: [رابط يوتيوب](https://www.youtube.com/@hnasr)
+
+---
+
+### ☁️ المرحلة الحادية عشرة: استضافة ونشر الخدمات السحابية (Cloud Deployment)
+استضافة ونشر تطبيقات الويب، قواعد البيانات، وإدارة بيئات الإنتاج السحابية الحديثة.
+* **مواضيع الدراسة:** نشر الخدمات الثابتة (Vercel & Netlify)، استضافة خوادم الخلفية وقواعد البيانات (Railway)، تكامل الخدمات مع Firebase، وإعداد النطاقات وشهادات SSL.
+* **المشاريع والمختبرات:**
+  * *مشروع عملي:* استضافة وتأمين لوحة تحكم الـ IT الخاصة بك ونشرها على Vercel مع ربطها بقاعدة بيانات سحابية مستضافة على Railway.
+* **المصادر المعتمدة:**
+  * شرح نشر وتطوير خوادم الويب السحابية - يوتيوب: [رابط يوتيوب](https://www.youtube.com/watch?v=2H-L7S6yX7w)
+  * Modern Web Deployment & Firebase - Net Ninja: [رابط يوتيوب](https://www.youtube.com/watch?v=sBws8MSXN7A)
