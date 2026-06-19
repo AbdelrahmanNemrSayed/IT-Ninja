@@ -11,3 +11,10 @@ Desktop.ini
 *.njsproj
 *.sln
 *.sw?
+
+# Node dependencies
+node_modules/
+
+# Production build output
+dist/
+
