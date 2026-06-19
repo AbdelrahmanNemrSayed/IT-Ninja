@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { 
   roadmapData, 
   toolsData, 
@@ -31,7 +31,8 @@ import {
   TerminalSquare,
   Star,
   Sparkles,
-  Compass
+  Compass,
+  ArrowUp
 } from "lucide-react";
 
 const accentColors = {
@@ -91,6 +92,14 @@ const accentColors = {
   }
 };
 
+// Precompute static lists outside the component to save CPU cycles on every render
+const allCheckboxIds = [];
+roadmapData.forEach((phase) => {
+  phase.subtopics.forEach((topic) => allCheckboxIds.push(topic.id));
+  phase.resources.forEach((res) => allCheckboxIds.push(res.id));
+});
+const totalCheckboxes = allCheckboxIds.length;
+
 export default function App() {
   const [completedItems, setCompletedItems] = useState(() => {
     const saved = localStorage.getItem("it_ninja_completed");
@@ -132,6 +141,7 @@ export default function App() {
   const [interviewRole, setInterviewRole] = useState("all");
   const [interviewSearch, setInterviewSearch] = useState("");
   const [troubleshootSearch, setTroubleshootSearch] = useState("");
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("it_ninja_completed", JSON.stringify(completedItems));
@@ -153,30 +163,33 @@ export default function App() {
     localStorage.setItem("it_ninja_badges", JSON.stringify(earnedBadges));
   }, [earnedBadges]);
 
-  // Compute Total Checkboxes and Progress
-  const allCheckboxIds = [];
-  roadmapData.forEach((phase) => {
-    phase.subtopics.forEach((topic) => allCheckboxIds.push(topic.id));
-    phase.resources.forEach((res) => allCheckboxIds.push(res.id));
-  });
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const totalCheckboxes = allCheckboxIds.length;
   const completedCount = allCheckboxIds.filter((id) => completedItems[id]).length;
   const globalProgressPercent = totalCheckboxes > 0 ? Math.round((completedCount / totalCheckboxes) * 100) : 0;
 
-  // Get bookmarked items
-  const bookmarkedItems = [];
-  roadmapData.forEach((phase) => {
-    phase.resources.forEach((res) => {
-      if (starredResources.includes(res.id)) {
-        bookmarkedItems.push({ 
-          ...res, 
-          phaseAccent: phase.accent, 
-          phaseShortTitle: phase.shortTitle 
-        });
-      }
+  // Get bookmarked items (memoized to prevent recalculating on every click)
+  const bookmarkedItems = useMemo(() => {
+    const items = [];
+    roadmapData.forEach((phase) => {
+      phase.resources.forEach((res) => {
+        if (starredResources.includes(res.id)) {
+          items.push({ 
+            ...res, 
+            phaseAccent: phase.accent, 
+            phaseShortTitle: phase.shortTitle 
+          });
+        }
+      });
     });
-  });
+    return items;
+  }, [starredResources]);
 
   // Toggle item status
   const toggleItem = (id) => {
@@ -422,7 +435,13 @@ export default function App() {
             </button>
             <div className="flex items-center gap-2">
               <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-bold text-slate-950 text-lg shadow-md shadow-emerald-500/20">IT</span>
-              <h1 className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent">IT Ninja</h1>
+              <div className="flex flex-col">
+                <h1 className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent leading-none">IT Ninja</h1>
+                <div className="flex items-center gap-1 mt-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[8px] text-slate-500 font-bold uppercase tracking-wider">System Online</span>
+                </div>
+              </div>
             </div>
             <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-900 border border-slate-800 text-slate-400">
               Roadmap Dashboard
@@ -1438,6 +1457,17 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Floating Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 left-6 z-50 p-3 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/50 shadow-lg shadow-black/60 hover:scale-110 active:scale-95 transition-all cursor-pointer group"
+          title="العودة للأعلى"
+        >
+          <ArrowUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
+        </button>
+      )}
 
     </div>
   );

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { Network, HelpCircle, ShieldAlert } from "lucide-react";
 
-export default function SubnetCalculator() {
+const SubnetCalculator = memo(function SubnetCalculator() {
   const [ipAddress, setIpAddress] = useState("192.168.1.1");
   const [cidr, setCidr] = useState("24");
   const [result, setResult] = useState({
@@ -152,4 +152,6 @@ export default function SubnetCalculator() {
       )}
     </div>
   );
-}
+});
+
+export default SubnetCalculator;

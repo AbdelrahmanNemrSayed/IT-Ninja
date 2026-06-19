@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { HardDrive, Info, AlertTriangle, ShieldCheck } from "lucide-react";
 
 const raidDetails = {
@@ -28,7 +28,7 @@ const raidDetails = {
   }
 };
 
-export default function RaidCalculator() {
+const RaidCalculator = memo(function RaidCalculator() {
   const [raidLevel, setRaidLevel] = useState("5");
   const [numDisks, setNumDisks] = useState(4);
   const [diskSize, setDiskSize] = useState(1000);
@@ -244,4 +244,6 @@ export default function RaidCalculator() {
       )}
     </div>
   );
-}
+});
+
+export default RaidCalculator;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { ShieldCheck, Copy, Check } from "lucide-react";
 
 const portPresets = [
@@ -9,7 +9,7 @@ const portPresets = [
   { label: "RDP (3389)", value: "3389", proto: "tcp" }
 ];
 
-export default function FirewallGenerator() {
+const FirewallGenerator = memo(function FirewallGenerator() {
   const [fwType, setFwType] = useState("ufw");
   const [port, setPort] = useState("80");
   const [action, setAction] = useState("allow");
@@ -168,4 +168,6 @@ export default function FirewallGenerator() {
       </div>
     </div>
   );
-}
+});
+
+export default FirewallGenerator;

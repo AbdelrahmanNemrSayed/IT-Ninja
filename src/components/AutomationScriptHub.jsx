@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Terminal, Copy, Check, Info, Cpu } from "lucide-react";
 
 const scripts = {
@@ -55,7 +55,7 @@ const scripts = {
   }
 };
 
-export default function AutomationScriptHub() {
+const AutomationScriptHub = memo(function AutomationScriptHub() {
   const [selectedKey, setSelectedKey] = useState("backup_bash");
   const [hoveredLine, setHoveredLine] = useState(null);
   const [copied, setCopied] = useState(false);
@@ -166,4 +166,6 @@ export default function AutomationScriptHub() {
       </div>
     </div>
   );
-}
+});
+
+export default AutomationScriptHub;
