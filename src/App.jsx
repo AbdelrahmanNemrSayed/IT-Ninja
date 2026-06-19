@@ -6,6 +6,10 @@ import {
 } from "./data/roadmapData";
 import SubnetCalculator from "./components/SubnetCalculator";
 import AutomationScriptHub from "./components/AutomationScriptHub";
+import RaidCalculator from "./components/RaidCalculator";
+import FirewallGenerator from "./components/FirewallGenerator";
+import ConfettiEffect from "./components/ConfettiEffect";
+import { interviewQuestions, troubleshootingLog } from "./data/referenceData";
 import { 
   Trophy, 
   Youtube, 
@@ -24,7 +28,10 @@ import {
   Globe,
   RotateCcw,
   Book,
-  TerminalSquare
+  TerminalSquare,
+  Star,
+  Sparkles,
+  Compass
 } from "lucide-react";
 
 const accentColors = {
@@ -101,6 +108,31 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [copiedCommand, setCopiedCommand] = useState("");
 
+  // New States
+  const [starredResources, setStarredResources] = useState(() => {
+    const saved = localStorage.getItem("it_ninja_starred");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [notebookNotes, setNotebookNotes] = useState(() => {
+    const saved = localStorage.getItem("it_ninja_notes");
+    return saved ? JSON.parse(saved) : {};
+  });
+
+  const [earnedBadges, setEarnedBadges] = useState(() => {
+    const saved = localStorage.getItem("it_ninja_badges");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [celebratedPhase, setCelebratedPhase] = useState(null);
+  const [confettiActive, setConfettiActive] = useState(false);
+
+  // Tabs and search states for Reference Hub
+  const [refTab, setRefTab] = useState("interview");
+  const [interviewRole, setInterviewRole] = useState("all");
+  const [interviewSearch, setInterviewSearch] = useState("");
+  const [troubleshootSearch, setTroubleshootSearch] = useState("");
+
   useEffect(() => {
     localStorage.setItem("it_ninja_completed", JSON.stringify(completedItems));
   }, [completedItems]);
@@ -108,6 +140,18 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("it_ninja_certs", JSON.stringify(certProgress));
   }, [certProgress]);
+
+  useEffect(() => {
+    localStorage.setItem("it_ninja_starred", JSON.stringify(starredResources));
+  }, [starredResources]);
+
+  useEffect(() => {
+    localStorage.setItem("it_ninja_notes", JSON.stringify(notebookNotes));
+  }, [notebookNotes]);
+
+  useEffect(() => {
+    localStorage.setItem("it_ninja_badges", JSON.stringify(earnedBadges));
+  }, [earnedBadges]);
 
   // Compute Total Checkboxes and Progress
   const allCheckboxIds = [];
@@ -119,6 +163,20 @@ export default function App() {
   const totalCheckboxes = allCheckboxIds.length;
   const completedCount = allCheckboxIds.filter((id) => completedItems[id]).length;
   const globalProgressPercent = totalCheckboxes > 0 ? Math.round((completedCount / totalCheckboxes) * 100) : 0;
+
+  // Get bookmarked items
+  const bookmarkedItems = [];
+  roadmapData.forEach((phase) => {
+    phase.resources.forEach((res) => {
+      if (starredResources.includes(res.id)) {
+        bookmarkedItems.push({ 
+          ...res, 
+          phaseAccent: phase.accent, 
+          phaseShortTitle: phase.shortTitle 
+        });
+      }
+    });
+  });
 
   // Toggle item status
   const toggleItem = (id) => {
@@ -171,6 +229,58 @@ export default function App() {
     const total = ids.length;
     const percent = total > 0 ? Math.round((done / total) * 100) : 0;
     return { done, total, percent };
+  };
+
+  const badgeNames = {
+    itbasics: { title: "بطل التأسيس 💻", sub: "IT Starter Ninja", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
+    networks: { title: "نينجا الشبكات 🌐", sub: "Certified Network Ninja", color: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20" },
+    linux: { title: "قائد لينكس 🐧", sub: "Linux Commander", color: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
+    windows: { title: "مدير الأنظمة 🛡️", sub: "Windows Server Master", color: "text-purple-400 bg-purple-500/10 border-purple-500/20" },
+    virtualization: { title: "خبير السيرفرات الوهمية ⚙️", sub: "Virtualization Specialist", color: "text-blue-400 bg-blue-500/10 border-blue-500/20" },
+    security: { title: "حارس الأمن الرقمي 🔒", sub: "Cyber Sentinel", color: "text-rose-400 bg-rose-500/10 border-rose-500/20" },
+    specialization: { title: "خبير الأتمتة والسكربتات 🐍", sub: "Automation Alchemist", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
+    kubernetes: { title: "مهندس كوبيرنيتس ☸️", sub: "K8s Container Architect", color: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20" },
+    gitops: { title: "ماستر البنية ككود ⚙️", sub: "GitOps Master", color: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
+    sre: { title: "حارس استقرار الأنظمة 📈", sub: "SRE Guardian", color: "text-purple-400 bg-purple-500/10 border-purple-500/20" },
+    zerotrust: { title: "مدافع الـ Zero Trust 🛡️", sub: "Zero Trust Defender", color: "text-rose-400 bg-rose-500/10 border-rose-500/20" },
+    clouddep: { title: "بطل الإطلاق السحابي ☁️", sub: "Cloud Deploy Ninja", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" }
+  };
+
+  // Automated Badge/Milestone evaluation
+  useEffect(() => {
+    roadmapData.forEach((phase) => {
+      const stats = getPhaseCompletionStats(phase);
+      const isCompleted = stats.percent === 100 && stats.total > 0;
+      
+      if (isCompleted && !earnedBadges.includes(phase.id)) {
+        setEarnedBadges((prev) => {
+          if (prev.includes(phase.id)) return prev;
+          return [...prev, phase.id];
+        });
+        setCelebratedPhase(phase);
+        setConfettiActive(true);
+        setTimeout(() => {
+          setConfettiActive(false);
+        }, 5000);
+      }
+    });
+  }, [completedItems]);
+
+  const toggleStar = (resId) => {
+    setStarredResources((prev) => {
+      if (prev.includes(resId)) {
+        return prev.filter((id) => id !== resId);
+      } else {
+        return [...prev, resId];
+      }
+    });
+  };
+
+  const updateNote = (phaseId, noteText) => {
+    setNotebookNotes((prev) => ({
+      ...prev,
+      [phaseId]: noteText
+    }));
   };
 
   const handleScrollTo = (id) => {
@@ -257,6 +367,40 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans select-none">
+      <ConfettiEffect active={confettiActive} />
+
+      {celebratedPhase && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl p-6 max-w-md w-full text-center relative shadow-2xl">
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/20 border border-slate-900">
+              <Trophy className="w-12 h-12 text-slate-950 stroke-[2.5]" />
+            </div>
+            <div className="mt-14 flex flex-col gap-3">
+              <span className="text-[10px] font-extrabold text-emerald-400 uppercase tracking-widest flex items-center justify-center gap-1">
+                <Sparkles className="w-3.5 h-3.5" /> إنجاز جديد مذهل! <Sparkles className="w-3.5 h-3.5" />
+              </span>
+              <h3 className="text-xl font-black text-slate-100">تهانينا! لقد أكملت {celebratedPhase.shortTitle}</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                لقد قمت بإتمام كافة الدروس والمشاريع والتطبيقات الخاصة بهذه المرحلة. لقد حصلت بجدارة على شارة:
+              </p>
+              <div className="my-2.5 p-3 rounded-xl bg-slate-950 border border-slate-850/80">
+                <span className="text-lg font-black block text-emerald-400">
+                  {badgeNames[celebratedPhase.id]?.title}
+                </span>
+                <span className="text-[10px] text-slate-500 font-mono font-bold">
+                  {badgeNames[celebratedPhase.id]?.sub}
+                </span>
+              </div>
+              <button
+                onClick={() => setCelebratedPhase(null)}
+                className="mt-2 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-slate-950 font-bold text-xs py-2.5 px-6 rounded-xl transition-all cursor-pointer shadow-md shadow-emerald-500/10"
+              >
+                متابعة رحلة النينجا 🥷
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Sticky Progress & Header Bar */}
       <header className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-900">
@@ -462,6 +606,46 @@ export default function App() {
                 <Book className="w-4 h-4 text-slate-400" />
                 <span>جدول المسارات الشامل</span>
               </button>
+
+              <button 
+                onClick={() => handleScrollTo("reference-hub")}
+                className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-slate-900 text-slate-300 hover:text-slate-100 text-right cursor-pointer text-xs font-bold"
+              >
+                <BookOpen className="w-4 h-4 text-slate-400" />
+                <span>حقيبة النينجا المرجعية</span>
+              </button>
+
+              {/* Badges Showcase in Sidebar */}
+              <div className="mt-4 border-t border-slate-900 pt-4">
+                <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-2.5 pr-2">شارات النينجا المكتسبة ({earnedBadges.length}/12)</div>
+                <div className="grid grid-cols-4 gap-2">
+                  {roadmapData.map((phase) => {
+                    const isEarned = earnedBadges.includes(phase.id);
+                    const details = badgeNames[phase.id] || { title: "شارة", sub: "" };
+                    return (
+                      <div 
+                        key={phase.id}
+                        title={`${details.title} (${details.sub})`}
+                        className={`w-11 h-11 rounded-lg flex items-center justify-center border text-base relative group transition-all duration-300 ${
+                          isEarned 
+                            ? "bg-slate-900 border-emerald-500/30 text-slate-100 shadow-md shadow-emerald-500/5 hover:scale-105" 
+                            : "bg-slate-950/45 border-slate-900 text-slate-700 opacity-40"
+                        }`}
+                      >
+                        <span className="cursor-default">{details.title.split(" ").slice(-1)[0]}</span>
+                        {/* Tooltip */}
+                        <div className="absolute right-full mr-2 z-50 hidden group-hover:block w-40 bg-slate-900 border border-slate-800 rounded-lg p-2 shadow-xl pointer-events-none text-right">
+                          <div className="text-[10px] font-bold text-slate-100">{details.title}</div>
+                          <div className="text-[8px] text-slate-500 font-mono font-bold mt-0.5">{details.sub}</div>
+                          <div className="text-[8px] mt-1 text-slate-400">
+                            {isEarned ? "✅ تم الحصول عليها" : "🔒 لم تكتمل بعد"}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </nav>
           </div>
         </aside>
@@ -484,6 +668,58 @@ export default function App() {
               </h2>
             </div>
           </section>
+
+          {/* Bookmarks Hub (Only visible if there are starred resources) */}
+          {bookmarkedItems.length > 0 && (
+            <section className="bg-slate-900/20 border border-amber-500/10 rounded-2xl p-5 flex flex-col gap-4 shadow-md">
+              <div className="flex items-center justify-between border-b border-slate-850 pb-2.5">
+                <div className="flex items-center gap-1.5">
+                  <Star className="w-4.5 h-4.5 text-amber-400 fill-amber-400 animate-pulse" />
+                  <h3 className="font-extrabold text-sm text-slate-100">المصادر التعليمية المفضلة (Bookmarks Hub)</h3>
+                </div>
+                <span className="text-[10px] font-bold bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full border border-amber-500/20">
+                  {bookmarkedItems.length} مصادر
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {bookmarkedItems.map((res) => {
+                  return (
+                    <div key={res.id} className="bg-slate-950/80 border border-slate-850/60 p-4 rounded-xl flex flex-col justify-between hover:border-amber-500/30 transition-all duration-300">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[9px] font-bold text-slate-500">{res.phaseShortTitle}</span>
+                          <button 
+                            onClick={() => toggleStar(res.id)}
+                            className="text-amber-400 hover:text-slate-400 p-0.5 transition-colors cursor-pointer"
+                            title="إزالة من المفضلة"
+                          >
+                            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                          </button>
+                        </div>
+                        <h4 className="font-bold text-xs text-slate-200 line-clamp-1">{res.title}</h4>
+                        <p className="text-[11px] text-slate-450 mt-2 line-clamp-2 leading-relaxed">{res.desc}</p>
+                      </div>
+                      <div className="flex items-center justify-between border-t border-slate-900/80 pt-3 mt-4">
+                        <div className="flex items-center gap-1">
+                          {getPlatformIcon(res.platform)}
+                          <span className="text-[9px] text-slate-500 font-semibold">{res.platform}</span>
+                        </div>
+                        <a 
+                          href={res.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[11px] font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-0.5 cursor-pointer"
+                        >
+                          <span>دخول</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
 
           {/* SysAdmin Essential Toolkit */}
           <section className="bg-slate-900/30 border border-slate-900 rounded-2xl p-6 flex flex-col gap-4 shadow-md">
@@ -616,6 +852,20 @@ export default function App() {
                   </div>
                 )}
 
+                {/* RAID Calculator widget in virtualization phase */}
+                {phase.id === "virtualization" && (
+                  <div className="my-1">
+                    <RaidCalculator />
+                  </div>
+                )}
+
+                {/* Firewall Generator widget in security phase */}
+                {phase.id === "security" && (
+                  <div className="my-1">
+                    <FirewallGenerator />
+                  </div>
+                )}
+
                 {/* Automation script hub in scripting phase */}
                 {phase.id === "specialization" && (
                   <div className="my-1">
@@ -661,16 +911,25 @@ export default function App() {
                                 </span>
                               </div>
 
-                              <button 
-                                onClick={() => toggleItem(res.id)}
-                                className={`w-5 h-5 rounded flex items-center justify-center border transition-all ${
-                                  isChecked 
-                                    ? "bg-emerald-500 border-emerald-500 text-slate-950" 
-                                    : "border-slate-750 bg-slate-900/60 text-transparent hover:border-slate-650"
-                                }`}
-                              >
-                                <Check className="w-3.5 h-3.5 stroke-[3]" />
-                              </button>
+                              <div className="flex items-center gap-2">
+                                <button 
+                                  onClick={() => toggleStar(res.id)}
+                                  className="p-1 rounded hover:bg-slate-900 text-slate-500 hover:text-amber-400 transition-colors cursor-pointer"
+                                  title="إضافة للمفضلة"
+                                >
+                                  <Star className={`w-3.5 h-3.5 ${starredResources.includes(res.id) ? "fill-amber-400 text-amber-400" : ""}`} />
+                                </button>
+                                <button 
+                                  onClick={() => toggleItem(res.id)}
+                                  className={`w-5 h-5 rounded flex items-center justify-center border transition-all ${
+                                    isChecked 
+                                      ? "bg-emerald-500 border-emerald-500 text-slate-950" 
+                                      : "border-slate-750 bg-slate-900/60 text-transparent hover:border-slate-650"
+                                  }`}
+                                >
+                                  <Check className="w-3.5 h-3.5 stroke-[3]" />
+                                </button>
+                              </div>
                             </div>
 
                             <div className="mb-4">
@@ -721,6 +980,33 @@ export default function App() {
                     </ul>
                   </div>
                 )}
+
+                {/* Personal Notebook per Phase */}
+                <div className="mt-4 border-t border-slate-900/60 pt-4">
+                  <details className="group">
+                    <summary className="flex items-center justify-between text-xs font-extrabold text-slate-400 hover:text-slate-200 cursor-pointer select-none">
+                      <div className="flex items-center gap-1.5">
+                        <BookOpen className="w-4 h-4 text-purple-400" />
+                        <span>📝 ملاحظاتي الشخصية للمرحلة</span>
+                      </div>
+                      <span className="text-[10px] text-slate-500 font-bold group-open:hidden">عرض ▽</span>
+                      <span className="text-[10px] text-slate-500 font-bold hidden group-open:inline">إخفاء △</span>
+                    </summary>
+                    <div className="mt-3 flex flex-col gap-2">
+                      <textarea
+                        className="w-full bg-slate-950 border border-slate-850 rounded-xl p-3 text-xs text-slate-350 placeholder-slate-650 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/20 font-mono leading-relaxed"
+                        rows="3"
+                        placeholder="اكتب هنا ملخصك للمرحلة، أو الأوامر الهامة التي تريد تدوينها..."
+                        value={notebookNotes[phase.id] || ""}
+                        onChange={(e) => updateNote(phase.id, e.target.value)}
+                      />
+                      <div className="flex justify-between items-center text-[10px] text-slate-500">
+                        <span>تم الحفظ تلقائياً في المتصفح</span>
+                        <span>{(notebookNotes[phase.id] || "").length} حرف</span>
+                      </div>
+                    </div>
+                  </details>
+                </div>
 
               </section>
             );
@@ -910,6 +1196,150 @@ export default function App() {
                 );
               })}
             </div>
+          </section>
+
+          {/* IT Interview Prep & Troubleshooting Hub */}
+          <section 
+            id="reference-hub" 
+            className="bg-slate-900/20 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28"
+          >
+            <div className="border-b border-slate-800 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <h3 className="font-extrabold text-base text-slate-100 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-emerald-450" />
+                حقيبة النينجا المرجعية (IT Interview Prep & Troubleshooting Hub)
+              </h3>
+              <div className="flex gap-1.5 self-end sm:self-auto">
+                <button
+                  onClick={() => setRefTab("interview")}
+                  className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
+                    refTab === "interview"
+                      ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 shadow-md"
+                      : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  أسئلة المقابلات الشخصية (50 Q&A)
+                </button>
+                <button
+                  onClick={() => setRefTab("troubleshoot")}
+                  className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
+                    refTab === "troubleshoot"
+                      ? "bg-rose-500/10 border border-rose-500/30 text-rose-455 shadow-md"
+                      : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  كتيب الأخطاء الشائعة (Troubleshooting Log)
+                </button>
+              </div>
+            </div>
+
+            {refTab === "interview" ? (
+              <div className="flex flex-col gap-4">
+                {/* Role Filters */}
+                <div className="flex gap-2 overflow-x-auto pb-2 border-b border-slate-900 scrollbar-none">
+                  {[
+                    { id: "all", label: "جميع الأسئلة" },
+                    { id: "helpdesk", label: "الدعم الفني (Help Desk)" },
+                    { id: "sysadmin", label: "إدارة الأنظمة (SysAdmin)" },
+                    { id: "network", label: "هندسة الشبكات (Network Eng)" }
+                  ].map((role) => (
+                    <button
+                      key={role.id}
+                      onClick={() => setInterviewRole(role.id)}
+                      className={`text-[11px] px-3 py-1.5 rounded-lg border font-bold transition-all flex-shrink-0 cursor-pointer ${
+                        interviewRole === role.id
+                          ? "bg-cyan-500/10 border-cyan-500/35 text-cyan-400"
+                          : "border-slate-900 text-slate-500 hover:text-slate-350"
+                      }`}
+                    >
+                      {role.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Search in Interview Prep */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="ابحث في أسئلة المقابلات (مثال: DHCP, Active Directory, Nginx)..."
+                    className="w-full bg-slate-950 border border-slate-850 rounded-xl pl-3 pr-10 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/20"
+                    value={interviewSearch}
+                    onChange={(e) => setInterviewSearch(e.target.value)}
+                  />
+                  <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-3" />
+                </div>
+
+                {/* Questions grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[500px] overflow-y-auto pr-1">
+                  {interviewQuestions
+                    .filter((q) => interviewRole === "all" || q.role === interviewRole)
+                    .filter((q) => {
+                      const query = interviewSearch.toLowerCase();
+                      return q.question.toLowerCase().includes(query) || q.answer.toLowerCase().includes(query);
+                    })
+                    .map((q, idx) => (
+                      <div key={q.id} className="bg-slate-950/40 border border-slate-900 rounded-xl p-4 flex flex-col gap-3 hover:border-slate-800 transition-all duration-300">
+                        <div className="flex items-start justify-between gap-3 border-b border-slate-900 pb-2">
+                          <span className={`px-2 py-0.5 rounded text-[9px] font-extrabold uppercase ${
+                            q.role === "helpdesk"
+                              ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                              : q.role === "sysadmin"
+                              ? "bg-purple-500/10 text-purple-400 border border-purple-500/20"
+                              : "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
+                          }`}>
+                            {q.role === "helpdesk" ? "Help Desk" : q.role === "sysadmin" ? "SysAdmin" : "Network Eng"}
+                          </span>
+                          <span className="font-mono text-[10px] text-slate-500">سؤال {idx + 1}</span>
+                        </div>
+                        <h4 className="font-extrabold text-xs text-slate-200 leading-relaxed text-right">{q.question}</h4>
+                        <p className="text-xs text-slate-400 leading-relaxed bg-slate-950/60 p-3 rounded-lg border border-slate-900/60 mt-1 select-text text-right whitespace-pre-wrap">
+                          {q.answer}
+                        </p>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                {/* Troubleshooting search */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="ابحث في سجل الأخطاء والحلول (مثال: DNS, SSH, 403 Forbidden)..."
+                    className="w-full bg-slate-950 border border-slate-850 rounded-xl pl-3 pr-10 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20"
+                    value={troubleshootSearch}
+                    onChange={(e) => setTroubleshootSearch(e.target.value)}
+                  />
+                  <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-3" />
+                </div>
+
+                {/* Troubleshooting Cards */}
+                <div className="flex flex-col gap-4 max-h-[500px] overflow-y-auto pr-1">
+                  {troubleshootingLog
+                    .filter((item) => {
+                      const query = troubleshootSearch.toLowerCase();
+                      return item.error.toLowerCase().includes(query) || item.scenario.toLowerCase().includes(query) || item.solution.toLowerCase().includes(query);
+                    })
+                    .map((item) => (
+                      <div key={item.id} className="bg-slate-950/40 border border-rose-500/10 rounded-xl p-5 flex flex-col gap-3.5 hover:border-rose-500/25 transition-all duration-300">
+                        <div className="flex items-center justify-between border-b border-slate-900 pb-2">
+                          <span className="font-black text-xs text-rose-400">{item.error}</span>
+                          <span className="text-[9px] font-extrabold bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-0.5 rounded">خطأ شائع وجذري</span>
+                        </div>
+                        <div className="text-xs text-slate-350 leading-relaxed text-right">
+                          <span className="font-extrabold text-slate-400 block mb-1">السيناريو والأعراض:</span>
+                          <p className="bg-slate-950/40 p-3 rounded border border-slate-900/60 leading-relaxed">{item.scenario}</p>
+                        </div>
+                        <div className="text-xs text-slate-350 leading-relaxed text-right">
+                          <span className="font-extrabold text-slate-400 block mb-1">خطوات الحل والحل السريع:</span>
+                          <div className="p-3 bg-[#070b12] text-slate-200 rounded-lg font-mono text-left whitespace-pre-wrap select-text border border-rose-500/5 leading-relaxed" dir="ltr">
+                            {item.solution}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
           </section>
 
           {/* Course list table - "جدول المسارات والمصادر الشامل" */}
