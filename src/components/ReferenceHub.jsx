@@ -23,8 +23,8 @@ const ReferenceHub = memo(function ReferenceHub() {
             onClick={() => setRefTab("interview")}
             className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
               refTab === "interview"
-                ? "bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 shadow-md"
-                : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200"
+                ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 shadow-md shadow-emerald-500/10 scale-105"
+                : "bg-slate-950 border border-slate-850 text-slate-400 hover:text-slate-200 hover:border-slate-700"
             }`}
           >
             أسئلة المقابلات الشخصية (50 Q&A)
@@ -33,7 +33,7 @@ const ReferenceHub = memo(function ReferenceHub() {
             onClick={() => setRefTab("troubleshoot")}
             className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
               refTab === "troubleshoot"
-                ? "bg-rose-500/10 border border-rose-500/30 text-rose-455 shadow-md"
+                ? "bg-gradient-to-r from-rose-500 to-amber-500 text-slate-950 shadow-md shadow-rose-500/10 scale-105"
                 : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200"
             }`}
           >
@@ -57,8 +57,8 @@ const ReferenceHub = memo(function ReferenceHub() {
                 onClick={() => setInterviewRole(role.id)}
                 className={`text-[11px] px-3 py-1.5 rounded-lg border font-bold transition-all flex-shrink-0 cursor-pointer ${
                   interviewRole === role.id
-                    ? "bg-cyan-500/10 border-cyan-500/35 text-cyan-400"
-                    : "border-slate-900 text-slate-500 hover:text-slate-350"
+                    ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 border-transparent shadow-md shadow-emerald-500/10 scale-105"
+                    : "bg-slate-950 border-slate-850 text-slate-400 hover:text-slate-200 hover:border-slate-750"
                 }`}
               >
                 {role.label}

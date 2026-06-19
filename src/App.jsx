@@ -440,8 +440,8 @@ export default function App() {
                 onClick={() => setActiveFilter("all")}
                 className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
                   activeFilter === "all" 
-                    ? "bg-cyan-500/10 border-cyan-500/30 text-cyan-400 shadow-md" 
-                    : "border-slate-900 text-slate-400 hover:text-slate-200 hover:border-slate-700"
+                    ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 border-transparent shadow-md shadow-emerald-500/10 scale-105" 
+                    : "bg-slate-950 border-slate-850 text-slate-400 hover:text-slate-200 hover:border-slate-750"
                 }`}
               >
                 الكل (All)
@@ -450,8 +450,8 @@ export default function App() {
                 onClick={() => setActiveFilter("ar")}
                 className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
                   activeFilter === "ar" 
-                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400 shadow-md" 
-                    : "border-slate-900 text-slate-400 hover:text-slate-200 hover:border-slate-700"
+                    ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 border-transparent shadow-md shadow-emerald-500/10 scale-105" 
+                    : "bg-slate-950 border-slate-850 text-slate-400 hover:text-slate-200 hover:border-slate-750"
                 }`}
               >
                 عربي فقط (Arabic Only)
@@ -460,8 +460,8 @@ export default function App() {
                 onClick={() => setActiveFilter("en")}
                 className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
                   activeFilter === "en" 
-                    ? "bg-amber-500/10 border-emerald-500/0 border-amber-500/30 text-amber-400 shadow-md" 
-                    : "border-slate-900 text-slate-400 hover:text-slate-200 hover:border-slate-700"
+                    ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 border-transparent shadow-md shadow-emerald-500/10 scale-105" 
+                    : "bg-slate-950 border-slate-850 text-slate-400 hover:text-slate-200 hover:border-slate-750"
                 }`}
               >
                 إنجليزي فقط (English Only)
@@ -470,8 +470,8 @@ export default function App() {
                 onClick={() => setActiveFilter("practice")}
                 className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
                   activeFilter === "practice" 
-                    ? "bg-purple-500/10 border-purple-500/30 text-purple-400 shadow-md" 
-                    : "border-slate-900 text-slate-400 hover:text-slate-200 hover:border-slate-700"
+                    ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 border-transparent shadow-md shadow-emerald-500/10 scale-105" 
+                    : "bg-slate-950 border-slate-850 text-slate-400 hover:text-slate-200 hover:border-slate-750"
                 }`}
               >
                 معامل تطبيقية (Practice Labs)

@@ -46,8 +46,8 @@ const CheatSheetsHub = memo(function CheatSheetsHub() {
               onClick={() => setCheatCategory(cat)}
               className={`text-xs px-3.5 py-2 rounded-xl font-bold uppercase transition-all cursor-pointer ${
                 cheatCategory === cat
-                  ? "bg-purple-500/10 border border-purple-500/30 text-purple-400 shadow-md"
-                  : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-250"
+                  ? "bg-gradient-to-r from-purple-500 to-indigo-500 text-slate-950 border-transparent shadow-md shadow-purple-500/10 scale-105"
+                  : "bg-slate-950 border border-slate-850 text-slate-400 hover:text-slate-200 hover:border-slate-750"
               }`}
             >
               {cat === "all" ? "الكل" : cat === "cisco" ? "Cisco" : cat === "linux" ? "Linux" : "PowerShell"}
