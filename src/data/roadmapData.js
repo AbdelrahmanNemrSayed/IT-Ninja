@@ -18,12 +18,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_itb_ar",
-        title: "كورس CompTIA A+ بالعربي - Free4arab",
+        title: "كورس CompTIA A+ بالعربي - المهندس أحمد حسن",
         type: "video",
         lang: "ar",
         platform: "YouTube",
         desc: "دورة عربية شاملة لشرح منهج A+ والجانب العملي في تجميع وصيانة الحواسب.",
-        url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK2i60473jKolHvnZ359EbWf"
+        url: "https://www.youtube.com/playlist?list=PL77yNtB4-LjnN2FU3h1v5hIJOHZfW9ugq"
       },
       {
         id: "res_itb_en",
@@ -56,12 +56,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_net_ar",
-        title: "كورس CCNA 200-301 بالعربي - Free4arab",
+        title: "كورس CCNA بالعربي - المهندس أحمد نظمي",
         type: "video",
         lang: "ar",
         platform: "YouTube",
         desc: "سلسلة شرح عربي كاملة ومبسطة لأساسيات التوجيه والتبديل وبناء الشبكات.",
-        url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK3JYsGq_jEcNx-EHF4lqXHP"
+        url: "https://www.youtube.com/playlist?list=PLB560a63H3_a1P9H13pL5v-8oP_T42T0p"
       },
       {
         id: "res_net_en",
@@ -93,12 +93,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_lin_ar",
-        title: "كورس Linux RHCSA - Free4arab",
+        title: "كورس Linux RHCSA - المهندسة عبير حسني",
         type: "video",
         lang: "ar",
         platform: "YouTube",
         desc: "شرح عربي كامل لمنهج Red Hat Linux وإدارة الخوادم عملياً.",
-        url: "https://www.youtube.com/playlist?list=PLvbyo73L4vfvxbFgbbCSNNWqO1HGvrws9"
+        url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK1f8p8ajyYtXP9GxdFH7WIU"
       },
       {
         id: "res_lin_en",
@@ -130,7 +130,7 @@ export const roadmapData = [
     resources: [
       {
         id: "res_win_ar",
-        title: "ويندوز سيرفر 2022 بالعربي - Free4arab",
+        title: "ويندوز سيرفر بالعربي - المهندس محمد الطناني",
         type: "video",
         lang: "ar",
         platform: "YouTube",
@@ -166,12 +166,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_virt_ar",
-        title: "شرح VMware vSphere - Free4arab",
+        title: "شرح الحوسبة السحابية و Azure - المهندس محمد زهدي",
         type: "video",
         lang: "ar",
         platform: "YouTube",
         desc: "دورة شاملة باللغة العربية تشرح الأنظمة الافتراضية وخدمات vSphere.",
-        url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK38sTiACRPapBUCLXnbcYOp"
+        url: "https://www.youtube.com/@mohamedzohdy"
       },
       {
         id: "res_virt_en",
@@ -202,12 +202,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_sec_ar",
-        title: "كورس CompTIA Security+ SY0-701 بالعربي - Free4Arab",
+        title: "كورس CompTIA Security+ بالعربي - قناة Free4Arab",
         type: "video",
         lang: "ar",
         platform: "YouTube",
         desc: "سلسلة شروحات كاملة لتأمين الأنظمة، تحليل المخاطر، وفهم الهندسة الاجتماعية.",
-        url: "https://www.youtube.com/playlist?list=PLAQ9093fDW_bDj8o3n7hMjaIZgVimhCHI"
+        url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK0G8jXNlL-tHR-7FO4vgXkb"
       },
       {
         id: "res_sec_en",
@@ -238,12 +238,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_spec_ar",
-        title: "تعلم لغة بايثون للأنظمة - الزيرو ويب سكول (Elzero)",
+        title: "تعلم لغة بايثون للأنظمة - الزيرو ويب سكول",
         type: "video",
         lang: "ar",
         platform: "YouTube",
         desc: "دورة برمجية مبسطة وممتازة للتأسيس في البرمجة وتصميم السكربتات التلقائية.",
-        url: "https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mocs"
+        url: "https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mSry"
       },
       {
         id: "res_spec_en",
@@ -274,12 +274,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_k8s_ar",
-        title: "دورة دوكر وكوبيرنيتس بالعربي - خالد السعدني",
+        title: "دورة دوكر وكوبيرنيتس بالعربي - المهندس عبد أبوغزالة",
         type: "video",
         lang: "ar",
         platform: "YouTube",
         desc: "سلسلة شروحات عملية رائعة تبسط مفاهيم الحاويات وإدارة كتل الخدمات.",
-        url: "https://www.youtube.com/playlist?list=PLX1bW_GeBRhDkTf_jbdvBbkHs2LCWVeXZ"
+        url: "https://www.youtube.com/playlist?list=PLm2M9B6tHnF63jZ6H6yP59iP1J-7g2-8C"
       },
       {
         id: "res_k8s_en",
@@ -310,12 +310,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_git_ar",
-        title: "شرح أداة Terraform بالعربي - Free4arab",
+        title: "شرح أداة Terraform بالعربي - المهندس محمد الشريف",
         type: "video",
         lang: "ar",
         platform: "YouTube",
         desc: "دليل متكامل لتصميم وإدارة البنية التحتية ككود باللغة العربية.",
-        url: "https://www.youtube.com/playlist?list=PLX1bW_GeBRhBIT9-Nyt4_osatqokaN8ae"
+        url: "https://www.youtube.com/playlist?list=PLCIJjtxA3eXT4O8QYm0f4u73Z9Z0lE1vJ"
       },
       {
         id: "res_git_en",
@@ -324,7 +324,7 @@ export const roadmapData = [
         lang: "en",
         platform: "YouTube",
         desc: "Practical Ansible playbook writing, host management, and configuration tasks by a legend.",
-        url: "https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN"
+        url: "https://www.youtube.com/playlist?list=PL2_OB-tmK9Y9p2E17w58m6sFq-s15Q9_C"
       }
     ]
   },
@@ -472,15 +472,15 @@ export const toolsData = [
     name: "VMware Workstation Player",
     category: "الأنظمة الافتراضية",
     type: "local",
-    desc: "أداء ممتاز واستقرار عالٍ في بناء وإدارة الآلات الافتراضية (Virtual Machines) على جهازك.",
-    url: "https://www.vmware.com/products/workstation-player.html"
+    desc: "النسخة المجانية للاستخدام الشخصي من برنامج VMware",
+    url: "https://www.broadcom.com/products/infosecurity-digital-experience/workstation-player"
   },
   {
     name: "Proxmox VE",
     category: "البيئة السحابية والافتراضية",
     type: "local",
-    desc: "نظام تشغيل متكامل (Bare-Metal Hypervisor) لتنصيبه مباشرة على السيرفر الحقيقي وإدارته بالكامل لبناء Homelab.",
-    url: "https://www.proxmox.com/en/proxmox-ve"
+    desc: "نظام مفتوح المصدر لإنشاء سيرفرات وهمية وإدارتها",
+    url: "https://www.proxmox.com/en/downloads/proxmox-virtual-environment"
   },
   {
     name: "Ventoy",

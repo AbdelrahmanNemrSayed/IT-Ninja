@@ -8,14 +8,14 @@ export const homeLabData = [
         url: "https://www.virtualbox.org/"
       },
       {
-        name: "VMware Workstation",
+        name: "VMware Workstation Player",
         desc: "Advanced local hypervisor with excellent performance.",
-        url: "https://www.vmware.com/products/workstation-pro.html"
+        url: "https://www.broadcom.com/products/infosecurity-digital-experience/workstation-player"
       },
       {
         name: "Proxmox VE",
         desc: "Bare-metal server virtualization for true homelab setups.",
-        url: "https://www.proxmox.com/en/proxmox-ve"
+        url: "https://www.proxmox.com/en/downloads/proxmox-virtual-environment"
       }
     ]
   },
@@ -35,7 +35,7 @@ export const homeLabData = [
       {
         name: "Windows Server Eval",
         desc: "Official 180-day license for Active Directory setup.",
-        url: "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2022"
+        url: "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server"
       }
     ]
   },
