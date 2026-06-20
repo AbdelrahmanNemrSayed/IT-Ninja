@@ -1,11 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
 import { allCheckboxIds, APP_DATA_VERSION } from "../utils/constants";
 import { roadmapData } from "../data/roadmapData";
+import { useProfile } from "../context/ProfileContext";
 
 export function useProgress() {
+  const { getProfileKey } = useProfile();
+
   const [completedItems, setCompletedItems] = useState(() => {
-    const savedVersion = localStorage.getItem("it_ninja_version");
-    const saved = localStorage.getItem("it_ninja_completed");
+    const versionKey = getProfileKey("version");
+    const completedKey = getProfileKey("completed");
+
+    const savedVersion = localStorage.getItem(versionKey);
+    const saved = localStorage.getItem(completedKey);
     let parsed = saved ? JSON.parse(saved) : {};
     
     if (savedVersion !== APP_DATA_VERSION) {
@@ -17,24 +23,24 @@ export function useProgress() {
         }
       });
       parsed = migrated;
-      localStorage.setItem("it_ninja_version", APP_DATA_VERSION);
-      localStorage.setItem("it_ninja_completed", JSON.stringify(parsed));
+      localStorage.setItem(versionKey, APP_DATA_VERSION);
+      localStorage.setItem(completedKey, JSON.stringify(parsed));
     }
     return parsed;
   });
 
   const [certProgress, setCertProgress] = useState(() => {
-    const saved = localStorage.getItem("it_ninja_certs");
+    const saved = localStorage.getItem(getProfileKey("certs"));
     return saved ? JSON.parse(saved) : { ccna: 0, linux: 0, security: 0, cloud: 0 };
   });
 
   useEffect(() => {
-    localStorage.setItem("it_ninja_completed", JSON.stringify(completedItems));
-  }, [completedItems]);
+    localStorage.setItem(getProfileKey("completed"), JSON.stringify(completedItems));
+  }, [completedItems, getProfileKey]);
 
   useEffect(() => {
-    localStorage.setItem("it_ninja_certs", JSON.stringify(certProgress));
-  }, [certProgress]);
+    localStorage.setItem(getProfileKey("certs"), JSON.stringify(certProgress));
+  }, [certProgress, getProfileKey]);
 
   const toggleItem = useCallback((id) => {
     setCompletedItems((prev) => {

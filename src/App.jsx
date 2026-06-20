@@ -16,11 +16,23 @@ import HomeLabHub from "./components/HomeLabHub";
 import PracticePlatformsGrid from "./components/PracticePlatformsGrid";
 import ConfettiEffect from "./components/ConfettiEffect";
 import CelebrationModal from "./components/CelebrationModal";
+import ProfileSelector from "./components/ProfileSelector";
 
 import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
 import { motion } from "framer-motion";
+import { ProfileProvider, useProfile } from "./context/ProfileContext";
 
 export default function App() {
+  return (
+    <ProfileProvider>
+      <AppContent />
+    </ProfileProvider>
+  );
+}
+
+function AppContent() {
+  const { activeProfileId } = useProfile();
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
   const {
     completedItems,
     setCompletedItems,
@@ -46,7 +58,13 @@ export default function App() {
     exportBackup,
     importBackup,
     resetAllProgress
-  } = useBackup(completedItems, setCompletedItems, setCertProgress);
+  } = useBackup(
+    completedItems, setCompletedItems,
+    certProgress, setCertProgress,
+    starredResources, setStarredResources,
+    notebookNotes, setNotebookNotes,
+    earnedBadges, setEarnedBadges
+  );
 
   const [activeFilter, setActiveFilter] = useState("all");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -112,7 +130,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans select-none">
+    <div key={activeProfileId} className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans select-none">
       <ConfettiEffect active={confettiActive} />
       
       <CelebrationModal 
@@ -130,6 +148,7 @@ export default function App() {
         exportBackup={exportBackup}
         importBackup={importBackup}
         resetAllProgress={resetAllProgress}
+        onOpenProfileModal={() => setProfileModalOpen(true)}
       />
 
       <div className="flex-grow flex w-full max-w-7xl mx-auto px-4 py-6 gap-6 relative">
@@ -449,6 +468,11 @@ export default function App() {
       </div>
 
       <Footer showScrollTop={showScrollTop} />
+
+      <ProfileSelector 
+        isOpen={profileModalOpen} 
+        onClose={() => setProfileModalOpen(false)} 
+      />
     </div>
   );
 }

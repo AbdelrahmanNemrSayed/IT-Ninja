@@ -6,9 +6,9 @@ import { homeLabData } from "../data/hubsData";
 export default function HomeLabHub() {
   const getIconForCategory = (cat) => {
     switch (cat) {
-      case "Hypervisors": return <Layers className="w-4.5 h-4.5 text-indigo-400" />;
-      case "Official OS Evaluation ISOs": return <Download className="w-4.5 h-4.5 text-indigo-400" />;
-      case "Network Simulation": return <Server className="w-4.5 h-4.5 text-indigo-400" />;
+      case "أنظمة التشغيل الوهمية (Hypervisors)": return <Layers className="w-4.5 h-4.5 text-indigo-400" />;
+      case "تحميل نسخ الأنظمة الرسمية (OS ISOs)": return <Download className="w-4.5 h-4.5 text-indigo-400" />;
+      case "برامج محاكاة الشبكات (Network Simulation)": return <Server className="w-4.5 h-4.5 text-indigo-400" />;
       default: return <Server className="w-4.5 h-4.5 text-indigo-400" />;
     }
   };
@@ -20,22 +20,22 @@ export default function HomeLabHub() {
       transition={{ duration: 0.5, delay: 0.1 }}
       className="bg-slate-900/40 backdrop-blur-md border border-indigo-500/20 rounded-2xl p-6 flex flex-col gap-5 shadow-lg"
     >
-      <div className="border-b border-slate-800 pb-3">
-        <h3 className="font-extrabold text-sm text-slate-100 flex items-center gap-2">
+      <div className="border-b border-slate-800 pb-3 text-right">
+        <h3 className="font-extrabold text-sm text-slate-100 flex items-center justify-start gap-2">
           <Server className="w-4.5 h-4.5 text-indigo-400 animate-pulse" />
-          The Home Lab & Hypervisors Sandbox Hub
+          المختبرات الافتراضية وأنظمة المحاكاة (Home Lab Sandbox)
         </h3>
         <p className="text-xs text-slate-400 mt-1">
-          Dedicated UI grid block for setting up a local engineering environment.
+          بيئة عمل مخصصة لتحميل برامج المحاكاة والأنظمة الافتراضية للتدريب العملي.
         </p>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-right">
         {homeLabData.map((categoryGroup, index) => (
           <div key={index} className="flex flex-col gap-3 bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
-            <h4 className="font-bold text-xs text-indigo-300 flex items-center gap-2 border-b border-slate-800/50 pb-2">
+            <h4 className="font-bold text-xs text-indigo-300 flex items-center justify-start gap-2 border-b border-slate-800/50 pb-2">
               {getIconForCategory(categoryGroup.category)}
-              {categoryGroup.category}
+              <span>{categoryGroup.category}</span>
             </h4>
             <div className="flex flex-col gap-3 mt-1">
               {categoryGroup.items.map((item, i) => (

@@ -2,6 +2,7 @@ import React from "react";
 import { X, Menu, Download, Upload, RotateCcw } from "lucide-react";
 import { totalCheckboxes } from "../utils/constants";
 import { motion } from "framer-motion";
+import { useProfile } from "../context/ProfileContext";
 
 export default function Header({ 
   globalProgressPercent, 
@@ -12,8 +13,10 @@ export default function Header({
   setActiveFilter,
   exportBackup,
   importBackup,
-  resetAllProgress
+  resetAllProgress,
+  onOpenProfileModal
 }) {
+  const { activeProfile } = useProfile();
   return (
     <motion.header 
       initial={{ y: -100, opacity: 0 }}
@@ -102,8 +105,19 @@ export default function Header({
             ))}
           </div>
 
-          {/* Backup actions */}
+          {/* Backup actions & Profiles */}
           <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+            <motion.button 
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={onOpenProfileModal}
+              title="إدارة وتبديل الملفات الشخصية"
+              className="text-xs px-2.5 py-1.5 rounded-lg border border-cyan-500/20 bg-cyan-950/10 text-cyan-400 hover:bg-cyan-500/15 hover:text-cyan-300 transition-all flex items-center gap-1.5 cursor-pointer font-bold ml-1.5"
+            >
+              <span className="text-[14px] leading-none">{activeProfile.avatar}</span>
+              <span>{activeProfile.name}</span>
+            </motion.button>
+
             <motion.button 
               whileHover={{ scale: 1.05, backgroundColor: "rgba(15, 23, 42, 1)" }}
               whileTap={{ scale: 0.95 }}

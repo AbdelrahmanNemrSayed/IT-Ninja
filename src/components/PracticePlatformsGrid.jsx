@@ -21,17 +21,17 @@ export default function PracticePlatformsGrid() {
       transition={{ duration: 0.5, delay: 0.2 }}
       className="bg-slate-900/40 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 flex flex-col gap-5 shadow-lg"
     >
-      <div className="border-b border-slate-800 pb-3">
-        <h3 className="font-extrabold text-sm text-slate-100 flex items-center gap-2">
+      <div className="border-b border-slate-800 pb-3 text-right">
+        <h3 className="font-extrabold text-sm text-slate-100 flex items-center justify-start gap-2">
           <Target className="w-4.5 h-4.5 text-rose-400 animate-pulse" />
-          The Interactive Practice Platforms Grid
+          مواقع ومنصات التطبيق التفاعلي (Interactive Training Sites)
         </h3>
         <p className="text-xs text-slate-400 mt-1">
-          Visually striking cards for interactive training sites.
+          مواقع عملية لتعلم واختبار مهارات لينكس، الشبكات، واختبار الاختراق.
         </p>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-right">
         {practicePlatformsData.map((item, index) => {
           const accentStyles = getAccentColors(item.accent);
           return (
@@ -47,8 +47,8 @@ export default function PracticePlatformsGrid() {
                 <span className={`font-extrabold text-sm block mb-1.5 ${accentStyles.split(' ').pop()}`}>{item.name}</span>
                 <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
               </div>
-              <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500 mt-2">
-                <span>Start Practicing</span>
+              <div className="flex items-center justify-start gap-1.5 text-[11px] font-bold text-slate-500 mt-2">
+                <span>ابدأ التدريب الآن</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </div>
             </motion.a>

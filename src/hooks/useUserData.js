@@ -1,33 +1,36 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { roadmapData } from "../data/roadmapData";
+import { useProfile } from "../context/ProfileContext";
 
 export function useUserData() {
+  const { getProfileKey } = useProfile();
+
   const [starredResources, setStarredResources] = useState(() => {
-    const saved = localStorage.getItem("it_ninja_starred");
+    const saved = localStorage.getItem(getProfileKey("starred"));
     return saved ? JSON.parse(saved) : [];
   });
 
   const [notebookNotes, setNotebookNotes] = useState(() => {
-    const saved = localStorage.getItem("it_ninja_notes");
+    const saved = localStorage.getItem(getProfileKey("notes"));
     return saved ? JSON.parse(saved) : {};
   });
 
   const [earnedBadges, setEarnedBadges] = useState(() => {
-    const saved = localStorage.getItem("it_ninja_badges");
+    const saved = localStorage.getItem(getProfileKey("badges"));
     return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem("it_ninja_starred", JSON.stringify(starredResources));
-  }, [starredResources]);
+    localStorage.setItem(getProfileKey("starred"), JSON.stringify(starredResources));
+  }, [starredResources, getProfileKey]);
 
   useEffect(() => {
-    localStorage.setItem("it_ninja_notes", JSON.stringify(notebookNotes));
-  }, [notebookNotes]);
+    localStorage.setItem(getProfileKey("notes"), JSON.stringify(notebookNotes));
+  }, [notebookNotes, getProfileKey]);
 
   useEffect(() => {
-    localStorage.setItem("it_ninja_badges", JSON.stringify(earnedBadges));
-  }, [earnedBadges]);
+    localStorage.setItem(getProfileKey("badges"), JSON.stringify(earnedBadges));
+  }, [earnedBadges, getProfileKey]);
 
   const toggleStar = useCallback((resId) => {
     setStarredResources((prev) => {
