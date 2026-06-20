@@ -18,12 +18,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_itb_ar",
-        title: "كورس CompTIA A+ بالعربي - المهندس أحمد حسن",
+        title: "كورس CompTIA A+ بالعربي - المهندس سامح رمضان",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "دورة عربية شاملة لشرح منهج A+ والجانب العملي في تجميع وصيانة الحواسب.",
-        url: "https://www.youtube.com/playlist?list=PL77yNtB4-LjnN2FU3h1v5hIJOHZfW9ugq"
+        desc: "دورة مبسطة وحديثة لتأسيسك بالكامل في عتاد وصيانة الحاسوب وأنظمة التشغيل والدعم الفني.",
+        url: "https://www.youtube.com/playlist?list=PLH-n8YK76vIiDdOMRB-ylvns-_8Zl1euV"
       },
       {
         id: "res_itb_en",
