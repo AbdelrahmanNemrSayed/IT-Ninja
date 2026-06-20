@@ -12,6 +12,8 @@ import Footer from "./layout/Footer";
 import RoadmapPhase from "./components/RoadmapPhase";
 import CheatSheetsHub from "./components/CheatSheetsHub";
 import ReferenceHub from "./components/ReferenceHub";
+import HomeLabHub from "./components/HomeLabHub";
+import PracticePlatformsGrid from "./components/PracticePlatformsGrid";
 import ConfettiEffect from "./components/ConfettiEffect";
 import CelebrationModal from "./components/CelebrationModal";
 
@@ -220,6 +222,9 @@ export default function App() {
               </div>
             </motion.section>
           )}
+
+          <HomeLabHub />
+          <PracticePlatformsGrid />
 
           <motion.section 
             initial={{ opacity: 0, y: 20 }}
