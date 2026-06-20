@@ -31,8 +31,8 @@ export const roadmapData = [
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "Official playlist for A+ 220-1101 & 1102 exam preparation by Messer.",
-        url: "https://www.youtube.com/playlist?list=PLG49S3nxzAnlGHYsF9IaPf9A8H85GBsJ1"
+        desc: "Official playlist for the CompTIA A+ (220-1201) exam preparation by Messer.",
+        url: "https://www.youtube.com/playlist?list=PLG49S3nxzAnnes8ZGI-OBlKEukHCX46N8"
       }
     ]
   },

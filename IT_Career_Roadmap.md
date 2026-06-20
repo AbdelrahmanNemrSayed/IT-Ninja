@@ -20,7 +20,7 @@
   * *مشروع عملي:* تفكيك وتجميع جهاز كمبيوتر افتراضي وتحديد وتثبيت المكونات ونظام تشغيل مزدوج.
 * **المصادر المعتمدة:**
   * كورس CompTIA A+ بالعربي - المهندس سامح رمضان: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLH-n8YK76vIiDdOMRB-ylvns-_8Zl1euV)
-  * CompTIA A+ Course - Professor Messer: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLG49S3nxzAnlGHYsF9IaPf9A8H85GBsJ1)
+  * CompTIA A+ Course - Professor Messer: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLG49S3nxzAnnes8ZGI-OBlKEukHCX46N8)
 
 ---
 
