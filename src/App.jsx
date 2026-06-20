@@ -46,7 +46,9 @@ function AppContent() {
 
   const {
     starredResources,
+    setStarredResources,
     notebookNotes,
+    setNotebookNotes,
     earnedBadges,
     setEarnedBadges,
     toggleStar,
