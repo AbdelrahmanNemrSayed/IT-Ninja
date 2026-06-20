@@ -47,12 +47,12 @@ export default function Header({
           </motion.button>
           
           <div className="flex items-center gap-3">
-            <motion.div 
+            <motion.img 
               whileHover={{ rotate: 5, scale: 1.05 }}
-              className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center font-black text-slate-950 text-lg shadow-[0_0_15px_rgba(16,185,129,0.3)] border border-emerald-400/50"
-            >
-              IT
-            </motion.div>
+              src="/logo.png" 
+              alt="IT Ninja Logo" 
+              className="w-9 h-9 rounded-xl shadow-[0_0_15px_rgba(6,182,212,0.35)] border border-cyan-400/30 object-cover"
+            />
             <div className="flex flex-col">
               <h1 className="font-black text-lg tracking-tight bg-gradient-to-r from-slate-100 to-slate-300 bg-clip-text text-transparent leading-none">IT Ninja</h1>
               <div className="flex items-center gap-1 mt-1">
