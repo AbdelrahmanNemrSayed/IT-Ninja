@@ -75,6 +75,7 @@ const ReferenceHub = memo(function ReferenceHub() {
               value={interviewSearch}
               onChange={(e) => setInterviewSearch(e.target.value)}
               dir="rtl"
+              aria-label="البحث في أسئلة المقابلات"
             />
             <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-3" />
           </div>
@@ -120,6 +121,7 @@ const ReferenceHub = memo(function ReferenceHub() {
               value={troubleshootSearch}
               onChange={(e) => setTroubleshootSearch(e.target.value)}
               dir="rtl"
+              aria-label="البحث في سجل الأخطاء والحلول"
             />
             <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-3" />
           </div>
@@ -143,7 +145,7 @@ const ReferenceHub = memo(function ReferenceHub() {
                   </div>
                   <div className="text-xs text-slate-350 leading-relaxed text-right">
                     <span className="font-extrabold text-slate-400 block mb-1">خطوات الحل والحل السريع:</span>
-                    <div className="p-3 bg-[#070b12] text-slate-200 rounded-lg font-mono text-left whitespace-pre-wrap select-text border border-rose-500/5 leading-relaxed" dir="ltr">
+                    <div className="p-3 bg-[#070b12] text-slate-200 rounded-lg font-mono text-left whitespace-pre-wrap select-text border border-rose-500/5 leading-relaxed overflow-x-auto" dir="ltr">
                       {item.solution}
                     </div>
                   </div>

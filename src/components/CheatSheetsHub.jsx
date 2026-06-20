@@ -35,6 +35,7 @@ const CheatSheetsHub = memo(function CheatSheetsHub() {
             value={cheatSearch}
             onChange={(e) => setCheatSearch(e.target.value)}
             dir="rtl"
+            aria-label="البحث في أوامر Cheat Sheets"
           />
           <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-3.5" />
         </div>
@@ -58,8 +59,8 @@ const CheatSheetsHub = memo(function CheatSheetsHub() {
 
       {/* Commands Table */}
       <div className="bg-slate-950 border border-slate-900 rounded-xl overflow-hidden">
-        <div className="max-h-[300px] overflow-y-auto">
-          <table className="w-full text-right border-collapse">
+        <div className="max-h-[300px] overflow-y-auto overflow-x-auto">
+          <table className="w-full text-right border-collapse min-w-[600px]">
             <thead>
               <tr className="bg-slate-900/80 text-[10px] text-slate-400 uppercase tracking-wider border-b border-slate-850">
                 <th className="p-3 text-right">القسم</th>
@@ -125,7 +126,7 @@ const CheatSheetsHub = memo(function CheatSheetsHub() {
                 <a 
                   href={tool.url}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1 cursor-pointer"
                 >
                   <span>تحميل / زيارة</span>

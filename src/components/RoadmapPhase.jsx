@@ -1,8 +1,8 @@
-import React, { memo } from "react";
-import SubnetCalculator from "./SubnetCalculator";
-import RaidCalculator from "./RaidCalculator";
-import FirewallGenerator from "./FirewallGenerator";
-import AutomationScriptHub from "./AutomationScriptHub";
+import React, { memo, lazy, Suspense, useState, useEffect } from "react";
+const SubnetCalculator = lazy(() => import("./SubnetCalculator"));
+const RaidCalculator = lazy(() => import("./RaidCalculator"));
+const FirewallGenerator = lazy(() => import("./FirewallGenerator"));
+const AutomationScriptHub = lazy(() => import("./AutomationScriptHub"));
 import { 
   Youtube, 
   BookOpen, 
@@ -12,7 +12,9 @@ import {
   ExternalLink, 
   Star, 
   Check, 
-  TerminalSquare 
+  TerminalSquare,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 
 const accentColors = {
@@ -96,9 +98,17 @@ const RoadmapPhase = memo(function RoadmapPhase({
   toggleItem,
   togglePhaseMaster,
   toggleStar,
-  updateNote
+  updateNote,
+  isOpen,
+  onToggle
 }) {
   const styles = accentColors[phase.accent] || accentColors.cyan;
+
+  const [hasRendered, setHasRendered] = useState(isOpen);
+
+  useEffect(() => {
+    if (isOpen && !hasRendered) setHasRendered(true);
+  }, [isOpen, hasRendered]);
 
   // Completion calculation for this phase
   const phaseItemIds = [
@@ -122,10 +132,13 @@ const RoadmapPhase = memo(function RoadmapPhase({
   return (
     <section 
       id={phase.id}
-      className="bg-slate-900/20 border border-slate-900 rounded-2xl p-6 flex flex-col gap-6 scroll-mt-28 relative shadow-md hover:border-slate-800 transition-all duration-300"
+      className={`bg-slate-900/20 border ${isOpen ? 'border-cyan-500/30 shadow-lg shadow-cyan-900/10' : 'border-slate-900'} rounded-2xl flex flex-col scroll-mt-28 relative transition-all duration-300 overflow-hidden`}
     >
-      {/* Phase Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      {/* Phase Header - Clickable for Accordion */}
+      <div 
+        onClick={onToggle}
+        className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 cursor-pointer hover:bg-slate-900/40 transition-colors ${isOpen ? 'border-b border-slate-800 pb-4' : ''}`}
+      >
         <div className="flex items-center gap-3">
           <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black font-mono text-lg shadow-lg ${styles.bg} ${styles.text}`}>
             {phase.phaseNumber}
@@ -136,27 +149,40 @@ const RoadmapPhase = memo(function RoadmapPhase({
           </div>
         </div>
 
-        {/* Phase Master Tracker */}
-        <div className="flex items-center gap-3 bg-slate-950/80 border border-slate-850 px-3.5 py-1.5 rounded-xl">
-          <div className="flex items-center gap-2">
-            <input 
-              type="checkbox"
-              id={`master-${phase.id}`}
-              checked={isPhaseDone}
-              onChange={() => togglePhaseMaster(phase)}
-              className={`w-4 h-4 rounded border-slate-800 bg-slate-900 cursor-pointer focus:ring-offset-slate-950 ${styles.checkbox}`}
-            />
-            <label 
-              htmlFor={`master-${phase.id}`}
-              className="text-xs font-bold text-slate-350 cursor-pointer select-none"
-            >
-              تم إنجاز المرحلة
-            </label>
+        {/* Phase Master Tracker and Toggle Icon */}
+        <div className="flex items-center gap-4">
+          <div 
+            className="flex items-center gap-3 bg-slate-950/80 border border-slate-850 px-3.5 py-1.5 rounded-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-2">
+              <input 
+                type="checkbox"
+                id={`master-${phase.id}`}
+                checked={isPhaseDone}
+                onChange={() => togglePhaseMaster(phase)}
+                className={`w-4 h-4 rounded border-slate-800 bg-slate-900 cursor-pointer focus:ring-offset-slate-950 ${styles.checkbox}`}
+              />
+              <label 
+                htmlFor={`master-${phase.id}`}
+                className="text-xs font-bold text-slate-350 cursor-pointer select-none"
+              >
+                تم إنجاز المرحلة
+              </label>
+            </div>
+            <div className="w-px h-4 bg-slate-800" />
+            <span className="font-mono text-xs font-semibold text-slate-400">{done}/{total}</span>
           </div>
-          <div className="w-px h-4 bg-slate-800" />
-          <span className="font-mono text-xs font-semibold text-slate-400">{done}/{total}</span>
+          <div className="text-slate-400">
+            {isOpen ? <ChevronUp className="w-6 h-6" /> : <ChevronDown className="w-6 h-6" />}
+          </div>
         </div>
       </div>
+
+      {/* Accordion Content */}
+      <div className={`transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[10000px] opacity-100 visible p-6 pt-2' : 'max-h-0 opacity-0 invisible p-0 m-0 border-0'}`}>
+        {hasRendered && (
+          <div className="flex flex-col gap-6">
 
       {/* Sub-topics Checklist */}
       <div className="flex flex-col gap-3">
@@ -192,28 +218,36 @@ const RoadmapPhase = memo(function RoadmapPhase({
       {/* Subnet Calculator widget in networking phase */}
       {phase.id === "networks" && (
         <div className="my-1">
-          <SubnetCalculator />
+          <Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-900/50 rounded-xl border border-slate-800 text-cyan-400 text-sm font-bold animate-pulse">جاري تحميل حاسبة الشبكات...</div>}>
+            <SubnetCalculator />
+          </Suspense>
         </div>
       )}
 
       {/* RAID Calculator widget in virtualization phase */}
       {phase.id === "virtualization" && (
         <div className="my-1">
-          <RaidCalculator />
+          <Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-900/50 rounded-xl border border-slate-800 text-amber-400 text-sm font-bold animate-pulse">جاري تحميل حاسبة وحدات التخزين...</div>}>
+            <RaidCalculator />
+          </Suspense>
         </div>
       )}
 
       {/* Firewall Generator widget in security phase */}
       {phase.id === "security" && (
         <div className="my-1">
-          <FirewallGenerator />
+          <Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-900/50 rounded-xl border border-slate-800 text-rose-400 text-sm font-bold animate-pulse">جاري تحميل مولد جدار الحماية...</div>}>
+            <FirewallGenerator />
+          </Suspense>
         </div>
       )}
 
       {/* Automation script hub in scripting phase */}
       {phase.id === "specialization" && (
         <div className="my-1">
-          <AutomationScriptHub />
+          <Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-900/50 rounded-xl border border-slate-800 text-emerald-400 text-sm font-bold animate-pulse">جاري تحميل مكتبة السكربتات...</div>}>
+            <AutomationScriptHub />
+          </Suspense>
         </div>
       )}
 
@@ -294,7 +328,7 @@ const RoadmapPhase = memo(function RoadmapPhase({
                     <a 
                       href={res.url} 
                       target="_blank" 
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
                     >
                       <span>زيارة المصدر</span>
@@ -351,9 +385,14 @@ const RoadmapPhase = memo(function RoadmapPhase({
           </div>
         </details>
       </div>
-    </section>
+    </div>
+    )}
+  </div>
+</section>
   );
 }, (prevProps, nextProps) => {
+  if (prevProps.isOpen !== nextProps.isOpen) return false;
+
   // 1. Check if the phase itself is the same reference
   if (prevProps.phase !== nextProps.phase) return false;
   

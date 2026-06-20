@@ -107,10 +107,27 @@ roadmapData.forEach((phase) => {
 });
 const totalCheckboxes = allCheckboxIds.length;
 
+const APP_DATA_VERSION = "v3.0";
+
 export default function App() {
   const [completedItems, setCompletedItems] = useState(() => {
+    const savedVersion = localStorage.getItem("it_ninja_version");
     const saved = localStorage.getItem("it_ninja_completed");
-    return saved ? JSON.parse(saved) : {};
+    let parsed = saved ? JSON.parse(saved) : {};
+    
+    if (savedVersion !== APP_DATA_VERSION) {
+      const validIds = new Set(allCheckboxIds);
+      const migrated = {};
+      Object.keys(parsed).forEach(id => {
+        if (validIds.has(id)) {
+          migrated[id] = parsed[id];
+        }
+      });
+      parsed = migrated;
+      localStorage.setItem("it_ninja_version", APP_DATA_VERSION);
+      localStorage.setItem("it_ninja_completed", JSON.stringify(parsed));
+    }
+    return parsed;
   });
 
   const [certProgress, setCertProgress] = useState(() => {
@@ -120,6 +137,24 @@ export default function App() {
 
   const [activeFilter, setActiveFilter] = useState("all");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [expandedPhases, setExpandedPhases] = useState(() => {
+    const firstIncomplete = roadmapData.find(phase => {
+      const phaseItemIds = [
+        ...phase.subtopics.map((t) => t.id),
+        ...phase.resources.map((r) => r.id)
+      ];
+      // completedItems variable is accessible due to scope and prior initialization
+      return !phaseItemIds.every((id) => completedItems[id]);
+    });
+    return firstIncomplete ? { [firstIncomplete.id]: true } : {};
+  });
+
+  const togglePhaseExpansion = useCallback((phaseId) => {
+    setExpandedPhases(prev => ({
+      ...prev,
+      [phaseId]: !prev[phaseId]
+    }));
+  }, []);
 
   // User notes, bookmarked resources, and achievements state
   const [starredResources, setStarredResources] = useState(() => {
@@ -399,6 +434,7 @@ export default function App() {
             <button 
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="lg:hidden text-slate-400 hover:text-white p-1 rounded-lg focus:outline-none"
+              aria-label="القائمة الجانبية"
             >
               {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -483,6 +519,7 @@ export default function App() {
               <button 
                 onClick={exportBackup}
                 title="تصدير نسخة احتياطية من التقدم"
+                aria-label="تصدير نسخة احتياطية من التقدم"
                 className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700 transition-all flex items-center gap-1.5"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -490,15 +527,17 @@ export default function App() {
               </button>
               <label 
                 title="استيراد نسخة احتياطية من التقدم"
+                aria-label="استيراد نسخة احتياطية من التقدم"
                 className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700 transition-all flex items-center gap-1.5 cursor-pointer"
               >
                 <Upload className="w-3.5 h-3.5" />
                 <span>رفع التقدم</span>
-                <input type="file" accept=".json" onChange={importBackup} className="hidden" />
+                <input type="file" accept=".json" onChange={importBackup} className="hidden" aria-label="اختيار ملف النسخة الاحتياطية" />
               </label>
               <button 
                 onClick={resetAllProgress}
                 title="إعادة تعيين كافة التقدم"
+                aria-label="إعادة تعيين كافة التقدم"
                 className="text-xs px-2 py-1.5 rounded-lg border border-rose-500/20 text-rose-400 hover:bg-rose-500/10 transition-all"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
@@ -519,7 +558,7 @@ export default function App() {
           <div className="sticky top-40 flex flex-col gap-4">
             <div className="flex items-center justify-between lg:hidden border-b border-slate-900 pb-3 mb-2">
               <span className="font-bold text-slate-400 text-sm">مراحل خريطة الطريق</span>
-              <button onClick={() => setSidebarOpen(false)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setSidebarOpen(false)} className="text-slate-400 hover:text-white" aria-label="إغلاق القائمة">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -695,7 +734,7 @@ export default function App() {
                         <a 
                           href={res.url}
                           target="_blank"
-                          rel="noreferrer"
+                          rel="noopener noreferrer"
                           className="text-[11px] font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-0.5 cursor-pointer"
                         >
                           <span>دخول</span>
@@ -743,7 +782,7 @@ export default function App() {
                   <a 
                     href={t.url} 
                     target="_blank" 
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="text-xs font-bold text-slate-350 hover:text-white flex items-center justify-center gap-1 py-1.5 bg-slate-900 border border-slate-800 rounded-lg hover:bg-cyan-500/10 hover:border-cyan-500/20 transition-all cursor-pointer"
                   >
                     <span>تحميل الأداة</span>
@@ -767,6 +806,8 @@ export default function App() {
               togglePhaseMaster={togglePhaseMaster}
               toggleStar={toggleStar}
               updateNote={updateNote}
+              isOpen={!!expandedPhases[phase.id]}
+              onToggle={() => togglePhaseExpansion(phase.id)}
             />
           ))}
 
@@ -904,8 +945,8 @@ export default function App() {
                               <a 
                                 href={res.url} 
                                 target="_blank" 
-                                rel="noreferrer"
-                                className="text-cyan-400 hover:text-cyan-300 font-bold flex items-center justify-center gap-1 cursor-pointer"
+                                rel="noopener noreferrer"
+                                className="text-[10px] px-2 py-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded font-bold hover:bg-cyan-500/20 flex items-center gap-1 transition-all cursor-pointer inline-flex"
                               >
                                 <span>زيارة</span>
                                 <ExternalLink className="w-3 h-3" />
@@ -941,6 +982,7 @@ export default function App() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="fixed bottom-6 left-6 z-50 p-3 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/50 shadow-lg shadow-black/60 hover:scale-110 active:scale-95 transition-all cursor-pointer group"
           title="العودة للأعلى"
+          aria-label="العودة للأعلى"
         >
           <ArrowUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform" />
         </button>
