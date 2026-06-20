@@ -16,6 +16,7 @@ import ConfettiEffect from "./components/ConfettiEffect";
 import CelebrationModal from "./components/CelebrationModal";
 
 import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function App() {
   const {
@@ -140,7 +141,12 @@ export default function App() {
 
         <main className="flex-grow w-full lg:max-w-[calc(100%-17rem)] flex flex-col gap-8">
           
-          <section className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-900 rounded-2xl p-6 relative overflow-hidden shadow-xl">
+          <motion.section 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/80 rounded-2xl p-6 relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.05)]"
+          >
             <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full filter blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/5 rounded-full filter blur-3xl pointer-events-none" />
             
@@ -153,10 +159,15 @@ export default function App() {
                 لوحة تحكم المسار المهني لمهندس الأنظمة والشبكات (IT Ninja)
               </h2>
             </div>
-          </section>
+          </motion.section>
 
           {bookmarkedItems.length > 0 && (
-            <section className="bg-slate-900/20 border border-amber-500/10 rounded-2xl p-5 flex flex-col gap-4 shadow-md">
+            <motion.section 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="bg-slate-900/40 backdrop-blur-md border border-amber-500/20 rounded-2xl p-5 flex flex-col gap-4 shadow-lg shadow-amber-500/5"
+            >
               <div className="flex items-center justify-between border-b border-slate-850 pb-2.5">
                 <div className="flex items-center gap-1.5">
                   <Star className="w-4.5 h-4.5 text-amber-400 fill-amber-400 animate-pulse" />
@@ -169,7 +180,11 @@ export default function App() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 {bookmarkedItems.map((res) => {
                   return (
-                    <div key={res.id} className="bg-slate-950/80 border border-slate-850/60 p-4 rounded-xl flex flex-col justify-between hover:border-amber-500/30 transition-all duration-300">
+                    <motion.div 
+                      whileHover={{ scale: 1.02, y: -5 }}
+                      key={res.id} 
+                      className="bg-slate-950/80 border border-slate-800 p-4 rounded-xl flex flex-col justify-between hover:border-amber-500/50 hover:shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all duration-300"
+                    >
                       <div>
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-[9px] font-bold text-slate-500">{res.phaseShortTitle}</span>
@@ -199,14 +214,19 @@ export default function App() {
                           <ExternalLink className="w-3 h-3" />
                         </a>
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
-            </section>
+            </motion.section>
           )}
 
-          <section className="bg-slate-900/30 border border-slate-900 rounded-2xl p-6 flex flex-col gap-4 shadow-md">
+          <motion.section 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-slate-900/40 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 flex flex-col gap-4 shadow-lg"
+          >
             <div className="border-b border-slate-800 pb-3">
               <h3 className="font-extrabold text-sm text-slate-100 flex items-center gap-2">
                 <Wrench className="w-4.5 h-4.5 text-cyan-400 animate-pulse" />
@@ -231,7 +251,11 @@ export default function App() {
                   url: "https://gitforwindows.org/"
                 }
               ].map((t) => (
-                <div key={t.name} className="bg-slate-950 border border-slate-850 p-4 rounded-xl flex flex-col justify-between hover:border-cyan-500/40 hover:scale-[1.02] transition-all duration-300">
+                <motion.div 
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  key={t.name} 
+                  className="bg-slate-950/80 border border-slate-800 p-4 rounded-xl flex flex-col justify-between hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)] transition-all duration-300"
+                >
                   <div className="mb-4">
                     <span className="font-extrabold text-sm text-cyan-400 block mb-1">{t.name}</span>
                     <p className="text-xs text-slate-400 leading-relaxed">{t.desc}</p>
@@ -245,10 +269,10 @@ export default function App() {
                     <span>تحميل الأداة</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </section>
+          </motion.section>
 
           {roadmapData.map((phase) => (
             <RoadmapPhase

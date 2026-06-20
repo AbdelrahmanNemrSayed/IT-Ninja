@@ -16,6 +16,7 @@ import {
   ChevronDown,
   ChevronUp
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const accentColors = {
   emerald: {
@@ -130,14 +131,15 @@ const RoadmapPhase = memo(function RoadmapPhase({
   });
 
   return (
-    <section 
+    <motion.section 
+      layout
       id={phase.id}
-      className={`bg-slate-900/20 border ${isOpen ? 'border-cyan-500/30 shadow-lg shadow-cyan-900/10' : 'border-slate-900'} rounded-2xl flex flex-col scroll-mt-28 relative transition-all duration-300 overflow-hidden`}
+      className={`bg-slate-900/30 backdrop-blur-md border ${isOpen ? 'border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.15)]' : 'border-slate-800/80 hover:border-slate-700'} rounded-2xl flex flex-col scroll-mt-28 relative transition-all duration-300 overflow-hidden`}
     >
       {/* Phase Header - Clickable for Accordion */}
       <div 
         onClick={onToggle}
-        className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 cursor-pointer hover:bg-slate-900/40 transition-colors ${isOpen ? 'border-b border-slate-800 pb-4' : ''}`}
+        className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 cursor-pointer hover:bg-slate-900/60 transition-colors ${isOpen ? 'border-b border-slate-800/60 pb-4' : ''}`}
       >
         <div className="flex items-center gap-3">
           <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black font-mono text-lg shadow-lg ${styles.bg} ${styles.text}`}>
@@ -180,9 +182,16 @@ const RoadmapPhase = memo(function RoadmapPhase({
       </div>
 
       {/* Accordion Content */}
-      <div className={`transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[10000px] opacity-100 visible p-6 pt-2' : 'max-h-0 opacity-0 invisible p-0 m-0 border-0'}`}>
-        {hasRendered && (
-          <div className="flex flex-col gap-6">
+      <AnimatePresence initial={false}>
+        {isOpen && hasRendered && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+            className="overflow-hidden"
+          >
+            <div className="p-6 pt-4 flex flex-col gap-6">
 
       {/* Sub-topics Checklist */}
       <div className="flex flex-col gap-3">
@@ -263,13 +272,14 @@ const RoadmapPhase = memo(function RoadmapPhase({
             {filteredResources.map((res) => {
               const isChecked = !!completedItems[res.id];
               return (
-                <div 
+                <motion.div 
+                  whileHover={{ scale: 1.02, y: -4 }}
                   key={res.id}
-                  className={`flex flex-col justify-between border bg-slate-950/60 p-4 rounded-xl transition-all duration-300 relative group ${
+                  className={`flex flex-col justify-between border bg-slate-950/70 p-4 rounded-xl transition-all duration-300 relative group ${
                     isChecked 
-                      ? "border-emerald-500/20 shadow-lg shadow-emerald-950/5" 
-                      : "border-slate-850 hover:border-slate-700"
-                  } ${styles.glow} hover:scale-[1.02]`}
+                      ? "border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]" 
+                      : "border-slate-800 hover:border-slate-700"
+                  } ${styles.glow}`}
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <div className="flex items-center gap-1.5 flex-wrap">
@@ -335,7 +345,7 @@ const RoadmapPhase = memo(function RoadmapPhase({
                       <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -385,10 +395,11 @@ const RoadmapPhase = memo(function RoadmapPhase({
           </div>
         </details>
       </div>
-    </div>
-    )}
-  </div>
-</section>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.section>
   );
 }, (prevProps, nextProps) => {
   if (prevProps.isOpen !== nextProps.isOpen) return false;

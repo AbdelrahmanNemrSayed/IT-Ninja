@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Cairo', 'sans-serif'],
+        sans: ['Alexandria', 'sans-serif'],
       },
     },
   },
