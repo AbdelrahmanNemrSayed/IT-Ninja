@@ -30,8 +30,8 @@
 * **المشاريع والمختبرات:**
   * *مشروع 1:* تصميم وتقسيم شبكة شركة ذات 3 فروع وحساب العناوين (Subnetting) برمجياً ومحاكاتها بالكامل داخل Cisco Packet Tracer.
 * **المصادر المعتمدة:**
-  * كورس CCNA بالعربي - أحمد نظمي: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLB560a63H3_a1P9H13pL5v-8oP_T42T0p)
-  * CCNA Course - Jeremy's IT Lab: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLxbivXZeScB9h11oG1Y4eBwHh2n2-d_0E)
+  * كورس CCNA بالعربي - أحمد نظمي: [رابط يوتيوب](https://www.youtube.com/playlist?list=PL45l-0J235g-67Lp7p30s1H749W-vB55P)
+  * CCNA Course - Jeremy's IT Lab: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ)
 
 ---
 
@@ -42,7 +42,7 @@
   * *مشروع عملي:* إعداد سيرفر ويب Nginx على نظام Ubuntu Server وتأمينه باستخدام جدار الحماية UFW وتفعيل مفاتيح SSH للدخول الآمن.
 * **المصادر المعتمدة:**
   * كورس Linux RHCSA - عبير حسني: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK1f8p8ajyYtXP9GxdFH7WIU)
-  * Linux Server Administration - Learn Linux TV: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLT98CRl2KxGGPLw0KHb5F4N5ypgcUXsLy)
+  * Linux Server Administration - Learn Linux TV: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLT98CRl2KxKHKd_tH3ssq0HPrThx2hESW)
 
 ---
 
@@ -53,7 +53,7 @@
   * *مشروع 2:* تثبيت نسخة ويندوز سيرفر محلية، إعداد خادم الدليل النشط (AD Domain Controller)، وتطبيق سياسات مجموعة (GPOs) هرمية على أقسام الشركة.
 * **المصادر المعتمدة:**
   * ويندوز سيرفر بالعربي - محمد الطناني: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK1llkvqlu4DSqtYN46fQo92)
-  * Active Directory & IT Support - Kevtech: [رابط يوتيوب](https://www.youtube.com/@kevtechitsupport)
+  * Active Directory & IT Support - Kevtech: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLdh13bXVc6-k_u2RPqYAp8R8HtYT_ONht)
 
 ---
 
@@ -63,8 +63,8 @@
 * **المشاريع والمختبرات:**
   * *مشروع عملي:* بناء بيئة افتراضية متكاملة باستخدام Proxmox VE تشمل خادم ويب وخادم قاعدة بيانات SQL مع إعداد مصفوفة RAID 1 للتخزين.
 * **المصادر المعتمدة:**
-  * شرح الحوسبة السحابية و Azure - محمد زهدي: [رابط يوتيوب](https://www.youtube.com/@mohamedzohdy)
-  * Azure & Virtualization Fundamentals - John Savill: [رابط يوتيوب](https://www.youtube.com/@ntfaqguy)
+  * شرح الحوسبة السحابية و Azure - محمد زهدي: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLDxVq3TlR9y3D61tEq4BbRZ8f5bv2_PFt)
+  * Azure & Virtualization Fundamentals - John Savill: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLlVtbbG169nED0_vMEniWBQjSoxTsBYS3)
 
 ---
 
@@ -75,7 +75,7 @@
   * *مشروع عملي:* إعداد جدار حماية PfSense للتحكم في حركة المرور، تشغيل نظام كشف التسلل Snort، وحل ثغرات أمنية في معامل PortSwigger.
 * **المصادر المعتمدة:**
   * كورس CompTIA Security+ بالعربي - Free4Arab: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK0G8jXNlL-tHR-7FO4vgXkb)
-  * CompTIA Security+ Course - Professor Messer: [رابط يوتيوب](https://www.youtube.com/user/professormesser)
+  * CompTIA Security+ Course - Professor Messer: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv)
 
 ---
 
@@ -118,7 +118,7 @@
 * **المشاريع والمختبرات:**
   * *مشروع عملي:* تثبيت Prometheus لجمع مقاييس أداء السيرفرات وربطه بـ Grafana لتصميم لوحة تحكم حية تعكس حالة النظام والذاكرة.
 * **المصادر المعتمدة:**
-  * Prometheus & Grafana - DevOps Area: [رابط يوتيوب](https://www.youtube.com/@DevOpsArea)
+  * كورس Prometheus & Grafana بالعربي - DolfinED: [رابط يوتيوب](https://www.youtube.com/watch?v=L-dDeZjZUiA)
   * Prometheus & Grafana Setup - TechWorld with Nana: [رابط يوتيوب](https://www.youtube.com/watch?v=h4Sl21mGIG8)
 
 ---
@@ -130,7 +130,7 @@
   * *مشروع عملي:* بناء شبكة VPN مشفرة للربط بين أجهزة الشركة وسيرفراتها عن بعد باستخدام WireGuard مع تطبيق سياسة التحقق الصفرية (Zero Trust).
 * **المصادر المعتمدة:**
   * تأمين الشبكات والاتصال الآمن - قناة هارفارد عربي: [رابط يوتيوب](https://www.youtube.com/watch?v=N6O3qw9QyqU)
-  * Web Networks & Security - Hussein Nasser: [رابط يوتيوب](https://www.youtube.com/@hnasr)
+  * Web Networks & Security - Hussein Nasser: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLQnljOFTspQUBSgBXilKhRMJ1ACqr7pTr)
 
 ---
 

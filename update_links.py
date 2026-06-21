@@ -20,7 +20,7 @@ roadmap_replacements = {
     "CompTIA A+ Full Course - Professor Messer": "CompTIA A+ Course - Professor Messer",
     
     # Phase 1
-    "https://www.youtube.com/playlist?list=PLLlr6jKKdyK3JYsGq_jEcNx-EHF4lqXHP": "https://www.youtube.com/playlist?list=PLB560a63H3_a1P9H13pL5v-8oP_T42T0p",
+    "https://www.youtube.com/playlist?list=PLLlr6jKKdyK3JYsGq_jEcNx-EHF4lqXHP": "https://www.youtube.com/playlist?list=PL45l-0J235g-67Lp7p30s1H749W-vB55P",
     "كورس CCNA 200-301 بالعربي - Free4arab": "كورس CCNA بالعربي - المهندس أحمد نظمي",
     "Free CCNA 200-301 - Jeremy's IT Lab": "CCNA Course - Jeremy's IT Lab",
     
@@ -28,7 +28,7 @@ roadmap_replacements = {
     "https://www.youtube.com/playlist?list=PLvbyo73L4vfvxbFgbbCSNNWqO1HGvrws9": "https://www.youtube.com/playlist?list=PLLlr6jKKdyK1f8p8ajyYtXP9GxdFH7WIU",
     "كورس Linux RHCSA - Free4arab": "كورس Linux RHCSA - المهندسة عبير حسني",
     "Linux for Beginners - freeCodeCamp": "Linux Server Administration - Learn Linux TV",
-    "https://www.youtube.com/watch?v=sWbUDq4S6Y8": "https://www.youtube.com/playlist?list=PLT98CRl2KxGGPLw0KHb5F4N5ypgcUXsLy",
+    "https://www.youtube.com/watch?v=sWbUDq4S6Y8": "https://www.youtube.com/playlist?list=PLT98CRl2KxKHKd_tH3ssq0HPrThx2hESW",
     
     # Phase 3
     "https://www.youtube.com/playlist?list=PLLlr6jKKdyK1llkvqlu4DSqtYN46fQo92": "https://www.youtube.com/playlist?list=PLLlr6jKKdyK1llkvqlu4DSqtYN46fQo92",
@@ -36,16 +36,16 @@ roadmap_replacements = {
     "Active Directory Training - Kevtech": "Active Directory & IT Support - Kevtech IT Support",
     
     # Phase 4
-    "https://www.youtube.com/playlist?list=PLLlr6jKKdyK38sTiACRPapBUCLXnbcYOp": "https://www.youtube.com/@mohamedzohdy",
+    "https://www.youtube.com/playlist?list=PLLlr6jKKdyK38sTiACRPapBUCLXnbcYOp": "https://www.youtube.com/playlist?list=PLDxVq3TlR9y3D61tEq4BbRZ8f5bv2_PFt",
     "شرح VMware vSphere - Free4arab": "شرح الحوسبة السحابية و Azure - المهندس محمد زهدي",
     "Virtualization Technologies - NetworkChuck": "Azure & Virtualization Fundamentals - John Savill",
-    "https://www.youtube.com/playlist?list=PLIhvC56v63IJVXv0GJcl9vO5Z6znCVb1P": "https://www.youtube.com/@ntfaqguy",
+    "https://www.youtube.com/playlist?list=PLIhvC56v63IJVXv0GJcl9vO5Z6znCVb1P": "https://www.youtube.com/playlist?list=PLlVtbbG169nED0_vMEniWBQjSoxTsBYS3",
     
     # Phase 5
     "https://www.youtube.com/playlist?list=PLAQ9093fDW_bDj8o3n7hMjaIZgVimhCHI": "https://www.youtube.com/playlist?list=PLLlr6jKKdyK0G8jXNlL-tHR-7FO4vgXkb",
     "كورس CompTIA Security+ SY0-701 بالعربي - Free4Arab": "كورس CompTIA Security+ بالعربي - قناة Free4Arab",
     "Security+ SY0-701 - Professor Messer": "CompTIA Security+ Course - Professor Messer",
-    "https://www.youtube.com/playlist?list=PLG49S3nxzAnnVhoQgTGvSm4qV1A1PptX9": "https://www.youtube.com/user/professormesser",
+    "https://www.youtube.com/playlist?list=PLG49S3nxzAnnVhoQgTGvSm4qV1A1PptX9": "https://www.youtube.com/playlist?list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv",
     
     # Phase 6
     "https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mocs": "https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mSry",
@@ -66,15 +66,15 @@ roadmap_replacements = {
     "https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN": "https://www.youtube.com/playlist?list=PL2_OB-tmK9Y9p2E17w58m6sFq-s15Q9_C",
     
     # Phase 9
-    "https://www.youtube.com/playlist?list=PLhW3qG5bs-L9NMEkZ0y44Z1qH86pU6jR-": "https://www.youtube.com/@DevOpsArea",
-    "شرح Prometheus & Grafana - محمود رمضان": "Prometheus & Grafana - DevOps Area",
+    "https://www.youtube.com/playlist?list=PLhW3qG5bs-L9NMEkZ0y44Z1qH86pU6jR-": "https://www.youtube.com/watch?v=L-dDeZjZUiA",
+    "شرح Prometheus & Grafana - محمود رمضان": "كورس Prometheus & Grafana بالعربي - DolfinED",
     "Prometheus Monitoring - TechWorld with Nana": "Prometheus & Grafana Setup - TechWorld with Nana",
     
     # Phase 10
     "https://www.youtube.com/playlist?list=PLm2M9B6tHnF6H016Y4fB0LWe1d2Vv1FqF": "https://www.youtube.com/watch?v=N6O3qw9QyqU",
     "تأمين البنية التحتية Zero Trust - عبد أبوغزالة": "تأمين الشبكات والاتصال الآمن - قناة هارفارد عربي",
     "Zero Trust Architecture Explained - IBM Technology": "Web Networks & Security - Hussein Nasser",
-    "https://www.youtube.com/watch?v=rWbQn6a-n18": "https://www.youtube.com/@hnasr",
+    "https://www.youtube.com/watch?v=rWbQn6a-n18": "https://www.youtube.com/playlist?list=PLQnljOFTspQUBSgBXilKhRMJ1ACqr7pTr",
     
     # Phase 11
     "https://www.youtube.com/playlist?list=PLm2M9B6tHnF57P17sV12-pL8W2u3-i00j": "https://www.youtube.com/watch?v=2H-L7S6yX7w",

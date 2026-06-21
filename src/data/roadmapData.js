@@ -61,7 +61,7 @@ export const roadmapData = [
         lang: "ar",
         platform: "YouTube",
         desc: "سلسلة شرح عربي كاملة ومبسطة لأساسيات التوجيه والتبديل وبناء الشبكات.",
-        url: "https://www.youtube.com/playlist?list=PLB560a63H3_a1P9H13pL5v-8oP_T42T0p"
+        url: "https://www.youtube.com/playlist?list=PL45l-0J235g-67Lp7p30s1H749W-vB55P"
       },
       {
         id: "res_net_en",
@@ -70,7 +70,7 @@ export const roadmapData = [
         lang: "en",
         platform: "YouTube",
         desc: "Comprehensive CCNA 200-301 course including configuration labs.",
-        url: "https://www.youtube.com/playlist?list=PLxbivXZeScB9h11oG1Y4eBwHh2n2-d_0E"
+        url: "https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ"
       }
     ]
   },
@@ -107,7 +107,7 @@ export const roadmapData = [
         lang: "en",
         platform: "YouTube",
         desc: "Detailed Linux administration guide from basics to advanced server setups.",
-        url: "https://www.youtube.com/playlist?list=PLT98CRl2KxGGPLw0KHb5F4N5ypgcUXsLy"
+        url: "https://www.youtube.com/playlist?list=PLT98CRl2KxKHKd_tH3ssq0HPrThx2hESW"
       }
     ]
   },
@@ -144,7 +144,7 @@ export const roadmapData = [
         lang: "en",
         platform: "YouTube",
         desc: "Hands-on guide to AD DS setup, user administration, and enterprise ticketing scenarios.",
-        url: "https://www.youtube.com/@kevtechitsupport"
+        url: "https://www.youtube.com/playlist?list=PLdh13bXVc6-k_u2RPqYAp8R8HtYT_ONht"
       }
     ]
   },
@@ -171,7 +171,7 @@ export const roadmapData = [
         lang: "ar",
         platform: "YouTube",
         desc: "دورة شاملة باللغة العربية تشرح الأنظمة الافتراضية وخدمات vSphere.",
-        url: "https://www.youtube.com/@mohamedzohdy"
+        url: "https://www.youtube.com/playlist?list=PLDxVq3TlR9y3D61tEq4BbRZ8f5bv2_PFt"
       },
       {
         id: "res_virt_en",
@@ -180,7 +180,7 @@ export const roadmapData = [
         lang: "en",
         platform: "YouTube",
         desc: "Deep technical guide on virtualization engines, networking, and cloud models.",
-        url: "https://www.youtube.com/@ntfaqguy"
+        url: "https://www.youtube.com/playlist?list=PLlVtbbG169nED0_vMEniWBQjSoxTsBYS3"
       }
     ]
   },
@@ -216,7 +216,7 @@ export const roadmapData = [
         lang: "en",
         platform: "YouTube",
         desc: "Industry-standard free preparation course for Security+ certification.",
-        url: "https://www.youtube.com/user/professormesser"
+        url: "https://www.youtube.com/playlist?list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv"
       }
     ]
   },
@@ -346,12 +346,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_sre_ar",
-        title: "Prometheus & Grafana - DevOps Area",
+        title: "كورس Prometheus & Grafana بالعربي - DolfinED",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "دورة ممتازة باللغة العربية تشرح كيفية إعداد بيئات المراقبة للسيرفرات.",
-        url: "https://www.youtube.com/@DevOpsArea"
+        desc: "شرح عربي متكامل وعملي لمفاهيم المراقبة وكيفية إعداد Prometheus وربطه بـ Grafana.",
+        url: "https://www.youtube.com/watch?v=L-dDeZjZUiA"
       },
       {
         id: "res_sre_en",
@@ -396,7 +396,7 @@ export const roadmapData = [
         lang: "en",
         platform: "YouTube",
         desc: "Deep backend networks architecture, proxies, load balancing, and SSL concepts.",
-        url: "https://www.youtube.com/@hnasr"
+        url: "https://www.youtube.com/playlist?list=PLQnljOFTspQUBSgBXilKhRMJ1ACqr7pTr"
       }
     ]
   },
