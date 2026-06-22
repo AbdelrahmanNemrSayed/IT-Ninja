@@ -85,8 +85,8 @@
 * **المشاريع والمختبرات:**
   * *مشروع عملي:* كتابة سكربت PowerShell لمراقبة استهلاك الموارد للسيرفرات وإرسال تنبيهات بريدية آلياً، وسكربت Python لأتمتة النسخ الاحتياطي.
 * **المصادر المعتمدة:**
-  * تعلم لغة بايثون للأنظمة - الزيرو ويب سكول: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mSry)
-  * AWS Cloud Practitioner Course - FreeCodeCamp: [رابط يوتيوب](https://www.youtube.com/watch?v=7HKot-brXFE)
+  * كورس Bash Scripting للـ DevOps والأتمتة - Ahmed Elfakharany: [رابط يوتيوب](https://www.youtube.com/watch?v=Iw3dYzEUdek)
+  * PowerShell Master Class - John Savill: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8)
 
 ---
 

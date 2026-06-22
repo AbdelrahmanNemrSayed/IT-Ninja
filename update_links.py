@@ -48,10 +48,10 @@ roadmap_replacements = {
     "https://www.youtube.com/playlist?list=PLG49S3nxzAnnVhoQgTGvSm4qV1A1PptX9": "https://www.youtube.com/watch?v=3FNYvj2U0HM",
     
     # Phase 6
-    "https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mocs": "https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mSry",
-    "تعلم لغة بايثون للأنظمة - الزيرو ويب سكول (Elzero)": "تعلم لغة بايثون للأنظمة - الزيرو ويب سكول",
-    "Python for Beginners - Programming with Mosh": "AWS Cloud Practitioner Course - FreeCodeCamp",
-    "https://www.youtube.com/watch?v=kqtD5dpn9C8": "https://www.youtube.com/watch?v=7HKot-brXFE",
+    "https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mocs": "https://www.youtube.com/watch?v=Iw3dYzEUdek",
+    "تعلم لغة بايثون للأنظمة - الزيرو ويب سكول (Elzero)": "كورس Bash Scripting للـ DevOps والأتمتة - Ahmed Elfakharany",
+    "Python for Beginners - Programming with Mosh": "PowerShell Master Class - John Savill",
+    "https://www.youtube.com/watch?v=kqtD5dpn9C8": "https://www.youtube.com/playlist?list=PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8",
     
     # Phase 7
     "https://www.youtube.com/playlist?list=PLX1bW_GeBRhDkTf_jbdvBbkHs2LCWVeXZ": "https://www.youtube.com/playlist?list=PLm2M9B6tHnF63jZ6H6yP59iP1J-7g2-8C",

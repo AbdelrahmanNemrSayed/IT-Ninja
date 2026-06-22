@@ -238,21 +238,21 @@ export const roadmapData = [
     resources: [
       {
         id: "res_spec_ar",
-        title: "تعلم لغة بايثون للأنظمة - الزيرو ويب سكول",
+        title: "كورس Bash Scripting للـ DevOps والأتمتة - Ahmed Elfakharany",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "دورة برمجية مبسطة وممتازة للتأسيس في البرمجة وتصميم السكربتات التلقائية.",
-        url: "https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mSry"
+        desc: "دورة شاملة باللغة العربية لشرح لغة البرمجة النصية Bash وكتابة السكربتات لأتمتة الأنظمة والخوادم.",
+        url: "https://www.youtube.com/watch?v=Iw3dYzEUdek"
       },
       {
         id: "res_spec_en",
-        title: "AWS Cloud Practitioner Course - FreeCodeCamp",
+        title: "PowerShell Master Class - John Savill",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "Full certification course covering Amazon Web Services core concepts.",
-        url: "https://www.youtube.com/watch?v=7HKot-brXFE"
+        desc: "Comprehensive, step-by-step master class for learning PowerShell scripting, administration, and automation.",
+        url: "https://www.youtube.com/playlist?list=PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8"
       }
     ]
   },
@@ -469,11 +469,11 @@ export const toolsData = [
     url: "https://www.virtualbox.org/"
   },
   {
-    name: "VMware Workstation Player",
+    name: "VMware Workstation Pro",
     category: "الأنظمة الافتراضية",
     type: "local",
-    desc: "النسخة المجانية للاستخدام الشخصي من برنامج VMware",
-    url: "https://www.broadcom.com/products/infosecurity-digital-experience/workstation-player"
+    desc: "برنامج إنشاء وإدارة الأجهزة الافتراضية الشهير من VMware (متاح الآن مجاناً بالكامل للجميع).",
+    url: "https://support.broadcom.com/group/ecx/productdownloads?subfamily=VMware+Workstation+Pro"
   },
   {
     name: "Proxmox VE",
