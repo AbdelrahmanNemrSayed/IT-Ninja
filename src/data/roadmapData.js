@@ -274,12 +274,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_k8s_ar",
-        title: "دورة دوكر وكوبيرنيتس بالعربي - المهندس عبد أبوغزالة",
+        title: "دورة دوكر وكوبيرنيتس بالعربي - خالد السعدني",
         type: "video",
         lang: "ar",
         platform: "YouTube",
         desc: "سلسلة شروحات عملية رائعة تبسط مفاهيم الحاويات وإدارة كتل الخدمات.",
-        url: "https://www.youtube.com/playlist?list=PLm2M9B6tHnF63jZ6H6yP59iP1J-7g2-8C"
+        url: "https://www.youtube.com/playlist?list=PLX1bW_GeBRhDkTf_jbdvBbkHs2LCWVeXZ"
       },
       {
         id: "res_k8s_en",

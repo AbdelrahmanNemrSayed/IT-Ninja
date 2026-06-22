@@ -100,7 +100,7 @@
 * **المشاريع والمختبرات:**
   * *مشروع عملي:* تحويل تطبيق ويب إلى حاوية Docker ورفعه على Docker Hub، ثم نشره وإدارته داخل كلوستر Kubernetes محلي باستخدام Helm.
 * **المصادر المعتمدة:**
-  * دورة دوكر وكوبيرنيتس بالعربي - عبد أبوغزالة: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLm2M9B6tHnF63jZ6H6yP59iP1J-7g2-8C)
+  * دورة دوكر وكوبيرنيتس بالعربي - خالد السعدني: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLX1bW_GeBRhDkTf_jbdvBbkHs2LCWVeXZ)
   * Kubernetes Tutorial - TechWorld with Nana: [رابط يوتيوب](https://www.youtube.com/watch?v=X48VuDVv0do)
 
 ---

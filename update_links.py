@@ -58,8 +58,8 @@ roadmap_replacements = {
     "https://www.youtube.com/watch?v=kqtD5dpn9C8": "https://www.youtube.com/playlist?list=PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8",
     
     # Phase 7
-    "https://www.youtube.com/playlist?list=PLX1bW_GeBRhDkTf_jbdvBbkHs2LCWVeXZ": "https://www.youtube.com/playlist?list=PLm2M9B6tHnF63jZ6H6yP59iP1J-7g2-8C",
-    "دورة دوكر وكوبيرنيتس بالعربي - خالد السعدني": "دورة دوكر وكوبيرنيتس بالعربي - المهندس عبد أبوغزالة",
+    "https://www.youtube.com/playlist?list=PLX1bW_GeBRhDkTf_jbdvBbkHs2LCWVeXZ": "https://www.youtube.com/playlist?list=PLX1bW_GeBRhDkTf_jbdvBbkHs2LCWVeXZ",
+    "دورة دوكر وكوبيرنيتس بالعربي - خالد السعدني": "دورة دوكر وكوبيرنيتس بالعربي - خالد السعدني",
     "Docker & Kubernetes - TechWorld with Nana": "Kubernetes Tutorial - TechWorld with Nana",
     "https://www.youtube.com/watch?v=3c-iBn73dDE": "https://www.youtube.com/watch?v=X48VuDVv0do",
     
