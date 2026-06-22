@@ -202,21 +202,21 @@ export const roadmapData = [
     resources: [
       {
         id: "res_sec_ar",
-        title: "كورس CompTIA Security+ بالعربي - قناة Free4Arab",
+        title: "كورس Cyber Security Crash Course بالعربي - Free4Arab",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "سلسلة شروحات كاملة لتأمين الأنظمة، تحليل المخاطر، وفهم الهندسة الاجتماعية.",
-        url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK0G8jXNlL-tHR-7FO4vgXkb"
+        desc: "دورة عملية مكثفة تركز على المفاهيم التطبيقية للأمن السيبراني، حماية الأنظمة والشبكات، وتحليل التهديدات العملية.",
+        url: "https://www.youtube.com/playlist?list=PLLlr6jKKdyK31rHcvCI-oafO6D7hG2Ot4"
       },
       {
         id: "res_sec_en",
-        title: "CompTIA Security+ Course - Professor Messer",
+        title: "Practical Ethical Hacking Course - TCM Security",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "Industry-standard free preparation course for Security+ certification.",
-        url: "https://www.youtube.com/playlist?list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv"
+        desc: "A hands-on course covering network hacking, active directory security, credential attacks, and server vulnerabilities mitigation.",
+        url: "https://www.youtube.com/watch?v=MGP4Wfd-_Lc"
       }
     ]
   },
