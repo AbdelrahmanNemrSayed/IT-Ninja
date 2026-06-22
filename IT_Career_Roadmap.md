@@ -74,8 +74,8 @@
 * **المشاريع والمختبرات:**
   * *مشروع عملي:* إعداد جدار حماية PfSense للتحكم في حركة المرور، تشغيل نظام كشف التسلل Snort، وحل ثغرات أمنية في معامل PortSwigger.
 * **المصادر المعتمدة:**
-  * كورس CompTIA Security+ بالعربي - Free4Arab: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK0G8jXNlL-tHR-7FO4vgXkb)
-  * CompTIA Security+ Course - Professor Messer: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv)
+  * كورس Cyber Security Crash Course بالعربي - Free4Arab: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK31rHcvCI-oafO6D7hG2Ot4)
+  * Practical Ethical Hacking Course - TCM Security: [رابط يوتيوب](https://www.youtube.com/watch?v=3FNYvj2U0HM)
 
 ---
 
