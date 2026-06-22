@@ -45,7 +45,11 @@ roadmap_replacements = {
     "https://www.youtube.com/playlist?list=PLAQ9093fDW_bDj8o3n7hMjaIZgVimhCHI": "https://www.youtube.com/playlist?list=PLLlr6jKKdyK31rHcvCI-oafO6D7hG2Ot4",
     "كورس CompTIA Security+ SY0-701 بالعربي - Free4Arab": "كورس Cyber Security Crash Course بالعربي - Free4Arab",
     "Security+ SY0-701 - Professor Messer": "Practical Ethical Hacking Course - TCM Security",
+<<<<<<< HEAD
     "https://www.youtube.com/playlist?list=PLG49S3nxzAnnVhoQgTGvSm4qV1A1PptX9": "https://www.youtube.com/watch?v=3FNYvj2U0HM",
+=======
+    "https://www.youtube.com/playlist?list=PLG49S3nxzAnnVhoQgTGvSm4qV1A1PptX9": "https://www.youtube.com/watch?v=MGP4Wfd-_Lc",
+>>>>>>> 27af8a30c0c3a48fbdc0534f2b8e62e999e32296
     
     # Phase 6
     "https://www.youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mocs": "https://www.youtube.com/watch?v=Iw3dYzEUdek",

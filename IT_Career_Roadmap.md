@@ -75,7 +75,11 @@
   * *مشروع عملي:* إعداد جدار حماية PfSense للتحكم في حركة المرور، تشغيل نظام كشف التسلل Snort، وحل ثغرات أمنية في معامل PortSwigger.
 * **المصادر المعتمدة:**
   * كورس Cyber Security Crash Course بالعربي - Free4Arab: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLLlr6jKKdyK31rHcvCI-oafO6D7hG2Ot4)
+<<<<<<< HEAD
   * Practical Ethical Hacking Course - TCM Security: [رابط يوتيوب](https://www.youtube.com/watch?v=3FNYvj2U0HM)
+=======
+  * Practical Ethical Hacking Course - TCM Security: [رابط يوتيوب](https://www.youtube.com/watch?v=MGP4Wfd-_Lc)
+>>>>>>> 27af8a30c0c3a48fbdc0534f2b8e62e999e32296
 
 ---
 

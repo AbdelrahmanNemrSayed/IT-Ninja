@@ -216,7 +216,11 @@ export const roadmapData = [
         lang: "en",
         platform: "YouTube",
         desc: "A hands-on course covering network hacking, active directory security, credential attacks, and server vulnerabilities mitigation.",
+<<<<<<< HEAD
         url: "https://www.youtube.com/watch?v=3FNYvj2U0HM"
+=======
+        url: "https://www.youtube.com/watch?v=MGP4Wfd-_Lc"
+>>>>>>> 27af8a30c0c3a48fbdc0534f2b8e62e999e32296
       }
     ]
   },
