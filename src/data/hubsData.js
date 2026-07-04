@@ -8,9 +8,9 @@ export const homeLabData = [
         url: "https://www.virtualbox.org/"
       },
       {
-        name: "VMware Workstation Player",
-        desc: "برنامج محاكاة متقدم يتميز بأداء عالٍ وسرعة تشغيل الأنظمة الافتراضية.",
-        url: "https://www.broadcom.com/products/infosecurity-digital-experience/workstation-player"
+        name: "VMware Workstation Pro",
+        desc: "البرنامج الاحترافي لمحاكاة الأنظمة (الآن مجاني بالكامل للاستخدام الشخصي).",
+        url: "https://support.broadcom.com/group/ecx/productdownloads?subfamily=VMware+Workstation+Pro"
       },
       {
         name: "Proxmox VE",
@@ -35,7 +35,7 @@ export const homeLabData = [
       {
         name: "Windows Server Eval",
         desc: "النسخة التجريبية الرسمية (180 يوماً) لإعداد وتجربة خدمة Active Directory والـ Domain Controller.",
-        url: "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server"
+        url: "https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2025"
       }
     ]
   },
