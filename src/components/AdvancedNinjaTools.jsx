@@ -97,6 +97,60 @@ services:
     restart: always
 volumes:
   grafana_data:`
+  },
+  nginx_mysql: {
+    name: "Nginx + MySQL (Web + Database)",
+    desc: "خادم Nginx عالي الأداء مع قاعدة بيانات MySQL معزولة لاستضافة تطبيقات الويب المخصصة.",
+    yaml: `version: '3.8'
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./html:/usr/share/nginx/html
+    restart: always
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: strong_root_pass
+      MYSQL_DATABASE: app_database
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_secure_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+volumes:
+  mysql_data:`
+  },
+  portainer: {
+    name: "Portainer (Docker GUI Manager)",
+    desc: "واجهة رسومية متكاملة لإدارة ومراقبة جميع حاويات Docker على السيرفر بسهولة تامة.",
+    yaml: `version: '3.8'
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer_data:/data
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+volumes:
+  portainer_data:`
   }
 };
 

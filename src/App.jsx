@@ -19,6 +19,9 @@ import CelebrationModal from "./components/CelebrationModal";
 import ProfileSelector from "./components/ProfileSelector";
 import AdvancedNinjaTools from "./components/AdvancedNinjaTools";
 import CareerHub from "./components/CareerHub";
+import RAIDVisualizer from "./components/RAIDVisualizer";
+import RoadmapPlanner from "./components/RoadmapPlanner";
+import NinjaAchievements from "./components/NinjaAchievements";
 
 import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
 import { motion } from "framer-motion";
@@ -246,10 +249,13 @@ function AppContent() {
             </motion.section>
           )}
 
+          <NinjaAchievements />
           <HomeLabHub />
           <PracticePlatformsGrid />
           <AdvancedNinjaTools />
           <CareerHub />
+          <RoadmapPlanner />
+          <RAIDVisualizer />
 
           <motion.section 
             initial={{ opacity: 0, y: 20 }}

@@ -68,17 +68,21 @@ const scripts = {
     ]
   },
   ansible_deploy: {
-    fileName: "deploy_nginx.yml",
+    fileName: "secure_server_setup.yml",
     lang: "yaml",
-    description: "⚙️ Ansible: بلايبوك متكامل لتهيئة وتثبيت خادم Nginx وتفعيله",
+    description: "⚙️ Ansible: بلايبوك لتهيئة وتأمين خادم Ubuntu جديد وتفعيل الجدار الناري ufw",
     code: [
-      { text: "- hosts: webservers", desc: "تحديد مجموعة الخوادم المستهدفة بعملية النشر والتهيئة." },
-      { text: "  become: yes", desc: "تفعيل صلاحيات الجذر (Root/Sudo) لتثبيت الحزم وإدارة الخدمات." },
-      { text: "  tasks:", desc: "بدء قائمة المهام التي سيقوم البلايبوك بتنفيذها بالترتيب." },
-      { text: "    - name: Install Nginx package", desc: "تعريف المهمة الأولى وهي تثبيت حزمة Nginx." },
-      { text: "      apt: name=nginx state=present update_cache=yes", desc: "أمر تثبيت خادم Nginx وتحديث مستودع الحزم تلقائياً (في خوادم دبيان/أوبونتو)." },
-      { text: "    - name: Start Nginx service", desc: "تعريف المهمة الثانية وهي تفعيل خادم Nginx." },
-      { text: "      service: name=nginx state=started enabled=yes", desc: "بدء الخدمة فوراً وتأكيد تشغيلها تلقائياً مع إقلاع النظام." }
+      { text: "- hosts: all", desc: "تحديد كافة الخوادم الجديدة المستهدفة بعملية التثبيت والتأمين." },
+      { text: "  become: yes", desc: "تشغيل المهام بصلاحيات الجذر (Root/Sudo) لتثبيت الحزم وإدارة الجدار الناري." },
+      { text: "  tasks:", desc: "بدء المهام المتتالية لتهيئة وتأمين النظام." },
+      { text: "    - name: Update and upgrade system", desc: "مهمة تحديث النظام بالكامل لتطبيق رقع الأمان الأخيرة." },
+      { text: "      apt: update_cache=yes upgrade=dist", desc: "أمر تحديث مستودعات apt وترقية جميع حزم النظام لأحدث إصدار مستقر." },
+      { text: "    - name: Install security tool fail2ban", desc: "مهمة تثبيت أداة fail2ban لحماية الخادم من هجمات التخمين." },
+      { text: "      apt: name=fail2ban state=present", desc: "تثبيت الأداة وتأكيد وجودها لمنع محاولات تسجيل الدخول العشوائية المتكررة." },
+      { text: "    - name: Configure firewall rules", desc: "مهمة إعداد قواعد الجدار الناري لتأمين المنافذ." },
+      { text: "      ufw: rule=allow port=ssh", desc: "السماح بمرور حركة اتصالات SSH (البورت 22) فقط لمنع انقطاع الاتصال بالسيرفر." },
+      { text: "    - name: Enable UFW firewall", desc: "مهمة تفعيل الجدار الناري وتطبيق السياسات الافتراضية." },
+      { text: "      ufw: state=enabled policy=deny", desc: "تشغيل الجدار الناري ورفض كافة الاتصالات الواردة غير المسموح بها صراحة." }
     ]
   },
   terraform_ec2: {
