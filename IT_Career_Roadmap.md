@@ -30,7 +30,7 @@
 * **المشاريع والمختبرات:**
   * *مشروع 1:* تصميم وتقسيم شبكة شركة ذات 3 فروع وحساب العناوين (Subnetting) برمجياً ومحاكاتها بالكامل داخل Cisco Packet Tracer.
 * **المصادر المعتمدة:**
-  * كورس CCNA بالعربي - أحمد نظمي: [رابط يوتيوب](https://www.youtube.com/playlist?list=PL45l-0J235g-67Lp7p30s1H749W-vB55P)
+  * كورس CCNA بالعربي - أحمد نظمي: [رابط يوتيوب](https://www.youtube.com/playlist?list=PL77yNtB4-LjnN2FU3h1v5hIJOHZfW9ugq)
   * CCNA Course - Jeremy's IT Lab: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ)
 
 ---
@@ -83,11 +83,11 @@
 
 ---
 
-### 🚀 المرحلة السادسة: الأتمتة والسحابة (Scripting & Cloud)
-كتابة سكربتات الأتمتة وإدارة الخدمات السحابية الأساسية.
-* **مواضيع الدراسة:** أساسيات بايثون (Python) للسكربتات والأتمتة، أتمتة ويندوز بـ PowerShell، والحوسبة السحابية لشهادة AWS Cloud Practitioner.
+### 🚀 المرحلة السادسة: الأتمتة وبرمجة السكربتات (Systems Scripting & Automation)
+كتابة سكربتات الأتمتة لإدارة أنظمة Linux و Windows وتسهيل المهام المتكررة.
+* **مواضيع الدراسة:** كتابة السكربتات وأتمتة المهام بـ Bash Scripting، أتمتة وإدارة أنظمة ويندوز بـ PowerShell، وجدولة السكربتات وتكامل المهام (Cron Jobs & Task Scheduler).
 * **المشاريع والمختبرات:**
-  * *مشروع عملي:* كتابة سكربت PowerShell لمراقبة استهلاك الموارد للسيرفرات وإرسال تنبيهات بريدية آلياً، وسكربت Python لأتمتة النسخ الاحتياطي.
+  * *مشروع عملي:* كتابة سكربت PowerShell لمراقبة الخدمات وإرسال تنبيهات، وسكربت Bash لأتمتة النسخ الاحتياطي وضغط المجلدات تلقائياً.
 * **المصادر المعتمدة:**
   * كورس Bash Scripting للـ DevOps والأتمتة - Ahmed Elfakharany: [رابط يوتيوب](https://www.youtube.com/watch?v=Iw3dYzEUdek)
   * PowerShell Master Class - John Savill: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLlVtbbG169nFq_hR7FcMYg32xsSAObuq8)
@@ -111,8 +111,8 @@
 * **المشاريع والمختبرات:**
   * *مشروع عملي:* كتابة أكواد Terraform لبناء خادم سحابي شبكي، وكتابة Ansible Playbooks لتهيئة الخادم وتثبيت الخدمات تلقائياً.
 * **المصادر المعتمدة:**
-  * شرح أداة Terraform بالعربي - محمد الشريف: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLCIJjtxA3eXT4O8QYm0f4u73Z9Z0lE1vJ)
-  * Ansible 101 Course - Jeff Geerling: [رابط يوتيوب](https://www.youtube.com/playlist?list=PL2_OB-tmK9Y9p2E17w58m6sFq-s15Q9_C)
+  * شرح أداة Terraform بالعربي - خالد السعدني: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLX1bW_GeBRhBIT9-Nyt4_osatqokaN8ae)
+  * Ansible 101 Course - Jeff Geerling: [رابط يوتيوب](https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN)
 
 ---
 
@@ -123,7 +123,7 @@
   * *مشروع عملي:* تثبيت Prometheus لجمع مقاييس أداء السيرفرات وربطه بـ Grafana لتصميم لوحة تحكم حية تعكس حالة النظام والذاكرة.
 * **المصادر المعتمدة:**
   * كورس Prometheus & Grafana بالعربي - DolfinED: [رابط يوتيوب](https://www.youtube.com/watch?v=L-dDeZjZUiA)
-  * Prometheus & Grafana Setup - TechWorld with Nana: [رابط يوتيوب](https://www.youtube.com/watch?v=h4Sl21mGIG8)
+  * Prometheus & Grafana Setup - TechWorld with Nana: [رابط يوتيوب](https://www.youtube.com/watch?v=h4Sl21AKiDg)
 
 ---
 
@@ -133,7 +133,7 @@
 * **المشاريع والمختبرات:**
   * *مشروع عملي:* بناء شبكة VPN مشفرة للربط بين أجهزة الشركة وسيرفراتها عن بعد باستخدام WireGuard مع تطبيق سياسة التحقق الصفرية (Zero Trust).
 * **المصادر المعتمدة:**
-  * تأمين الشبكات والاتصال الآمن - قناة هارفارد عربي: [رابط يوتيوب](https://www.youtube.com/watch?v=N6O3qw9QyqU)
+  * أسلوب Zero Trust في الأمن السيبراني - العطاء الرقمي: [رابط يوتيوب](https://www.youtube.com/watch?v=KUwonVdYzRY)
   * Web Networks & Security - Hussein Nasser: [رابط يوتيوب](https://www.youtube.com/playlist?list=PLQnljOFTspQUBSgBXilKhRMJ1ACqr7pTr)
 
 ---
@@ -144,5 +144,5 @@
 * **المشاريع والمختبرات:**
   * *مشروع عملي:* استضافة وتأمين لوحة تحكم الـ IT الخاصة بك ونشرها على Vercel مع ربطها بقاعدة بيانات سحابية مستضافة على Railway.
 * **المصادر المعتمدة:**
-  * شرح نشر وتطوير خوادم الويب السحابية - يوتيوب: [رابط يوتيوب](https://www.youtube.com/watch?v=2H-L7S6yX7w)
-  * Modern Web Deployment & Firebase - Net Ninja: [رابط يوتيوب](https://www.youtube.com/watch?v=sBws8MSXN7A)
+  * شرح منصات Vercel & Netlify - أحمد السنوسي: [رابط يوتيوب](https://www.youtube.com/watch?v=LhXQMLxsZ1k)
+  * Firebase Hosting Tutorial - Net Ninja: [رابط يوتيوب](https://www.youtube.com/playlist?list=PL4cUxeGkcC9i5yvDQsZc0q9H55H98xH4p)

@@ -61,7 +61,7 @@ export const roadmapData = [
         lang: "ar",
         platform: "YouTube",
         desc: "سلسلة شرح عربي كاملة ومبسطة لأساسيات التوجيه والتبديل وبناء الشبكات.",
-        url: "https://www.youtube.com/playlist?list=PL45l-0J235g-67Lp7p30s1H749W-vB55P"
+        url: "https://www.youtube.com/playlist?list=PL77yNtB4-LjnN2FU3h1v5hIJOHZfW9ugq"
       },
       {
         id: "res_net_en",
@@ -223,17 +223,17 @@ export const roadmapData = [
   {
     id: "specialization",
     phaseNumber: "6",
-    title: "المرحلة السادسة: الأتمتة والسحابة (Scripting & Cloud)",
-    shortTitle: "الأتمتة والسحابة",
-    description: "كتابة سكربتات الأتمتة وإدارة الخدمات السحابية الأساسية.",
+    title: "المرحلة السادسة: الأتمتة وبرمجة السكربتات (Systems Scripting & Automation)",
+    shortTitle: "الأتمتة والسكربتات",
+    description: "كتابة سكربتات الأتمتة لإدارة أنظمة Linux و Windows وتسهيل المهام المتكررة.",
     accent: "emerald",
     subtopics: [
-      { id: "spec_python", text: "أساسيات لغة بايثون (Python) لأتمتة المهام" },
+      { id: "spec_python", text: "كتابة السكربتات وبرمجة الأتمتة باستخدام Bash Scripting" },
       { id: "spec_powershell", text: "أتمتة وإدارة أنظمة ويندوز باستخدام PowerShell" },
-      { id: "spec_aws", text: "الحوسبة السحابية وشهادة AWS Cloud Practitioner" }
+      { id: "spec_aws", text: "جدولة المهام وإدارة السكربتات التلقائية (Cron Jobs & Task Scheduler)" }
     ],
     projects: [
-      "مشروع 1: كتابة سكربت PowerShell لمراقبة استهلاك الموارد للسيرفرات وإرسال تنبيهات بريدية آلياً، وسكربت Python لأتمتة النسخ الاحتياطي."
+      "مشروع 1: كتابة سكربت PowerShell لمراقبة الخدمات وإرسال تنبيهات، وسكربت Bash لأتمتة النسخ الاحتياطي وضغط المجلدات تلقائياً."
     ],
     resources: [
       {
@@ -310,12 +310,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_git_ar",
-        title: "شرح أداة Terraform بالعربي - المهندس محمد الشريف",
+        title: "شرح أداة Terraform بالعربي - خالد السعدني",
         type: "video",
         lang: "ar",
         platform: "YouTube",
         desc: "دليل متكامل لتصميم وإدارة البنية التحتية ككود باللغة العربية.",
-        url: "https://www.youtube.com/playlist?list=PLCIJjtxA3eXT4O8QYm0f4u73Z9Z0lE1vJ"
+        url: "https://www.youtube.com/playlist?list=PLX1bW_GeBRhBIT9-Nyt4_osatqokaN8ae"
       },
       {
         id: "res_git_en",
@@ -324,7 +324,7 @@ export const roadmapData = [
         lang: "en",
         platform: "YouTube",
         desc: "Practical Ansible playbook writing, host management, and configuration tasks by a legend.",
-        url: "https://www.youtube.com/playlist?list=PL2_OB-tmK9Y9p2E17w58m6sFq-s15Q9_C"
+        url: "https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN"
       }
     ]
   },
@@ -360,7 +360,7 @@ export const roadmapData = [
         lang: "en",
         platform: "YouTube",
         desc: "Direct hands-on tutorial for metric parsing, alerts, and dashboard styling.",
-        url: "https://www.youtube.com/watch?v=h4Sl21mGIG8"
+        url: "https://www.youtube.com/watch?v=h4Sl21AKiDg"
       }
     ]
   },
@@ -382,12 +382,12 @@ export const roadmapData = [
     resources: [
       {
         id: "res_zt_ar",
-        title: "تأمين الشبكات والاتصال الآمن - قناة هارفارد عربي",
+        title: "أسلوب Zero Trust في الأمن السيبراني - العطاء الرقمي",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "شرح مبادئ أمن الشبكات والـ Cryptography وكيفية تشفير قنوات الاتصال.",
-        url: "https://www.youtube.com/watch?v=N6O3qw9QyqU"
+        desc: "محاضرة شاملة باللغة العربية تشرح نموذج أمان الثقة الصفرية وأهمية التحقق المستمر لحماية الشبكات.",
+        url: "https://www.youtube.com/watch?v=KUwonVdYzRY"
       },
       {
         id: "res_zt_en",
@@ -419,21 +419,21 @@ export const roadmapData = [
     resources: [
       {
         id: "res_cdp_ar",
-        title: "شرح نشر وتطوير خوادم الويب السحابية - يوتيوب",
+        title: "شرح منصات Vercel & Netlify - أحمد السنوسي",
         type: "video",
         lang: "ar",
         platform: "YouTube",
-        desc: "سلسلة مبسطة باللغة العربية تشرح كيفية إطلاق ونشر المواقع للإنتاج واستخدام النطاقات.",
-        url: "https://www.youtube.com/watch?v=2H-L7S6yX7w"
+        desc: "شرح عملي ومبسط لكيفية رفع ونشر المشاريع البرمجية وتطبيقات الويب مجاناً باستخدام Vercel و Netlify.",
+        url: "https://www.youtube.com/watch?v=LhXQMLxsZ1k"
       },
       {
         id: "res_cdp_en",
-        title: "Modern Web Deployment & Firebase - Net Ninja",
+        title: "Firebase Hosting Tutorial - Net Ninja",
         type: "video",
         lang: "en",
         platform: "YouTube",
-        desc: "Step-by-step tutorial on Firebase integrations, Vercel deploys, and DNS mapping.",
-        url: "https://www.youtube.com/watch?v=sBws8MSXN7A"
+        desc: "Step-by-step tutorial series on Firebase Hosting, CLI configuration, and web deployment.",
+        url: "https://www.youtube.com/playlist?list=PL4cUxeGkcC9i5yvDQsZc0q9H55H98xH4p"
       }
     ]
   }

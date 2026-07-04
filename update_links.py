@@ -20,7 +20,7 @@ roadmap_replacements = {
     "CompTIA A+ Full Course - Professor Messer": "CompTIA A+ Course - Professor Messer",
     
     # Phase 1
-    "https://www.youtube.com/playlist?list=PLLlr6jKKdyK3JYsGq_jEcNx-EHF4lqXHP": "https://www.youtube.com/playlist?list=PL45l-0J235g-67Lp7p30s1H749W-vB55P",
+    "https://www.youtube.com/playlist?list=PLLlr6jKKdyK3JYsGq_jEcNx-EHF4lqXHP": "https://www.youtube.com/playlist?list=PL77yNtB4-LjnN2FU3h1v5hIJOHZfW9ugq",
     "كورس CCNA 200-301 بالعربي - Free4arab": "كورس CCNA بالعربي - المهندس أحمد نظمي",
     "Free CCNA 200-301 - Jeremy's IT Lab": "CCNA Course - Jeremy's IT Lab",
     
@@ -64,27 +64,29 @@ roadmap_replacements = {
     "https://www.youtube.com/watch?v=3c-iBn73dDE": "https://www.youtube.com/watch?v=X48VuDVv0do",
     
     # Phase 8
-    "https://www.youtube.com/playlist?list=PLX1bW_GeBRhBIT9-Nyt4_osatqokaN8ae": "https://www.youtube.com/playlist?list=PLCIJjtxA3eXT4O8QYm0f4u73Z9Z0lE1vJ",
-    "شرح أداة Terraform بالعربي - Free4arab": "شرح أداة Terraform بالعربي - المهندس محمد الشريف",
+    "https://www.youtube.com/playlist?list=PLX1bW_GeBRhBIT9-Nyt4_osatqokaN8ae": "https://www.youtube.com/playlist?list=PLX1bW_GeBRhBIT9-Nyt4_osatqokaN8ae",
+    "شرح أداة Terraform بالعربي - Free4arab": "شرح أداة Terraform بالعربي - خالد السعدني",
     "Ansible 101 Course - Jeff Geerling": "Ansible 101 Course - Jeff Geerling",
-    "https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN": "https://www.youtube.com/playlist?list=PL2_OB-tmK9Y9p2E17w58m6sFq-s15Q9_C",
+    "https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN": "https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN",
     
     # Phase 9
     "https://www.youtube.com/playlist?list=PLhW3qG5bs-L9NMEkZ0y44Z1qH86pU6jR-": "https://www.youtube.com/watch?v=L-dDeZjZUiA",
     "شرح Prometheus & Grafana - محمود رمضان": "كورس Prometheus & Grafana بالعربي - DolfinED",
     "Prometheus Monitoring - TechWorld with Nana": "Prometheus & Grafana Setup - TechWorld with Nana",
+    "https://www.youtube.com/watch?v=h4Sl21mGIG8": "https://www.youtube.com/watch?v=h4Sl21AKiDg",
     
     # Phase 10
-    "https://www.youtube.com/playlist?list=PLm2M9B6tHnF6H016Y4fB0LWe1d2Vv1FqF": "https://www.youtube.com/watch?v=N6O3qw9QyqU",
-    "تأمين البنية التحتية Zero Trust - عبد أبوغزالة": "تأمين الشبكات والاتصال الآمن - قناة هارفارد عربي",
+    "https://www.youtube.com/playlist?list=PLm2M9B6tHnF6H016Y4fB0LWe1d2Vv1FqF": "https://www.youtube.com/watch?v=KUwonVdYzRY",
+    "تأمين البنية التحتية Zero Trust - عبد أبوغزالة": "أسلوب Zero Trust في الأمن السيبراني - العطاء الرقمي",
     "Zero Trust Architecture Explained - IBM Technology": "Web Networks & Security - Hussein Nasser",
     "https://www.youtube.com/watch?v=rWbQn6a-n18": "https://www.youtube.com/playlist?list=PLQnljOFTspQUBSgBXilKhRMJ1ACqr7pTr",
     
     # Phase 11
-    "https://www.youtube.com/playlist?list=PLm2M9B6tHnF57P17sV12-pL8W2u3-i00j": "https://www.youtube.com/watch?v=2H-L7S6yX7w",
-    "استضافة ونشر المشاريع - عبد أبوغزالة": "شرح نشر وتطوير خوادم الويب السحابية - يوتيوب",
-    "Deploying Web Apps - Traversy Media": "Modern Web Deployment & Firebase - Net Ninja",
-    "https://www.youtube.com/watch?v=rX_vjWf4cR8": "https://www.youtube.com/watch?v=sBws8MSXN7A"
+    "https://www.youtube.com/playlist?list=PLm2M9B6tHnF57P17sV12-pL8W2u3-i00j": "https://www.youtube.com/watch?v=LhXQMLxsZ1k",
+    "استضافة ونشر المشاريع - عبد أبوغزالة": "شرح منصات Vercel & Netlify - أحمد السنوسي",
+    "Deploying Web Apps - Traversy Media": "Firebase Hosting Tutorial - Net Ninja",
+    "https://www.youtube.com/watch?v=rX_vjWf4cR8": "https://www.youtube.com/playlist?list=PL4cUxeGkcC9i5yvDQsZc0q9H55H98xH4p",
+    "https://www.youtube.com/watch?v=sBws8MSXN7A": "https://www.youtube.com/playlist?list=PL4cUxeGkcC9i5yvDQsZc0q9H55H98xH4p"
 }
 
 update_file(r'd:\Code Projects\IT_Plan\src\data\roadmapData.js', roadmap_replacements)
