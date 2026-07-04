@@ -17,6 +17,8 @@ import PracticePlatformsGrid from "./components/PracticePlatformsGrid";
 import ConfettiEffect from "./components/ConfettiEffect";
 import CelebrationModal from "./components/CelebrationModal";
 import ProfileSelector from "./components/ProfileSelector";
+import AdvancedNinjaTools from "./components/AdvancedNinjaTools";
+import CareerHub from "./components/CareerHub";
 
 import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
 import { motion } from "framer-motion";
@@ -246,6 +248,8 @@ function AppContent() {
 
           <HomeLabHub />
           <PracticePlatformsGrid />
+          <AdvancedNinjaTools />
+          <CareerHub />
 
           <motion.section 
             initial={{ opacity: 0, y: 20 }}

@@ -52,6 +52,47 @@ const scripts = {
       { text: "  Write-EventLog -LogName Application -Source \"Monitor\" -EntryType Warning -EventId 101 -Message \"Service $serviceName was restarted!\"", desc: "تسجيل حدث تحذيري في سجلات نظام ويندوز (Event Viewer) يوضح عملية إعادة التشغيل." },
       { text: "}", desc: "إغلاق الشرط البرمجي." }
     ]
+  },
+  backup_s3: {
+    fileName: "s3_backup.sh",
+    lang: "bash",
+    description: "☁️ Bash: أخذ نسخة من قاعدة البيانات ورفعها مباشرة إلى AWS S3",
+    code: [
+      { text: "#!/bin/bash", desc: "رأس تشغيل السكربت عبر مترجم الباش." },
+      { text: "DB_NAME=\"prod_db\"", desc: "تحديد اسم قاعدة البيانات المستهدفة لأخذ النسخة الاحتياطية منها." },
+      { text: "S3_BUCKET=\"s3://my-ninja-backups/db\"", desc: "تحديد مسار واسم مخزن البيانات السحابي (S3 Bucket) في AWS." },
+      { text: "BACKUP_FILE=\"/tmp/db_$(date +%F).sql.gz\"", desc: "تحديد الاسم المؤقت للملف المضغوط الناتج." },
+      { text: "mysqldump -u root -psecret \"$DB_NAME\" | gzip > \"$BACKUP_FILE\"", desc: "توليد نسخة SQL كاملة لقاعدة البيانات وضغطها لتوفير سعة التخزين." },
+      { text: "aws s3 cp \"$BACKUP_FILE\" \"$S3_BUCKET\"", desc: "استخدام أداة AWS CLI لرفع الملف السحابي إلى S3 بشكل آمن." },
+      { text: "rm \"$BACKUP_FILE\"", desc: "تنظيف وحذف الملف المؤقت من الخادم بعد إتمام عملية الرفع." }
+    ]
+  },
+  ansible_deploy: {
+    fileName: "deploy_nginx.yml",
+    lang: "yaml",
+    description: "⚙️ Ansible: بلايبوك متكامل لتهيئة وتثبيت خادم Nginx وتفعيله",
+    code: [
+      { text: "- hosts: webservers", desc: "تحديد مجموعة الخوادم المستهدفة بعملية النشر والتهيئة." },
+      { text: "  become: yes", desc: "تفعيل صلاحيات الجذر (Root/Sudo) لتثبيت الحزم وإدارة الخدمات." },
+      { text: "  tasks:", desc: "بدء قائمة المهام التي سيقوم البلايبوك بتنفيذها بالترتيب." },
+      { text: "    - name: Install Nginx package", desc: "تعريف المهمة الأولى وهي تثبيت حزمة Nginx." },
+      { text: "      apt: name=nginx state=present update_cache=yes", desc: "أمر تثبيت خادم Nginx وتحديث مستودع الحزم تلقائياً (في خوادم دبيان/أوبونتو)." },
+      { text: "    - name: Start Nginx service", desc: "تعريف المهمة الثانية وهي تفعيل خادم Nginx." },
+      { text: "      service: name=nginx state=started enabled=yes", desc: "بدء الخدمة فوراً وتأكيد تشغيلها تلقائياً مع إقلاع النظام." }
+    ]
+  },
+  terraform_ec2: {
+    fileName: "main.tf",
+    lang: "hcl",
+    description: "🏗️ Terraform: كود البنية التحتية لإنشاء سيرفر EC2 افتراضي على AWS",
+    code: [
+      { text: "provider \"aws\" { region = \"us-east-1\" }", desc: "تحديد مزود الخدمة AWS والمنطقة الجغرافية التي سيتم إنشاء الموارد فيها." },
+      { text: "resource \"aws_instance\" \"ninja_server\" {", desc: "تعريف مورد جديد من نوع خادم افتراضي (EC2 Instance) وتسميته ninja_server." },
+      { text: "  ami           = \"ami-0c55b159cbfafe1f0\"", desc: "تحديد معرف نظام التشغيل (AMI) وغالباً ما يكون لنسخة Ubuntu LTS." },
+      { text: "  instance_type = \"t2.micro\"", desc: "تحديد مواصفات الخادم ونوع الحجم (الفئة المجانية t2.micro)." },
+      { text: "  tags = { Name = \"Ninja-WebServer\" }", desc: "إضافة تسميات وسوم (Tags) لتنظيم وإدارة المورد داخل الكونسول." },
+      { text: "}", desc: "إغلاق قوس تعريف مورد الخادم الافتراضي." }
+    ]
   }
 };
 
