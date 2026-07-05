@@ -22,22 +22,30 @@ import CareerHub from "./components/CareerHub";
 import RAIDVisualizer from "./components/RAIDVisualizer";
 import RoadmapPlanner from "./components/RoadmapPlanner";
 import NinjaAchievements from "./components/NinjaAchievements";
+import AuthModal from "./components/AuthModal";
+import UserProfile from "./components/UserProfile";
+import Leaderboard from "./components/Leaderboard";
 
 import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ProfileProvider, useProfile } from "./context/ProfileContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 
 export default function App() {
   return (
-    <ProfileProvider>
-      <AppContent />
-    </ProfileProvider>
+    <AuthProvider>
+      <ProfileProvider>
+        <AppContent />
+      </ProfileProvider>
+    </AuthProvider>
   );
 }
 
 function AppContent() {
   const { activeProfileId } = useProfile();
+  const { user, authModal, setAuthModal } = useAuth();
   const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [userProfileOpen, setUserProfileOpen] = useState(false);
   const {
     completedItems,
     setCompletedItems,
@@ -137,7 +145,7 @@ function AppContent() {
   };
 
   return (
-    <div key={activeProfileId} className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans select-none">
+    <div key={activeProfileId} className="min-h-screen ninja-bg text-slate-100 flex flex-col select-none">
       <ConfettiEffect active={confettiActive} />
       
       <CelebrationModal 
@@ -145,7 +153,17 @@ function AppContent() {
         setCelebratedPhase={setCelebratedPhase} 
       />
 
-      <Header 
+      {/* Auth Modal */}
+      <AnimatePresence>
+        {authModal && <AuthModal key="auth-modal" />}
+      </AnimatePresence>
+
+      {/* User Profile Modal */}
+      <AnimatePresence>
+        {userProfileOpen && <UserProfile key="user-profile" onClose={() => setUserProfileOpen(false)} />}
+      </AnimatePresence>
+
+      <Header
         globalProgressPercent={globalProgressPercent}
         completedCount={completedCount}
         sidebarOpen={sidebarOpen}
@@ -156,6 +174,7 @@ function AppContent() {
         importBackup={importBackup}
         resetAllProgress={resetAllProgress}
         onOpenProfileModal={() => setProfileModalOpen(true)}
+        onOpenUserProfile={() => setUserProfileOpen(true)}
       />
 
       <div className="flex-grow flex w-full max-w-7xl mx-auto px-4 py-6 gap-6 relative">
@@ -249,7 +268,11 @@ function AppContent() {
             </motion.section>
           )}
 
-          <NinjaAchievements />
+          {/* Achievements + Leaderboard — side by side on large screens */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <NinjaAchievements />
+            <Leaderboard currentUserId={user?.id} />
+          </div>
           <HomeLabHub />
           <PracticePlatformsGrid />
           <AdvancedNinjaTools />
