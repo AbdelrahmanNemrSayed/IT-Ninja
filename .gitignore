@@ -18,3 +18,7 @@ node_modules/
 # Production build output
 dist/
 
+# Environment variables — DO NOT commit secrets!
+.env
+.env.local
+.env.production
