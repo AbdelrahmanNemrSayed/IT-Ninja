@@ -25,6 +25,12 @@ import NinjaAchievements from "./components/NinjaAchievements";
 import AuthModal from "./components/AuthModal";
 import UserProfile from "./components/UserProfile";
 import Leaderboard from "./components/Leaderboard";
+import AIAssistant from "./components/AIAssistant";
+import CertificateGenerator from "./components/CertificateGenerator";
+import DailyTodo from "./components/DailyTodo";
+import StudyTimer from "./components/StudyTimer";
+import GlobalSearch, { useGlobalSearch, GlobalSearchTrigger } from "./components/GlobalSearch";
+import AnalyticsDashboard from "./components/AnalyticsDashboard";
 
 import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -44,6 +50,7 @@ export default function App() {
 function AppContent() {
   const { activeProfileId } = useProfile();
   const { user, authModal, setAuthModal } = useAuth();
+  const { isOpen: searchOpen, setIsOpen: setSearchOpen } = useGlobalSearch();
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [userProfileOpen, setUserProfileOpen] = useState(false);
   const {
@@ -279,6 +286,18 @@ function AppContent() {
           <CareerHub />
           <RoadmapPlanner />
           <RAIDVisualizer />
+          <AnalyticsDashboard />
+
+          {/* Analytics + Daily To-Do side by side */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <DailyTodo />
+            <CertificateGenerator
+              phaseNumber={1}
+              phaseTitle="Network Foundations"
+              completedCount={completedCount}
+              totalCount={totalCheckboxes}
+            />
+          </div>
 
           <motion.section 
             initial={{ opacity: 0, y: 20 }}
@@ -508,6 +527,11 @@ function AppContent() {
         isOpen={profileModalOpen} 
         onClose={() => setProfileModalOpen(false)} 
       />
+
+      {/* Floating components */}
+      <GlobalSearch />
+      <AIAssistant />
+      <StudyTimer />
     </div>
   );
 }
