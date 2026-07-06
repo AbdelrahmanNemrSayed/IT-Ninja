@@ -434,7 +434,7 @@ function AppContent() {
         <AIAssistant />
         <GlobalSearch />
         <StudyTimer />
-        <ProfileSelector open={profileModalOpen} onClose={() => setProfileModalOpen(false)} />
+        <ProfileSelector isOpen={profileModalOpen} onClose={() => setProfileModalOpen(false)} />
       </Suspense>
     </div>
   );
