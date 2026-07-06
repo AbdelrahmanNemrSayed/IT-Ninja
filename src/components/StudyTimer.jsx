@@ -8,18 +8,40 @@ const MODES = {
   longBreak:  { label: "راحة كبيرة", minutes: 15, color: "#8b5cf6", icon: Zap,  xp: 0  },
 };
 
-function beep(freq = 880, dur = 0.3) {
+function playAlarmSound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.frequency.value = freq;
-    osc.type = "sine";
-    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
-    osc.start(); osc.stop(ctx.currentTime + dur);
-  } catch {}
+    
+    // Resume context if browser suspended it
+    if (ctx.state === "suspended") {
+      ctx.resume();
+    }
+
+    const now = ctx.currentTime;
+    
+    // Play a sequence of 3 pleasant chimes (C6 -> E6 -> G6)
+    const tones = [1046.50, 1318.51, 1567.98]; 
+    
+    tones.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(freq, now + idx * 0.15);
+      
+      gain.gain.setValueAtTime(0, now + idx * 0.15);
+      gain.gain.linearRampToValueAtTime(0.3, now + idx * 0.15 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.15 + 0.3);
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.start(now + idx * 0.15);
+      osc.stop(now + idx * 0.15 + 0.35);
+    });
+  } catch (err) {
+    console.error("Audio error:", err);
+  }
 }
 
 function Ring({ pct, color, size = 120 }) {
@@ -60,8 +82,7 @@ export default function StudyTimer() {
   }, []);
 
   const handleComplete = useCallback(() => {
-    beep(880, 0.4);
-    setTimeout(() => beep(1100, 0.4), 500);
+    playAlarmSound();
     setRunning(false);
     if (mode === "work") {
       const newSessions = sessions + 1;
