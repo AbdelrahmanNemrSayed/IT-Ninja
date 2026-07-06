@@ -137,8 +137,10 @@ const Leaderboard = memo(function Leaderboard({ currentUserId }) {
 
                 {/* Avatar */}
                 <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-base font-black flex-shrink-0 border ${rankStyle.border} ${rankStyle.bg}`}>
-                  {leader.avatar_url ? (
+                  {leader.avatar_url && (leader.avatar_url.startsWith("http") || leader.avatar_url.startsWith("/")) ? (
                     <img src={leader.avatar_url} alt={leader.username} className="w-full h-full rounded-xl object-cover" />
+                  ) : leader.avatar_url ? (
+                    <span className="text-lg">{leader.avatar_url}</span>
                   ) : (
                     (leader.username || "N")[0].toUpperCase()
                   )}
