@@ -37,6 +37,7 @@ import SubnetCalculator from "./components/SubnetCalculator";
 import FirewallGenerator from "./components/FirewallGenerator";
 import RaidCalculator from "./components/RaidCalculator";
 import AutomationScriptHub from "./components/AutomationScriptHub";
+import SysAdminLabTools from "./components/SysAdminLabTools";
 
 import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -330,6 +331,7 @@ function AppContent() {
           {activeView === "tools" && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-8">
               <NetworkTopology />
+              <SysAdminLabTools />
               <AdvancedNinjaTools />
               <LinuxTerminal />
               <RaidCalculator />

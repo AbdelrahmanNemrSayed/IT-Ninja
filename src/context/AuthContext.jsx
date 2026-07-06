@@ -68,7 +68,8 @@ export function AuthProvider({ children }) {
   const createProfile = async (userId) => {
     const { data: userData } = await supabase.auth.getUser();
     const email = userData?.user?.email || "";
-    const username = email.split("@")[0];
+    const metaUsername = userData?.user?.user_metadata?.username;
+    const username = metaUsername || email.split("@")[0] || "Ninja";
 
     const { data } = await supabase
       .from("profiles")
@@ -92,15 +93,15 @@ export function AuthProvider({ children }) {
   };
 
   const signUp = async (email, password, username) => {
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (!error && data.user) {
-      await supabase.from("profiles").insert([{
-        id: data.user.id,
-        username: username || email.split("@")[0],
-        total_xp: 0,
-        rank: "Ninja Rookie",
-      }]);
-    }
+    const { data, error } = await supabase.auth.signUp({ 
+      email, 
+      password,
+      options: {
+        data: {
+          username: username || email.split("@")[0]
+        }
+      }
+    });
     return { data, error };
   };
 
