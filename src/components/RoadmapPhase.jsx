@@ -1,8 +1,8 @@
-import React, { memo, lazy, Suspense, useState, useEffect } from "react";
-const SubnetCalculator = lazy(() => import("./SubnetCalculator"));
-const RaidCalculator = lazy(() => import("./RaidCalculator"));
-const FirewallGenerator = lazy(() => import("./FirewallGenerator"));
-const AutomationScriptHub = lazy(() => import("./AutomationScriptHub"));
+import React, { memo, useState, useEffect } from "react";
+import SubnetCalculator from "./SubnetCalculator";
+import RaidCalculator from "./RaidCalculator";
+import FirewallGenerator from "./FirewallGenerator";
+import AutomationScriptHub from "./AutomationScriptHub";
 import { 
   Youtube, 
   BookOpen, 
@@ -229,36 +229,28 @@ const RoadmapPhase = memo(function RoadmapPhase({
       {/* Subnet Calculator widget in networking phase */}
       {phase.id === "networks" && (
         <div className="my-1">
-          <Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-900/50 rounded-xl border border-slate-800 text-cyan-400 text-sm font-bold animate-pulse">جاري تحميل حاسبة الشبكات...</div>}>
-            <SubnetCalculator />
-          </Suspense>
+          <SubnetCalculator />
         </div>
       )}
 
       {/* RAID Calculator widget in virtualization phase */}
       {phase.id === "virtualization" && (
         <div className="my-1">
-          <Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-900/50 rounded-xl border border-slate-800 text-amber-400 text-sm font-bold animate-pulse">جاري تحميل حاسبة وحدات التخزين...</div>}>
-            <RaidCalculator />
-          </Suspense>
+          <RaidCalculator />
         </div>
       )}
 
       {/* Firewall Generator widget in security phase */}
       {phase.id === "security" && (
         <div className="my-1">
-          <Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-900/50 rounded-xl border border-slate-800 text-rose-400 text-sm font-bold animate-pulse">جاري تحميل مولد جدار الحماية...</div>}>
-            <FirewallGenerator />
-          </Suspense>
+          <FirewallGenerator />
         </div>
       )}
 
       {/* Automation script hub in scripting phase */}
       {phase.id === "specialization" && (
         <div className="my-1">
-          <Suspense fallback={<div className="h-64 flex items-center justify-center bg-slate-900/50 rounded-xl border border-slate-800 text-emerald-400 text-sm font-bold animate-pulse">جاري تحميل مكتبة السكربتات...</div>}>
-            <AutomationScriptHub />
-          </Suspense>
+          <AutomationScriptHub />
         </div>
       )}
 

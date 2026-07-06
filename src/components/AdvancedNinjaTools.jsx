@@ -215,6 +215,15 @@ const AdvancedNinjaTools = memo(function AdvancedNinjaTools() {
   const [bandwidth, setBandwidth] = useState("50"); // Mbps
   const [calcResult, setCalcResult] = useState("");
 
+  // Cron generator state
+  const [cronMinute, setCronMinute] = useState("*");
+  const [cronHour, setCronHour] = useState("*");
+  const [cronDay, setCronDay] = useState("*");
+  const [cronMonth, setCronMonth] = useState("*");
+  const [cronWeekday, setCronWeekday] = useState("*");
+  const [cronCommand, setCronCommand] = useState("/var/www/backup.sh");
+  const [copiedCron, setCopiedCron] = useState(false);
+
   const handleCopyDocker = () => {
     navigator.clipboard.writeText(dockerTemplates[selectedDocker].yaml);
     setCopiedDocker(true);
@@ -338,6 +347,7 @@ const AdvancedNinjaTools = memo(function AdvancedNinjaTools() {
         {[
           { id: "docker", label: "Docker Compose", icon: <Server className="w-3.5 h-3.5" /> },
           { id: "nginx", label: "Nginx Config", icon: <Settings className="w-3.5 h-3.5" /> },
+          { id: "cron", label: "مولد Cron Jobs", icon: <Activity className="w-3.5 h-3.5" /> },
           { id: "quiz", label: "محاكي الاختبارات", icon: <HelpCircle className="w-3.5 h-3.5" /> },
           { id: "bandwidth", label: "حاسبة النقل", icon: <Activity className="w-3.5 h-3.5" /> },
           { id: "card", label: "بطاقة الإنجاز", icon: <Award className="w-3.5 h-3.5" /> }
@@ -717,6 +727,84 @@ const AdvancedNinjaTools = memo(function AdvancedNinjaTools() {
                   <div className="flex justify-between text-[11px] text-slate-450 font-semibold">
                     <span>الحاويات والأتمتة</span>
                     <span>جاهزية كاملة</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+          {activeTab === "cron" && (
+            <motion.div
+              key="cron"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              className="flex flex-col gap-4 text-right"
+            >
+              <h4 className="font-extrabold text-sm text-slate-100 flex items-center gap-1.5 justify-start">
+                <Activity className="w-4 h-4 text-purple-400" />
+                جدولة ومولد مهام لينكس (Cron Job Generator)
+              </h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                حدد التوقيت المناسب والسكربت المطلوب لتوليد سطر التكوين الخاص بـ Crontab.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 items-center">
+                <div className="w-full sm:w-1/2 flex flex-col gap-3">
+                  <div className="grid grid-cols-5 gap-2">
+                    <div className="flex flex-col gap-1 text-center">
+                      <span className="text-[9px] text-slate-500 font-extrabold">دقيقة</span>
+                      <input value={cronMinute} onChange={e => setCronMinute(e.target.value)} className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-xs font-mono text-slate-200" />
+                    </div>
+                    <div className="flex flex-col gap-1 text-center">
+                      <span className="text-[9px] text-slate-500 font-extrabold">ساعة</span>
+                      <input value={cronHour} onChange={e => setCronHour(e.target.value)} className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-xs font-mono text-slate-200" />
+                    </div>
+                    <div className="flex flex-col gap-1 text-center">
+                      <span className="text-[9px] text-slate-500 font-extrabold">يوم</span>
+                      <input value={cronDay} onChange={e => setCronDay(e.target.value)} className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-xs font-mono text-slate-200" />
+                    </div>
+                    <div className="flex flex-col gap-1 text-center">
+                      <span className="text-[9px] text-slate-500 font-extrabold">شهر</span>
+                      <input value={cronMonth} onChange={e => setCronMonth(e.target.value)} className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-xs font-mono text-slate-200" />
+                    </div>
+                    <div className="flex flex-col gap-1 text-center">
+                      <span className="text-[9px] text-slate-500 font-extrabold">يوم/أسبوع</span>
+                      <input value={cronWeekday} onChange={e => setCronWeekday(e.target.value)} className="bg-slate-950 border border-slate-800 rounded-lg p-2 text-center text-xs font-mono text-slate-200" />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[10px] text-slate-500 font-extrabold">الأمر المطلوب تشغيله (Command):</span>
+                    <input
+                      value={cronCommand}
+                      onChange={e => setCronCommand(e.target.value)}
+                      className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-purple-500 text-left font-mono"
+                    />
+                  </div>
+                </div>
+
+                <div className="w-full sm:w-1/2 bg-slate-950 border border-slate-850 rounded-xl p-4 flex flex-col gap-3">
+                  <div className="flex justify-between items-center border-b border-slate-900 pb-2">
+                    <span className="text-[10px] font-black text-purple-400">سجل التكوين المولد</span>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(`${cronMinute} ${cronHour} ${cronDay} ${cronMonth} ${cronWeekday} ${cronCommand}`);
+                        setCopiedCron(true);
+                        setTimeout(() => setCopiedCron(false), 2000);
+                      }}
+                      className="text-slate-400 hover:text-purple-400 text-[10px] font-bold flex items-center gap-0.5"
+                    >
+                      {copiedCron ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span>{copiedCron ? "تم النسخ!" : "نسخ الكود"}</span>
+                    </button>
+                  </div>
+
+                  <pre className="font-mono text-xs text-slate-350 p-3 bg-slate-900 rounded-lg select-all text-left" dir="ltr">
+                    {`${cronMinute} ${cronHour} ${cronDay} ${cronMonth} ${cronWeekday} ${cronCommand}`}
+                  </pre>
+                  
+                  <div className="text-[10px] text-slate-500 leading-relaxed bg-purple-500/5 p-3 rounded-lg border border-purple-500/10">
+                    💡 <strong>تلميح نينجا:</strong> لتشغيل السكربت كل ليلة في الساعة 12:00 صباحاً، اضبط الساعات والدقائق على <code className="text-purple-300">0 0</code> والباقي <code className="text-purple-300">*</code>.
                   </div>
                 </div>
               </div>

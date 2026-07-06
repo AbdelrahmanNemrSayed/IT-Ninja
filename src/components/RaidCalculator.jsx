@@ -25,6 +25,18 @@ const raidDetails = {
     desc: "دمج بين النسخ المتطابق والتوزيع (Mirroring + Striping). أداء عالٍ جداً وحماية فائقة، يتطلب 4 أقراص على الأقل وعدد أقراص زوجي.",
     minDisks: 4,
     color: "text-amber-400 border-amber-500/20 bg-amber-500/5"
+  },
+  "50": {
+    name: "RAID 50 (5+0)",
+    desc: "مجموعات من RAID 5 موزعة في مصفوفة RAID 0. أداء رائع وقراءة ممتازة وسعة جيدة، يتطلب 6 أقراص كحد أدنى ويتحمل تلف قرص واحد من كل مجموعة.",
+    minDisks: 6,
+    color: "text-indigo-400 border-indigo-500/20 bg-indigo-500/5"
+  },
+  "60": {
+    name: "RAID 60 (6+0)",
+    desc: "مجموعات من RAID 6 موزعة في مصفوفة RAID 0. يوفر حماية فائقة جداً (تسامح تلف قرصين لكل مجموعة فرعية)، يتطلب 8 أقراص كحد أدنى.",
+    minDisks: 8,
+    color: "text-purple-400 border-purple-500/20 bg-purple-500/5"
   }
 };
 
@@ -78,6 +90,15 @@ const RaidCalculator = memo(function RaidCalculator() {
       return;
     }
 
+    if ((level === "50" || level === "60") && n % 2 !== 0) {
+      setResult((prev) => ({
+        ...prev,
+        isValid: false,
+        errorMsg: `يتطلب RAID ${level} عدداً زوجياً من الأقراص لتوزيع المجموعات بالتساوي.`
+      }));
+      return;
+    }
+
     let usableCapacity = 0;
     let faultTolerance = 0;
     let readSpeed = "";
@@ -113,6 +134,27 @@ const RaidCalculator = memo(function RaidCalculator() {
         writeSpeed = `${n / 2}x (سريع جداً)`;
         efficiency = 50;
         break;
+      case "50":
+        // n/2 groups of RAID 5 (each group has 2 disks minimum, total min 6 disks, so 2 groups of 3)
+        // With n disks, assuming 2 groups of n/2 disks
+        const numGroups50 = 2;
+        const disksPerGroup50 = n / numGroups50;
+        usableCapacity = numGroups50 * (disksPerGroup50 - 1) * size;
+        faultTolerance = 2; // 1 disk per group
+        readSpeed = `${n - numGroups50}x (سريع جداً)`;
+        writeSpeed = "متوسط (مع بطء التماثل الموزع)";
+        efficiency = Math.round((usableCapacity / (n * size)) * 100);
+        break;
+      case "60":
+        // 2 groups of RAID 6 (each group has 4 disks minimum)
+        const numGroups60 = 2;
+        const disksPerGroup60 = n / numGroups60;
+        usableCapacity = numGroups60 * (disksPerGroup60 - 2) * size;
+        faultTolerance = 4; // 2 disks per group
+        readSpeed = `${n - (numGroups60 * 2)}x (سريع)`;
+        writeSpeed = "مقبول (مع بطء التماثل المزدوج)";
+        efficiency = Math.round((usableCapacity / (n * size)) * 100);
+        break;
       default:
         break;
     }
@@ -131,8 +173,8 @@ const RaidCalculator = memo(function RaidCalculator() {
   const currentLevelInfo = raidDetails[raidLevel];
 
   return (
-    <div className="bg-slate-900/60 border border-blue-500/20 rounded-xl p-5 shadow-lg backdrop-blur-md">
-      <div className="flex items-center gap-2 mb-4 border-b border-slate-800 pb-3">
+    <div className="bg-slate-900/60 border border-blue-500/20 rounded-xl p-5 shadow-lg backdrop-blur-md text-right">
+      <div className="flex items-center gap-2 mb-4 border-b border-slate-800 pb-3 flex-row-reverse">
         <HardDrive className="w-5 h-5 text-blue-400 animate-pulse" />
         <h3 className="font-bold text-lg text-slate-100">حاسبة السعات والأمان لمصفوفات التخزين (RAID Calculator)</h3>
       </div>
@@ -145,12 +187,14 @@ const RaidCalculator = memo(function RaidCalculator() {
           <select
             value={raidLevel}
             onChange={(e) => setRaidLevel(e.target.value)}
-            className="bg-slate-950 border border-slate-700/60 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500 transition-colors"
+            className="bg-slate-950 border border-slate-700/60 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
           >
             <option value="0">RAID 0 (لا حماية)</option>
             <option value="1">RAID 1 (مرآة كاملة)</option>
             <option value="5">RAID 5 (سرعة + حماية)</option>
             <option value="10">RAID 10 (سرعة + أمان فائق)</option>
+            <option value="50">RAID 50 (أداء وسعة للمجموعات)</option>
+            <option value="60">RAID 60 (حماية قصوى للمجموعات)</option>
           </select>
         </div>
 
@@ -185,7 +229,7 @@ const RaidCalculator = memo(function RaidCalculator() {
           <select
             value={diskUnit}
             onChange={(e) => setDiskUnit(e.target.value)}
-            className="bg-slate-950 border border-slate-700/60 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500 transition-colors"
+            className="bg-slate-950 border border-slate-700/60 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
           >
             <option value="GB">جيجابايت (GB)</option>
             <option value="TB">تيرابايت (TB)</option>
