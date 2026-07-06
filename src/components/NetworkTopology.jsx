@@ -56,9 +56,17 @@ export default function NetworkTopology() {
 
   // Node connection builder
   const handleNodeClick = (nodeId) => {
+    if (connectFrom === "SELECT_SOURCE") {
+      setConnectFrom(nodeId);
+      const srcNode = nodes.find(n => n.id === nodeId);
+      addLog(`🔌 تم اختيار ${srcNode.name} كمصدر. الآن انقر على الجهاز الثاني للتوصيل...`);
+      return;
+    }
+
     if (connectFrom) {
       if (connectFrom === nodeId) {
         setConnectFrom(null);
+        addLog("🔌 تم إلغاء وضع التوصيل.");
         return;
       }
       // Check if connection already exists
@@ -71,8 +79,10 @@ export default function NetworkTopology() {
         setConnectFrom(null);
         return;
       }
+      const fromNode = nodes.find(n => n.id === connectFrom);
+      const toNode = nodes.find(n => n.id === nodeId);
       setConnections(prev => [...prev, { from: connectFrom, to: nodeId }]);
-      addLog(`🔌 تم توصيل كابل شبكي بين ${connectFrom} و ${nodeId}`);
+      addLog(`🔌 تم توصيل كابل شبكي بين ${fromNode.name} و ${toNode.name}`);
       setConnectFrom(null);
     } else {
       setSelectedNode(nodes.find(n => n.id === nodeId));
@@ -153,13 +163,20 @@ export default function NetworkTopology() {
             <span className="text-[10px] text-slate-500 font-extrabold block mb-1">توصيل الكابلات الشبكية</span>
             <button
               onClick={() => {
-                if (nodes.length < 2) return;
-                setConnectFrom(nodes[0].id);
-                addLog(`🔌 حدد الجهاز الثاني لتوصيل الكابل بـ ${nodes[0].name}...`);
+                if (nodes.length < 2) {
+                  addLog("⚠️ يجب إضافة جهازين على الأقل لتتمكن من التوصيل!");
+                  return;
+                }
+                setConnectFrom("SELECT_SOURCE");
+                addLog("🔌 وضع التوصيل: انقر على الجهاز الأول (المصدر)...");
               }}
-              className="w-full py-2 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-bold rounded-lg hover:bg-cyan-500/20 cursor-pointer transition-colors"
+              className={`w-full py-2 border text-[10px] font-bold rounded-lg cursor-pointer transition-colors ${
+                connectFrom === "SELECT_SOURCE" 
+                  ? "bg-amber-500/20 border-amber-500/40 text-amber-400 animate-pulse" 
+                  : "bg-cyan-500/10 border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/20"
+              }`}
             >
-              ربط كابل شبكي جديد (Cable RJ45)
+              {connectFrom === "SELECT_SOURCE" ? "انتظار اختيار الجهاز الأول..." : "ربط كابل شبكي جديد (Cable RJ45)"}
             </button>
           </div>
 
