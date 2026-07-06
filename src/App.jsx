@@ -50,7 +50,7 @@ export default function App() {
 
 function AppContent() {
   const { activeProfileId } = useProfile();
-  const { user, authModal, setAuthModal } = useAuth();
+  const { user, authModal, setAuthModal, recoveryMode } = useAuth();
   const { isOpen: searchOpen, setIsOpen: setSearchOpen } = useGlobalSearch();
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [userProfileOpen, setUserProfileOpen] = useState(false);
@@ -151,6 +151,16 @@ function AppContent() {
     }
     setSidebarOpen(false);
   };
+
+  if (recoveryMode) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
+        <AnimatePresence>
+          <AuthModal key="auth-modal" />
+        </AnimatePresence>
+      </div>
+    );
+  }
 
   return (
     <div key={activeProfileId} className="min-h-screen ninja-bg text-slate-100 flex flex-col select-none">

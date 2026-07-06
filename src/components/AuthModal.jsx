@@ -111,6 +111,7 @@ export default function AuthModal() {
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/95 backdrop-blur-xl"
+      onClick={e => !recoveryMode && e.target === e.currentTarget && setAuthModal(false)}
     >
       {/* Background orbs */}
       <FloatingOrb style={{ width: 400, height: 400, background: "radial-gradient(circle, #06b6d4, transparent)", top: "10%", left: "15%" }} />
@@ -126,9 +127,11 @@ export default function AuthModal() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-px bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
 
           {/* Close */}
-          <button onClick={() => setAuthModal(false)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-200 transition-colors cursor-pointer p-1.5 rounded-lg hover:bg-slate-800">
-            <X className="w-4 h-4" />
-          </button>
+          {!recoveryMode && (
+            <button onClick={() => setAuthModal(false)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-200 transition-colors cursor-pointer p-1.5 rounded-lg hover:bg-slate-800">
+              <X className="w-4 h-4" />
+            </button>
+          )}
 
           {/* Logo */}
           <div className="flex flex-col items-center mb-6">
