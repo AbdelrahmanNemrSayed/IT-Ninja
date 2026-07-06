@@ -103,3 +103,31 @@ CREATE TRIGGER on_auth_user_created
 -- Real-time: enable for leaderboard live updates
 -- ════════════════════════════════════════════════════════════
 ALTER PUBLICATION supabase_realtime ADD TABLE public.profiles;
+
+-- 5. Comments & Discussions Table
+CREATE TABLE IF NOT EXISTS public.comments (
+  id          SERIAL PRIMARY KEY,
+  phase_id    INTEGER NOT NULL,
+  user_id     UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+  text        TEXT NOT NULL,
+  created_at  TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable RLS for comments
+ALTER TABLE public.comments ENABLE ROW LEVEL SECURITY;
+
+-- Anyone can read comments
+CREATE POLICY "Anyone can view comments"
+  ON public.comments FOR SELECT USING (true);
+
+-- Authenticated users can insert their own comments
+CREATE POLICY "Users can insert comments"
+  ON public.comments FOR INSERT WITH CHECK (auth.role() = 'authenticated' AND auth.uid() = user_id);
+
+-- Owners can delete their own comments
+CREATE POLICY "Users can delete comments"
+  ON public.comments FOR DELETE USING (auth.uid() = user_id);
+
+-- Enable real-time for comments
+ALTER PUBLICATION supabase_realtime ADD TABLE public.comments;
+

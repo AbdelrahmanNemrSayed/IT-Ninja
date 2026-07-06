@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, Menu, Download, Upload, RotateCcw, LogIn, User, Star, ChevronDown, Zap } from "lucide-react";
+import { X, Menu, Download, Upload, RotateCcw, LogIn, User, Star, ChevronDown, Zap, Search } from "lucide-react";
 import { totalCheckboxes } from "../utils/constants";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProfile } from "../context/ProfileContext";
@@ -17,6 +17,7 @@ export default function Header({
   resetAllProgress,
   onOpenProfileModal,
   onOpenUserProfile,
+  onSearchClick,
 }) {
   const { activeProfile } = useProfile();
   const { user, profile, setAuthModal, isConfigured } = useAuth();

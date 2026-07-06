@@ -31,6 +31,7 @@ import DailyTodo from "./components/DailyTodo";
 import StudyTimer from "./components/StudyTimer";
 import GlobalSearch, { useGlobalSearch, GlobalSearchTrigger } from "./components/GlobalSearch";
 import AnalyticsDashboard from "./components/AnalyticsDashboard";
+import LinuxTerminal from "./components/LinuxTerminal";
 
 import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -182,6 +183,7 @@ function AppContent() {
         resetAllProgress={resetAllProgress}
         onOpenProfileModal={() => setProfileModalOpen(true)}
         onOpenUserProfile={() => setUserProfileOpen(true)}
+        onSearchClick={() => setSearchOpen(true)}
       />
 
       <div className="flex-grow flex w-full max-w-7xl mx-auto px-4 py-6 gap-6 relative">
@@ -283,6 +285,7 @@ function AppContent() {
           <HomeLabHub />
           <PracticePlatformsGrid />
           <AdvancedNinjaTools />
+          <LinuxTerminal />
           <CareerHub />
           <RoadmapPlanner />
           <RAIDVisualizer />

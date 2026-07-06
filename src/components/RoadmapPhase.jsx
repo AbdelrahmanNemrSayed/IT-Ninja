@@ -17,6 +17,8 @@ import {
   ChevronUp
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import AIQuizGenerator from "./AIQuizGenerator";
+import CommentsSection from "./CommentsSection";
 
 const accentColors = {
   emerald: {
@@ -394,6 +396,12 @@ const RoadmapPhase = memo(function RoadmapPhase({
             </div>
           </div>
         </details>
+
+        {/* AI Quiz & stage comments section */}
+        <div className="mt-6 border-t border-slate-800 pt-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
+          <AIQuizGenerator phaseName={phase.title || phase.name} />
+          <CommentsSection phaseId={phase.id} />
+        </div>
       </div>
             </div>
           </motion.div>
