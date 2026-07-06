@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Lock, User, Eye, EyeOff, X, Loader2, AlertCircle, CheckCircle2, Zap, Shield } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { supabase } from "../lib/supabase";
 
 const FloatingOrb = ({ style }) => (
   <div className="absolute rounded-full blur-3xl opacity-20 pointer-events-none animate-pulse" style={style} />
@@ -50,11 +51,17 @@ export default function AuthModal() {
         const { error } = await signIn(email, password);
         if (error) throw error;
         setAuthModal(false);
-      } else {
+      } else if (tab === "register") {
         if (password.length < 6) throw new Error("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
         const { error } = await signUp(email, password, username);
         if (error) throw error;
         setSuccess("✅ تم إنشاء حسابك! تحقق من بريدك الإلكتروني لتأكيد الحساب.");
+      } else if (tab === "forgot") {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin,
+        });
+        if (error) throw error;
+        setSuccess("✅ تم إرسال بريد لإعادة تعيين كلمة المرور! تحقق من بريدك الوارد.");
       }
     } catch (err) {
       const msg = err.message || "حدث خطأ ما";
@@ -157,7 +164,34 @@ export default function AuthModal() {
             </AnimatePresence>
 
             <InputField icon={Mail} type="email" placeholder="البريد الإلكتروني" value={email} onChange={e => setEmail(e.target.value)} />
-            <InputField icon={Lock} type="password" placeholder="كلمة المرور" value={password} onChange={e => setPassword(e.target.value)} showToggle onToggle={() => setShowPass(!showPass)} showPass={showPass} />
+            
+            {tab !== "forgot" && (
+              <InputField icon={Lock} type="password" placeholder="كلمة المرور" value={password} onChange={e => setPassword(e.target.value)} showToggle onToggle={() => setShowPass(!showPass)} showPass={showPass} />
+            )}
+
+            {tab === "login" && (
+              <div className="text-right">
+                <button
+                  type="button"
+                  onClick={() => { setTab("forgot"); setError(""); setSuccess(""); }}
+                  className="text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer"
+                >
+                  نسيت كلمة المرور؟
+                </button>
+              </div>
+            )}
+
+            {tab === "forgot" && (
+              <div className="text-right">
+                <button
+                  type="button"
+                  onClick={() => { setTab("login"); setError(""); setSuccess(""); }}
+                  className="text-xs font-bold text-slate-400 hover:text-slate-350 transition-colors cursor-pointer"
+                >
+                  ← العودة لتسجيل الدخول
+                </button>
+              </div>
+            )}
 
             <AnimatePresence>
               {error && (
@@ -188,7 +222,7 @@ export default function AuthModal() {
               {loading ? (
                 <span className="flex items-center justify-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> جارٍ التحميل...</span>
               ) : (
-                tab === "login" ? "🔐 تسجيل الدخول" : "🚀 إنشاء الحساب"
+                tab === "login" ? "🔐 تسجيل الدخول" : tab === "register" ? "🚀 إنشاء الحساب" : "✉️ إرسال رابط إعادة التعيين"
               )}
             </motion.button>
           </form>
