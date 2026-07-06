@@ -30,7 +30,7 @@ const InputField = ({ icon: Icon, type, placeholder, value, onChange, showToggle
 );
 
 export default function AuthModal() {
-  const { signIn, signUp, setAuthModal, isConfigured } = useAuth();
+  const { signIn, signUp, setAuthModal, isConfigured, recoveryMode, setRecoveryMode } = useAuth();
   const [tab, setTab] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,7 +47,14 @@ export default function AuthModal() {
     setLoading(true);
 
     try {
-      if (tab === "login") {
+      if (recoveryMode) {
+        if (password.length < 6) throw new Error("كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل");
+        const { error } = await supabase.auth.updateUser({ password });
+        if (error) throw error;
+        setSuccess("🎉 تم تحديث كلمة المرور بنجاح! جاري الانتقال للوحة التحكم...");
+        setRecoveryMode(false);
+        setTimeout(() => setAuthModal(false), 2000);
+      } else if (tab === "login") {
         const { error } = await signIn(email, password);
         if (error) throw error;
         setAuthModal(false);
@@ -125,51 +132,63 @@ export default function AuthModal() {
 
           {/* Logo */}
           <div className="flex flex-col items-center mb-6">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)] mb-3">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-purple-650 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)] mb-3">
               <Zap className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-xl font-black text-slate-100">IT Ninja</h1>
-            <p className="text-xs text-slate-500 mt-0.5">منصة تعلم الـ IT الاحترافية</p>
+            <h1 className="text-xl font-black text-slate-100">
+              {recoveryMode ? "إعادة تعيين المرور" : "IT Ninja"}
+            </h1>
+            <p className="text-xs text-slate-500 mt-0.5">
+              {recoveryMode ? "قم بكتابة كلمة المرور الجديدة لحسابك" : "منصة تعلم الـ IT الاحترافية"}
+            </p>
           </div>
 
-          {/* Tabs */}
-          <div className="flex bg-slate-950 rounded-xl p-1 mb-6 relative">
-            <motion.div
-              className="absolute top-1 bottom-1 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30"
-              animate={{ left: tab === "login" ? "4px" : "calc(50% + 2px)", width: "calc(50% - 6px)" }}
-              transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            />
-            {[
-              { id: "login", label: "تسجيل الدخول" },
-              { id: "register", label: "حساب جديد" },
-            ].map(t => (
-              <button
-                key={t.id}
-                onClick={() => { setTab(t.id); setError(""); setSuccess(""); }}
-                className={`flex-1 py-2 text-sm font-bold rounded-lg relative z-10 transition-colors cursor-pointer ${tab === t.id ? "text-cyan-400" : "text-slate-500 hover:text-slate-300"}`}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
+          {/* Tabs - Hidden in recoveryMode */}
+          {!recoveryMode && (
+            <div className="flex bg-slate-950 rounded-xl p-1 mb-6 relative">
+              <motion.div
+                className="absolute top-1 bottom-1 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30"
+                animate={{ left: tab === "login" ? "4px" : "calc(50% + 2px)", width: "calc(50% - 6px)" }}
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+              {[
+                { id: "login", label: "تسجيل الدخول" },
+                { id: "register", label: "حساب جديد" },
+              ].map(t => (
+                <button
+                  key={t.id}
+                  onClick={() => { setTab(t.id); setError(""); setSuccess(""); }}
+                  className={`flex-1 py-2 text-sm font-bold rounded-lg relative z-10 transition-colors cursor-pointer ${tab === t.id ? "text-cyan-400" : "text-slate-500 hover:text-slate-300"}`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <AnimatePresence mode="wait">
-              {tab === "register" && (
-                <motion.div key="username" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-                  <InputField icon={User} type="text" placeholder="اسم المستخدم (Username)" value={username} onChange={e => setUsername(e.target.value)} />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {recoveryMode ? (
+              <InputField icon={Lock} type="password" placeholder="كلمة المرور الجديدة" value={password} onChange={e => setPassword(e.target.value)} showToggle onToggle={() => setShowPass(!showPass)} showPass={showPass} />
+            ) : (
+              <>
+                <AnimatePresence mode="wait">
+                  {tab === "register" && (
+                    <motion.div key="username" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
+                      <InputField icon={User} type="text" placeholder="اسم المستخدم (Username)" value={username} onChange={e => setUsername(e.target.value)} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-            <InputField icon={Mail} type="email" placeholder="البريد الإلكتروني" value={email} onChange={e => setEmail(e.target.value)} />
-            
-            {tab !== "forgot" && (
-              <InputField icon={Lock} type="password" placeholder="كلمة المرور" value={password} onChange={e => setPassword(e.target.value)} showToggle onToggle={() => setShowPass(!showPass)} showPass={showPass} />
+                <InputField icon={Mail} type="email" placeholder="البريد الإلكتروني" value={email} onChange={e => setEmail(e.target.value)} />
+                
+                {tab !== "forgot" && (
+                  <InputField icon={Lock} type="password" placeholder="كلمة المرور" value={password} onChange={e => setPassword(e.target.value)} showToggle onToggle={() => setShowPass(!showPass)} showPass={showPass} />
+                )}
+              </>
             )}
 
-            {tab === "login" && (
+            {!recoveryMode && tab === "login" && (
               <div className="text-right">
                 <button
                   type="button"
@@ -181,7 +200,7 @@ export default function AuthModal() {
               </div>
             )}
 
-            {tab === "forgot" && (
+            {!recoveryMode && tab === "forgot" && (
               <div className="text-right">
                 <button
                   type="button"
