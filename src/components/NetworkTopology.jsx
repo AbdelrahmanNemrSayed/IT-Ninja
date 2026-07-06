@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Server, Monitor, HardDrive, Wifi, Plus, Trash2, Play, RefreshCw, AlertCircle, CheckCircle2 } from "lucide-react";
 
 export default function NetworkTopology() {
   const [nodes, setNodes] = useState([
-    { id: "router_1", name: "Router 1 (الراوتر الرئيسي)", type: "router", ip: "192.168.1.1", x: 180, y: 50 },
-    { id: "switch_1", name: "Switch 1 (السويتش المركزي)", type: "switch", x: 180, y: 160 },
-    { id: "pc_1", name: "PC 1 (جهاز الموظف)", type: "pc", ip: "192.168.1.10", x: 80, y: 280 },
-    { id: "server_1", name: "Web Server (خادم الويب)", type: "server", ip: "192.168.1.100", x: 280, y: 280 }
+    { id: "router_1", name: "Router 1 (الراوتر الرئيسي)", type: "router", ip: "192.168.1.1", x: 180, y: 55 },
+    { id: "switch_1", name: "Switch 1 (السويتش المركزي)", type: "switch", x: 180, y: 165 },
+    { id: "pc_1", name: "PC 1 (جهاز الموظف)", type: "pc", ip: "192.168.1.10", x: 80, y: 275 },
+    { id: "server_1", name: "Web Server (خادم الويب)", type: "server", ip: "192.168.1.100", x: 280, y: 275 }
   ]);
 
   const [connections, setConnections] = useState([
@@ -22,6 +22,10 @@ export default function NetworkTopology() {
   const [pingTarget, setPingTarget] = useState("");
   const [packetAnim, setPacketAnim] = useState(null);
   const [log, setLog] = useState([]);
+  
+  // Custom Drag State
+  const [draggingId, setDraggingId] = useState(null);
+  const containerRef = useRef(null);
 
   // Add new nodes
   const addNode = (type) => {
@@ -35,8 +39,8 @@ export default function NetworkTopology() {
 
     const newNode = {
       id, name, type, ip,
-      x: 150 + Math.random() * 80,
-      y: 150 + Math.random() * 80
+      x: 120 + Math.random() * 100,
+      y: 120 + Math.random() * 100
     };
     setNodes(prev => [...prev, newNode]);
     addLog(`➕ تم إضافة جهاز جديد: ${name}`);
@@ -99,7 +103,6 @@ export default function NetworkTopology() {
 
     addLog(`📡 بدء فحص الاتصال (Ping) من ${srcNode.name} إلى ${destNode.name}...`);
     
-    // Find path via Switch (mocked simple path animation)
     setPacketAnim({
       fromX: srcNode.x, fromY: srcNode.y,
       toX: destNode.x, toY: destNode.y,
@@ -122,8 +125,33 @@ export default function NetworkTopology() {
     }, 1000);
   };
 
+  // Handle Drag Pointer move
+  const handlePointerMove = (e) => {
+    if (!draggingId || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    
+    // Calculate client coords relative to container
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+
+    // Boundary constraints
+    x = Math.max(28, Math.min(rect.width - 28, x));
+    y = Math.max(28, Math.min(rect.height - 28, y));
+
+    setNodes(prev => prev.map(n => n.id === draggingId ? { ...n, x, y } : n));
+  };
+
+  const handlePointerUp = () => {
+    setDraggingId(null);
+  };
+
   return (
-    <div className="bg-slate-900/40 backdrop-blur-md border border-cyan-500/20 rounded-2xl p-6 flex flex-col gap-6 shadow-lg relative text-right">
+    <div 
+      className="bg-slate-900/40 backdrop-blur-md border border-cyan-500/20 rounded-2xl p-6 flex flex-col gap-6 shadow-lg relative text-right"
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerUp}
+    >
       <div className="border-b border-slate-800 pb-3 flex justify-between items-center flex-row-reverse">
         <div>
           <h3 className="font-extrabold text-sm text-slate-100 flex items-center justify-start gap-2 flex-row-reverse">
@@ -224,7 +252,10 @@ export default function NetworkTopology() {
         </div>
 
         {/* Center Interactive SVG workspace */}
-        <div className="lg:col-span-3 bg-slate-950/80 border border-slate-850 rounded-xl relative overflow-hidden h-[340px] flex items-center justify-center">
+        <div 
+          ref={containerRef}
+          className="lg:col-span-3 bg-slate-950/80 border border-slate-850 rounded-xl relative overflow-hidden h-[340px]"
+        >
           <svg className="absolute inset-0 w-full h-full pointer-events-none">
             {/* Draw Cable Connections */}
             {connections.map((c, i) => {
@@ -263,12 +294,12 @@ export default function NetworkTopology() {
             const isSelected = selectedNode?.id === node.id;
             const isConnectSource = connectFrom === node.id;
             return (
-              <motion.div
+              <div
                 key={node.id}
-                drag
-                dragMomentum={false}
-                onDrag={(e, info) => {
-                  setNodes(prev => prev.map(n => n.id === node.id ? { ...n, x: n.x + info.delta.x, y: n.y + info.delta.y } : n));
+                onPointerDown={(e) => {
+                  e.stopPropagation();
+                  setDraggingId(node.id);
+                  setSelectedNode(node);
                 }}
                 onClick={() => handleNodeClick(node.id)}
                 className={`absolute w-14 h-14 rounded-2xl flex flex-col items-center justify-center border cursor-grab active:cursor-grabbing transition-shadow select-none ${
@@ -278,7 +309,11 @@ export default function NetworkTopology() {
                     ? "bg-slate-900 border-yellow-400 shadow-[0_0_15px_rgba(234,179,8,0.3)]"
                     : "bg-slate-900/90 border-slate-800 hover:border-slate-750"
                 }`}
-                style={{ left: node.x - 28, top: node.y - 28 }}
+                style={{ 
+                  left: node.x - 28, 
+                  top: node.y - 28,
+                  touchAction: "none" 
+                }}
               >
                 {node.type === "router" && <Wifi className="w-6 h-6 text-cyan-400" />}
                 {node.type === "switch" && <HardDrive className="w-6 h-6 text-purple-400" />}
@@ -286,7 +321,7 @@ export default function NetworkTopology() {
                 {node.type === "server" && <Server className="w-6 h-6 text-amber-400" />}
                 <span className="text-[8px] font-extrabold text-slate-300 mt-1 max-w-[50px] truncate text-center">{node.name}</span>
                 {node.ip && <span className="text-[6px] font-mono text-slate-500 mt-0.5">{node.ip}</span>}
-              </motion.div>
+              </div>
             );
           })}
 
@@ -315,7 +350,9 @@ export default function NetworkTopology() {
       <div className="bg-slate-950 border border-slate-850 rounded-xl p-4 font-mono text-[9px] text-slate-400 max-h-24 overflow-y-auto">
         <span className="text-[8px] text-slate-500 font-extrabold block mb-1">سجل الأحداث والشبكة:</span>
         <div className="flex flex-col gap-1">
-          {log.length === 0 ? "ابدأ ببناء شبكتك وتوصيل كابلات RJ45..." : log.map((l, i) => <div key={i}>{l}</div>)}
+          {log.map((msg, i) => (
+            <div key={i} className="text-right">{msg}</div>
+          ))}
         </div>
       </div>
     </div>
