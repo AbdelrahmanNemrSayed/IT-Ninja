@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HelpCircle, Sparkles, CheckCircle2, XCircle, ChevronRight, Play, Loader2, Award } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 

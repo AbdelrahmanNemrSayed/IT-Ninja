@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { supabase, isSupabaseConfigured } from "../lib/supabase";
+import { supabase, isSupabaseConfigured } from "../../lib/supabase";
 import { Trophy, Crown, Medal, Star, Loader2, Wifi, WifiOff } from "lucide-react";
 
 const RANK_COLORS = {

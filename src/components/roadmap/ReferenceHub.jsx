@@ -1,5 +1,5 @@
 import React, { useState, memo } from "react";
-import { interviewQuestions, troubleshootingLog } from "../data/referenceData";
+import { interviewQuestions, troubleshootingLog } from "../../data/referenceData";
 import { BookOpen, Search } from "lucide-react";
 
 const ReferenceHub = memo(function ReferenceHub() {

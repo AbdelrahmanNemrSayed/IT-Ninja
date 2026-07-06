@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useProfile, AVATARS } from "../context/ProfileContext";
+import { useProfile, AVATARS } from "../../context/ProfileContext";
 import { UserPlus, Trash2, X, Check, Edit2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 

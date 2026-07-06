@@ -1,6 +1,6 @@
 import React from "react";
 import { Trophy, Sparkles } from "lucide-react";
-import { badgeNames } from "../utils/constants";
+import { badgeNames } from "../../utils/constants";
 
 export default function CelebrationModal({ celebratedPhase, setCelebratedPhase }) {
   if (!celebratedPhase) return null;

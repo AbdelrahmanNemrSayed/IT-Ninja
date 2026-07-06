@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { roadmapData } from "./data/roadmapData";
 import { totalCheckboxes, accentColors, getPlatformIcon } from "./utils/constants";
 import { useProgress } from "./hooks/useProgress";
@@ -9,35 +9,40 @@ import Header from "./layout/Header";
 import Sidebar from "./layout/Sidebar";
 import Footer from "./layout/Footer";
 
-import RoadmapPhase from "./components/RoadmapPhase";
-import CheatSheetsHub from "./components/CheatSheetsHub";
-import ReferenceHub from "./components/ReferenceHub";
-import HomeLabHub from "./components/HomeLabHub";
-import PracticePlatformsGrid from "./components/PracticePlatformsGrid";
-import ConfettiEffect from "./components/ConfettiEffect";
-import CelebrationModal from "./components/CelebrationModal";
-import ProfileSelector from "./components/ProfileSelector";
-import AdvancedNinjaTools from "./components/AdvancedNinjaTools";
-import CareerHub from "./components/CareerHub";
-import RAIDVisualizer from "./components/RAIDVisualizer";
-import RoadmapPlanner from "./components/RoadmapPlanner";
-import NinjaAchievements from "./components/NinjaAchievements";
-import AuthModal from "./components/AuthModal";
-import UserProfile from "./components/UserProfile";
-import Leaderboard from "./components/Leaderboard";
-import AIAssistant from "./components/AIAssistant";
-import CertificateGenerator from "./components/CertificateGenerator";
-import DailyTodo from "./components/DailyTodo";
-import StudyTimer from "./components/StudyTimer";
-import GlobalSearch, { useGlobalSearch, GlobalSearchTrigger } from "./components/GlobalSearch";
-import AnalyticsDashboard from "./components/AnalyticsDashboard";
-import LinuxTerminal from "./components/LinuxTerminal";
-import NetworkTopology from "./components/NetworkTopology";
-import SubnetCalculator from "./components/SubnetCalculator";
-import FirewallGenerator from "./components/FirewallGenerator";
-import RaidCalculator from "./components/RaidCalculator";
-import AutomationScriptHub from "./components/AutomationScriptHub";
-import SysAdminLabTools from "./components/SysAdminLabTools";
+// Core UI Components (Statically Imported for Initial Paint)
+import RoadmapPhase from "./components/roadmap/RoadmapPhase";
+import RoadmapPlanner from "./components/roadmap/RoadmapPlanner";
+import CareerHub from "./components/roadmap/CareerHub";
+import ConfettiEffect from "./components/ui/ConfettiEffect";
+import CelebrationModal from "./components/ui/CelebrationModal";
+import NinjaAchievements from "./components/dashboard/NinjaAchievements";
+import Leaderboard from "./components/dashboard/Leaderboard";
+
+// Heavy components / Simulators / Utilities (Lazy Loaded for maximum initial load performance)
+const NetworkTopology = lazy(() => import("./components/simulators/NetworkTopology"));
+const SysAdminLabTools = lazy(() => import("./components/simulators/SysAdminLabTools"));
+const AdvancedNinjaTools = lazy(() => import("./components/simulators/AdvancedNinjaTools"));
+const LinuxTerminal = lazy(() => import("./components/simulators/LinuxTerminal"));
+const RaidCalculator = lazy(() => import("./components/simulators/RaidCalculator"));
+const RAIDVisualizer = lazy(() => import("./components/simulators/RAIDVisualizer"));
+const SubnetCalculator = lazy(() => import("./components/simulators/SubnetCalculator"));
+const FirewallGenerator = lazy(() => import("./components/simulators/FirewallGenerator"));
+
+const ReferenceHub = lazy(() => import("./components/roadmap/ReferenceHub"));
+const CheatSheetsHub = lazy(() => import("./components/roadmap/CheatSheetsHub"));
+const HomeLabHub = lazy(() => import("./components/roadmap/HomeLabHub"));
+const PracticePlatformsGrid = lazy(() => import("./components/roadmap/PracticePlatformsGrid"));
+
+const AnalyticsDashboard = lazy(() => import("./components/dashboard/AnalyticsDashboard"));
+const DailyTodo = lazy(() => import("./components/dashboard/DailyTodo"));
+const StudyTimer = lazy(() => import("./components/dashboard/StudyTimer"));
+const CertificateGenerator = lazy(() => import("./components/ui/CertificateGenerator"));
+
+const AuthModal = lazy(() => import("./components/auth/AuthModal"));
+const UserProfile = lazy(() => import("./components/auth/UserProfile"));
+const ProfileSelector = lazy(() => import("./components/auth/ProfileSelector"));
+import GlobalSearch, { useGlobalSearch, GlobalSearchTrigger } from "./components/ui/GlobalSearch";
+const AIAssistant = lazy(() => import("./components/AIAssistant"));
 
 import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -191,9 +196,11 @@ function AppContent() {
       </AnimatePresence>
 
       {/* User Profile Modal */}
-      <AnimatePresence>
-        {userProfileOpen && <UserProfile key="user-profile" onClose={() => setUserProfileOpen(false)} />}
-      </AnimatePresence>
+      <Suspense fallback={null}>
+        <AnimatePresence>
+          {userProfileOpen && <UserProfile key="user-profile" onClose={() => setUserProfileOpen(false)} />}
+        </AnimatePresence>
+      </Suspense>
 
       <Header
         globalProgressPercent={globalProgressPercent}
@@ -329,82 +336,106 @@ function AppContent() {
 
           {/* PAGE 2: INTERACTIVE TOOLS & SIMULATORS */}
           {activeView === "tools" && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-8">
-              <NetworkTopology />
-              <SysAdminLabTools />
-              <AdvancedNinjaTools />
-              <LinuxTerminal />
-              <RaidCalculator />
-              <RAIDVisualizer />
-              <SubnetCalculator />
-              <FirewallGenerator />
-            </motion.div>
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center min-h-[350px] gap-3 bg-slate-950/40 border border-slate-900 rounded-2xl p-8">
+                <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-bold text-slate-400">جاري تحميل مختبرات الأنظمة والشبكات التفاعلية...</span>
+              </div>
+            }>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-8">
+                <NetworkTopology />
+                <SysAdminLabTools />
+                <AdvancedNinjaTools />
+                <LinuxTerminal />
+                <RaidCalculator />
+                <RAIDVisualizer />
+                <SubnetCalculator />
+                <FirewallGenerator />
+              </motion.div>
+            </Suspense>
           )}
 
           {/* PAGE 3: REFERENCE & CHEATSHEETS */}
           {activeView === "reference" && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-8">
-              <ReferenceHub />
-              <CheatSheetsHub />
-              <AutomationScriptHub />
-              
-              <motion.section 
-                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                className="bg-slate-900/40 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 flex flex-col gap-4 text-right"
-              >
-                <div className="border-b border-slate-800 pb-3 flex justify-start items-center gap-2 flex-row-reverse">
-                  <Wrench className="w-4.5 h-4.5 text-cyan-400" />
-                  <h3 className="font-extrabold text-sm text-slate-100">أدوات العمل اليومية لمهندس الأنظمة (Essential Daily Tools)</h3>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {[
-                    { name: "PuTTY", desc: "محاكي طرفي آمن لبروتوكولات SSH/Telnet للاتصال بالسيرفرات وإدارة أجهزة الشبكة برمجياً.", url: "https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" },
-                    { name: "Tftpd64", desc: "خادم وعميل TFTP خفيف الوزن ومتوافق مع IPv6 لنقل أنظمة التشغيل والترقيات لأجهزة الشبكة.", url: "https://tftpd64.toomedim.fr/" },
-                    { name: "Git for Windows", desc: "نظام إدارة الإصدارات وتتبع التغييرات للأكواد والسكربتات وتشغيل أوامر Bash على نظام ويندوز.", url: "https://gitforwindows.org/" }
-                  ].map((t) => (
-                    <div key={t.name} className="bg-slate-950/80 border border-slate-800 p-4 rounded-xl flex flex-col justify-between hover:border-cyan-500/50 transition-all text-right">
-                      <div className="mb-4">
-                        <span className="font-extrabold text-sm text-cyan-400 block mb-1">{t.name}</span>
-                        <p className="text-xs text-slate-400 leading-relaxed">{t.desc}</p>
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center min-h-[300px] gap-3 bg-slate-950/40 border border-slate-900 rounded-2xl p-8">
+                <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-bold text-slate-400">جاري تحميل المراجع وجداول الأوامر السريعة...</span>
+              </div>
+            }>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-8">
+                <ReferenceHub />
+                <CheatSheetsHub />
+                <AutomationScriptHub />
+                
+                <motion.section 
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                  className="bg-slate-900/40 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 flex flex-col gap-4 text-right"
+                >
+                  <div className="border-b border-slate-800 pb-3 flex justify-start items-center gap-2 flex-row-reverse">
+                    <Wrench className="w-4.5 h-4.5 text-cyan-400" />
+                    <h3 className="font-extrabold text-sm text-slate-100">أدوات العمل اليومية لمهندس الأنظمة (Essential Daily Tools)</h3>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[
+                      { name: "PuTTY", desc: "محاكي طرفي آمن لبروتوكولات SSH/Telnet للاتصال بالسيرفرات وإدارة أجهزة الشبكة برمجياً.", url: "https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" },
+                      { name: "Tftpd64", desc: "خادم وعميل TFTP خفيف الوزن ومتوافق مع IPv6 لنقل أنظمة التشغيل والترقيات لأجهزة الشبكة.", url: "https://tftpd64.toomedim.fr/" },
+                      { name: "Git for Windows", desc: "نظام إدارة الإصدارات وتتبع التغييرات للأكواد والسكربتات وتشغيل أوامر Bash على نظام ويندوز.", url: "https://gitforwindows.org/" }
+                    ].map((t) => (
+                      <div key={t.name} className="bg-slate-950/80 border border-slate-800 p-4 rounded-xl flex flex-col justify-between hover:border-cyan-500/50 transition-all text-right">
+                        <div className="mb-4">
+                          <span className="font-extrabold text-sm text-cyan-400 block mb-1">{t.name}</span>
+                          <p className="text-xs text-slate-400 leading-relaxed">{t.desc}</p>
+                        </div>
+                        <a href={t.url} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-slate-350 hover:text-white flex items-center justify-center gap-1 py-1.5 bg-slate-900 border border-slate-800 rounded-lg transition-all cursor-pointer">
+                          <span>تحميل الأداة</span>
+                        </a>
                       </div>
-                      <a href={t.url} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-slate-350 hover:text-white flex items-center justify-center gap-1 py-1.5 bg-slate-900 border border-slate-800 rounded-lg transition-all cursor-pointer">
-                        <span>تحميل الأداة</span>
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </motion.section>
-            </motion.div>
+                    ))}
+                  </div>
+                </motion.section>
+              </motion.div>
+            </Suspense>
           )}
 
           {/* PAGE 4: PERFORMANCE ANALYTICS & TODAY TODO */}
           {activeView === "analytics" && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-8">
-              <AnalyticsDashboard />
-              
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                <DailyTodo />
-                <CertificateGenerator
-                  phaseNumber={1}
-                  phaseTitle="Network Foundations"
-                  completedCount={completedCount}
-                  totalCount={totalCheckboxes}
-                />
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center min-h-[300px] gap-3 bg-slate-950/40 border border-slate-900 rounded-2xl p-8">
+                <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-bold text-slate-400">جاري تحميل لوحة الإحصائيات وتحليلات الأداء...</span>
               </div>
+            }>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-8">
+                <AnalyticsDashboard />
+                
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                  <DailyTodo />
+                  <CertificateGenerator
+                    phaseNumber={1}
+                    phaseTitle="Network Foundations"
+                    completedCount={completedCount}
+                    totalCount={totalCheckboxes}
+                  />
+                </div>
 
-              <HomeLabHub />
-              <PracticePlatformsGrid />
-            </motion.div>
+                <HomeLabHub />
+                <PracticePlatformsGrid />
+              </motion.div>
+            </Suspense>
           )}
 
         </main>
       </div>
 
       <Footer />
-      <AIAssistant />
-      <GlobalSearch />
-      <StudyTimer />
-      <ProfileSelector open={profileModalOpen} onClose={() => setProfileModalOpen(false)} />
+      
+      <Suspense fallback={null}>
+        <AIAssistant />
+        <GlobalSearch />
+        <StudyTimer />
+        <ProfileSelector open={profileModalOpen} onClose={() => setProfileModalOpen(false)} />
+      </Suspense>
     </div>
   );
 }

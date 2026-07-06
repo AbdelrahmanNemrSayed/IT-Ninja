@@ -1,6 +1,6 @@
 import React from "react";
-import { roadmapData } from "../data/roadmapData";
-import { badgeNames } from "../utils/constants";
+import { roadmapData } from "../../data/roadmapData";
+import { badgeNames } from "../../utils/constants";
 
 export default function BadgesSection({ earnedBadges }) {
   return (

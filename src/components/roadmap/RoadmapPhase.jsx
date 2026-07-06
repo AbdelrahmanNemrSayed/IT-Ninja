@@ -1,8 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
-import SubnetCalculator from "./SubnetCalculator";
-import RaidCalculator from "./RaidCalculator";
-import FirewallGenerator from "./FirewallGenerator";
-import AutomationScriptHub from "./AutomationScriptHub";
+import React, { memo, useState, useEffect, lazy, Suspense } from "react";
 import { 
   Youtube, 
   BookOpen, 
@@ -17,8 +13,21 @@ import {
   ChevronUp
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import AIQuizGenerator from "./AIQuizGenerator";
-import CommentsSection from "./CommentsSection";
+
+// Lazy Loaded Widgets inside Roadmap Phase
+const SubnetCalculator = lazy(() => import("../simulators/SubnetCalculator"));
+const RaidCalculator = lazy(() => import("../simulators/RaidCalculator"));
+const FirewallGenerator = lazy(() => import("../simulators/FirewallGenerator"));
+const AutomationScriptHub = lazy(() => import("./AutomationScriptHub"));
+const AIQuizGenerator = lazy(() => import("./AIQuizGenerator"));
+const CommentsSection = lazy(() => import("./CommentsSection"));
+
+const WidgetLoader = () => (
+  <div className="flex items-center justify-center py-4 bg-slate-950/40 border border-slate-900 rounded-xl gap-2 text-[10px] text-slate-500 font-bold">
+    <div className="w-3.5 h-3.5 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+    <span>جاري تحميل الأداة التفاعلية...</span>
+  </div>
+);
 
 const accentColors = {
   emerald: {
@@ -228,30 +237,38 @@ const RoadmapPhase = memo(function RoadmapPhase({
 
       {/* Subnet Calculator widget in networking phase */}
       {phase.id === "networks" && (
-        <div className="my-1">
-          <SubnetCalculator />
-        </div>
+        <Suspense fallback={<WidgetLoader />}>
+          <div className="my-1">
+            <SubnetCalculator />
+          </div>
+        </Suspense>
       )}
 
       {/* RAID Calculator widget in virtualization phase */}
       {phase.id === "virtualization" && (
-        <div className="my-1">
-          <RaidCalculator />
-        </div>
+        <Suspense fallback={<WidgetLoader />}>
+          <div className="my-1">
+            <RaidCalculator />
+          </div>
+        </Suspense>
       )}
 
       {/* Firewall Generator widget in security phase */}
       {phase.id === "security" && (
-        <div className="my-1">
-          <FirewallGenerator />
-        </div>
+        <Suspense fallback={<WidgetLoader />}>
+          <div className="my-1">
+            <FirewallGenerator />
+          </div>
+        </Suspense>
       )}
 
       {/* Automation script hub in scripting phase */}
       {phase.id === "specialization" && (
-        <div className="my-1">
-          <AutomationScriptHub />
-        </div>
+        <Suspense fallback={<WidgetLoader />}>
+          <div className="my-1">
+            <AutomationScriptHub />
+          </div>
+        </Suspense>
       )}
 
       {/* Learning Resources Preview Cards */}
@@ -390,10 +407,23 @@ const RoadmapPhase = memo(function RoadmapPhase({
         </details>
 
         {/* AI Quiz & stage comments section */}
-        <div className="mt-6 border-t border-slate-800 pt-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
-          <AIQuizGenerator phaseName={phase.title || phase.name} />
-          <CommentsSection phaseId={phase.id} />
-        </div>
+        <Suspense fallback={
+          <div className="mt-6 border-t border-slate-800 pt-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <div className="flex items-center justify-center py-6 bg-slate-950/20 border border-slate-900/50 rounded-xl text-[10px] text-slate-500 font-bold gap-2">
+              <div className="w-3.5 h-3.5 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+              <span>جاري تحميل أسئلة الذكاء الاصطناعي...</span>
+            </div>
+            <div className="flex items-center justify-center py-6 bg-slate-950/20 border border-slate-900/50 rounded-xl text-[10px] text-slate-500 font-bold gap-2">
+              <div className="w-3.5 h-3.5 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+              <span>جاري تحميل التعليقات والنقاشات...</span>
+            </div>
+          </div>
+        }>
+          <div className="mt-6 border-t border-slate-800 pt-6 grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <AIQuizGenerator phaseName={phase.title || phase.name} />
+            <CommentsSection phaseId={phase.id} />
+          </div>
+        </Suspense>
       </div>
             </div>
           </motion.div>

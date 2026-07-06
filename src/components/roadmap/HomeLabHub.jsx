@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Server, ExternalLink, Download, Layers } from "lucide-react";
-import { homeLabData } from "../data/hubsData";
+import { homeLabData } from "../../data/hubsData";
 
 export default function HomeLabHub() {
   const getIconForCategory = (cat) => {

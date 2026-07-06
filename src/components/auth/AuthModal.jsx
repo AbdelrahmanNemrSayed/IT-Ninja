@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Lock, User, Eye, EyeOff, X, Loader2, AlertCircle, CheckCircle2, Zap, Shield } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
-import { supabase } from "../lib/supabase";
+import { useAuth } from "../../context/AuthContext";
+import { supabase } from "../../lib/supabase";
 
 const FloatingOrb = ({ style }) => (
   <div className="absolute rounded-full blur-3xl opacity-20 pointer-events-none animate-pulse" style={style} />

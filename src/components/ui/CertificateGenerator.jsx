@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Award, Download, Share2, Check, Sparkles, Star } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const PHASE_BADGES = {
   1: { emoji: "🌐", color: "#06b6d4", name: "Network Foundations" },

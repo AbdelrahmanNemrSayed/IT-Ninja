@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Target, ExternalLink } from "lucide-react";
-import { practicePlatformsData } from "../data/hubsData";
+import { practicePlatformsData } from "../../data/hubsData";
 
 export default function PracticePlatformsGrid() {
   const getAccentColors = (accent) => {

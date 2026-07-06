@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, ArrowRight, BookOpen, Terminal, Layers, Command } from "lucide-react";
-import { roadmapData } from "../data/roadmapData";
+import { roadmapData } from "../../data/roadmapData";
 
 // Build flat search index from roadmapData
 function buildIndex() {

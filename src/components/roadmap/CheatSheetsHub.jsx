@@ -1,5 +1,5 @@
 import React, { useState, memo } from "react";
-import { cheatSheetsData, toolsData } from "../data/roadmapData";
+import { cheatSheetsData, toolsData } from "../../data/roadmapData";
 import { Terminal, Search, ExternalLink } from "lucide-react";
 
 const CheatSheetsHub = memo(function CheatSheetsHub() {

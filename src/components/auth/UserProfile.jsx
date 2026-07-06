@@ -1,7 +1,7 @@
 import React, { useState, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { User, LogOut, Star, Award, Edit3, Check, X, Loader2, Shield, Settings, Goal, Compass } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const RANK_GRADIENT = {
   "Platinum Ninja": "from-cyan-400 to-blue-500",

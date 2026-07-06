@@ -1,7 +1,7 @@
 import React from "react";
 import { X, CheckCircle, Wrench, Award, Book, BookOpen, LayoutDashboard, Database } from "lucide-react";
 import { roadmapData } from "../data/roadmapData";
-import BadgesSection from "../components/BadgesSection";
+import BadgesSection from "../components/ui/BadgesSection";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Sidebar({
