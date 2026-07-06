@@ -134,13 +134,47 @@ export function useBackup(
     reader.readAsText(file);
   }, [setCompletedItems, setCertProgress, setStarredResources, setNotebookNotes, setEarnedBadges]);
 
-  const resetAllProgress = useCallback(() => {
+  const resetAllProgress = useCallback(async () => {
     if (window.confirm("هل أنت متأكد من رغبتك في إعادة تعيين كافة خطوات التقدم والمذاكرة؟")) {
-      setCompletedItems({});
-      setCertProgress({ ccna: 0, linux: 0, security: 0, cloud: 0 });
-      setStarredResources([]);
-      setNotebookNotes({});
-      setEarnedBadges([]);
+      try {
+        // 1. Clear achievements and streaks
+        localStorage.removeItem("ninja_achievements_v2");
+        localStorage.removeItem("ninja-streak");
+        localStorage.removeItem("ninja-daily-activity");
+        localStorage.removeItem("ninja-streak-data");
+        
+        // 2. Clear all profiles keys
+        const profileKeys = ["completed", "certs", "starred", "notes", "badges"];
+        const profileIds = ["default", "student", "professional", "custom"]; 
+        profileIds.forEach(p => {
+          profileKeys.forEach(k => {
+            localStorage.removeItem(`roadmapProgress-${p}-${k}`);
+          });
+        });
+
+        // 3. Reset states
+        setCompletedItems({});
+        setCertProgress({ ccna: 0, linux: 0, security: 0, cloud: 0 });
+        setStarredResources([]);
+        setNotebookNotes({});
+        setEarnedBadges([]);
+
+        // 4. Reset Supabase
+        if (isSupabaseConfigured) {
+          const { data: { user } } = await supabase.auth.getUser();
+          if (user) {
+            await supabase
+              .from("profiles")
+              .update({ total_xp: 0, rank: "Ninja Rookie", avatar_url: "🥷" })
+              .eq("id", user.id);
+          }
+        }
+      } catch (err) {
+        console.error("Reset progress error:", err);
+      } finally {
+        // 5. Reload to flush memory and refresh views
+        window.location.reload();
+      }
     }
   }, [setCompletedItems, setCertProgress, setStarredResources, setNotebookNotes, setEarnedBadges]);
 
