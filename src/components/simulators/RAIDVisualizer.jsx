@@ -105,10 +105,11 @@ const RAIDVisualizer = memo(function RAIDVisualizer() {
 
   return (
     <motion.section
+      id="raid-visualizer"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-slate-900/40 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 flex flex-col gap-6 shadow-lg relative overflow-hidden"
+      className="bg-slate-900/40 backdrop-blur-md border border-amber-500/20 rounded-2xl p-6 flex flex-col gap-6 shadow-lg relative overflow-hidden scroll-mt-28"
     >
       <div className="absolute top-0 left-0 w-64 h-64 bg-amber-500/5 rounded-full filter blur-3xl pointer-events-none" />
 

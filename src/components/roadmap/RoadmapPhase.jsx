@@ -112,7 +112,8 @@ const RoadmapPhase = memo(function RoadmapPhase({
   toggleStar,
   updateNote,
   isOpen,
-  onToggle
+  onToggle,
+  navigateToTab
 }) {
   const styles = accentColors[phase.accent] || accentColors.cyan;
 
@@ -235,40 +236,68 @@ const RoadmapPhase = memo(function RoadmapPhase({
         </div>
       </div>
 
-      {/* Subnet Calculator widget in networking phase */}
+      {/* Subnet Calculator Link */}
       {phase.id === "networks" && (
-        <Suspense fallback={<WidgetLoader />}>
-          <div className="my-1">
-            <SubnetCalculator />
+        <div className="bg-slate-950/60 border border-cyan-500/10 rounded-xl p-4 flex flex-col sm:flex-row-reverse sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col gap-1 text-right">
+            <span className="text-xs font-extrabold text-cyan-400">🧪 مختبر حاسبة الـ Subnetting التفاعلي</span>
+            <span className="text-[11px] text-slate-400">قم بتفكيك الـ IP وقناع الشبكة إلى بتات ثنائية ملونة وحساب تفاصيل الشبكة بالكامل.</span>
           </div>
-        </Suspense>
+          <button 
+            onClick={() => navigateToTab("tools", "subnet-calculator")}
+            className="px-4 py-1.5 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/20 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap self-end sm:self-auto"
+          >
+            فتح حاسبة الشبكة الفرعية 💻
+          </button>
+        </div>
       )}
 
-      {/* RAID Calculator widget in virtualization phase */}
+      {/* RAID Calculator Link */}
       {phase.id === "virtualization" && (
-        <Suspense fallback={<WidgetLoader />}>
-          <div className="my-1">
-            <RaidCalculator />
+        <div className="bg-slate-950/60 border border-emerald-500/10 rounded-xl p-4 flex flex-col sm:flex-row-reverse sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col gap-1 text-right">
+            <span className="text-xs font-extrabold text-emerald-400">💾 مختبر حاسبة ومحاكي RAID التفاعلي</span>
+            <span className="text-[11px] text-slate-400">جرّب مستويات RAID المختلفة، محاكاة سعة التخزين وسرعة الأداء مع سيناريو تعطل قرص.</span>
           </div>
-        </Suspense>
+          <button 
+            onClick={() => navigateToTab("tools", "raid-visualizer")}
+            className="px-4 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap self-end sm:self-auto"
+          >
+            تشغيل محاكي الـ RAID 💻
+          </button>
+        </div>
       )}
 
-      {/* Firewall Generator widget in security phase */}
+      {/* Firewall Generator Link */}
       {phase.id === "security" && (
-        <Suspense fallback={<WidgetLoader />}>
-          <div className="my-1">
-            <FirewallGenerator />
+        <div className="bg-slate-950/60 border border-rose-500/10 rounded-xl p-4 flex flex-col sm:flex-row-reverse sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col gap-1 text-right">
+            <span className="text-xs font-extrabold text-rose-455">🔒 مولّد جدران الحماية وقواعد Firewall</span>
+            <span className="text-[11px] text-slate-400">صمم إعدادات وقواعد الحماية وتصديرها بصيغ iptables و pfSense و Cisco ACLs.</span>
           </div>
-        </Suspense>
+          <button 
+            onClick={() => navigateToTab("tools", "firewall-generator")}
+            className="px-4 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-455 border border-rose-500/20 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap self-end sm:self-auto"
+          >
+            تشغيل مولّد الـ Firewall 💻
+          </button>
+        </div>
       )}
 
-      {/* Automation script hub in scripting phase */}
+      {/* Automation script hub Link */}
       {phase.id === "specialization" && (
-        <Suspense fallback={<WidgetLoader />}>
-          <div className="my-1">
-            <AutomationScriptHub />
+        <div className="bg-slate-950/60 border border-purple-500/10 rounded-xl p-4 flex flex-col sm:flex-row-reverse sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col gap-1 text-right">
+            <span className="text-xs font-extrabold text-purple-400">⚙️ مستودع سكربتات وحزم الأتمتة (Automation Scripts)</span>
+            <span className="text-[11px] text-slate-400">جاهز بنصوص وأوامر أتمتة لـ Bash و PowerShell و Ansible جاهزة للنسخ والاستخدام.</span>
           </div>
-        </Suspense>
+          <button 
+            onClick={() => navigateToTab("tools", "automation-scripts")}
+            className="px-4 py-1.5 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/20 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap self-end sm:self-auto"
+          >
+            فتح مستودع السكربتات 💻
+          </button>
+        </div>
       )}
 
       {/* Learning Resources Preview Cards */}

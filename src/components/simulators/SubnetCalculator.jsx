@@ -106,7 +106,7 @@ const SubnetCalculator = memo(function SubnetCalculator() {
   };
 
   return (
-    <div className="bg-slate-900/60 border border-cyan-500/20 rounded-xl p-5 shadow-lg backdrop-blur-md">
+    <div id="subnet-calculator" className="bg-slate-900/60 border border-cyan-500/20 rounded-xl p-5 shadow-lg backdrop-blur-md scroll-mt-28">
       <div className="flex items-center gap-2 mb-4 border-b border-slate-800 pb-3">
         <Network className="w-5 h-5 text-cyan-400 animate-pulse" />
         <h3 className="font-bold text-lg text-slate-100">حاسبة الشبكات الفرعية البصرية (IPv4 Visual Subnet Calculator)</h3>

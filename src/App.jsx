@@ -43,6 +43,7 @@ const UserProfile = lazy(() => import("./components/auth/UserProfile"));
 const ProfileSelector = lazy(() => import("./components/auth/ProfileSelector"));
 import GlobalSearch, { useGlobalSearch, GlobalSearchTrigger } from "./components/ui/GlobalSearch";
 const AIAssistant = lazy(() => import("./components/AIAssistant"));
+const NinjaHQ = lazy(() => import("./components/dashboard/NinjaHQ"));
 
 import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -67,7 +68,7 @@ function AppContent() {
   const [userProfileOpen, setUserProfileOpen] = useState(false);
   
   // Navigation / Multi-Page routing state
-  const [activeView, setActiveView] = useState("roadmap");
+  const [activeView, setActiveView] = useState("overview");
 
   const {
     completedItems,
@@ -160,14 +161,36 @@ function AppContent() {
     });
   }, [completedItems, earnedBadges, getPhaseCompletionStats, setEarnedBadges]);
 
-  const handleScrollTo = (id) => {
-    setActiveView("roadmap");
-    setTimeout(() => {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+  const navigateToTab = useCallback((tabId, scrollId) => {
+    setActiveView(tabId);
+    if (scrollId) {
+      let finalScrollId = scrollId;
+      
+      // If scrollId is a sub-tool in SysAdmin lab tools
+      if (["dns", "ssh", "gpo", "binary", "yaml"].includes(scrollId)) {
+        window.dispatchEvent(new CustomEvent("launch-ninja-tool", { detail: scrollId }));
+        finalScrollId = "sysadmin-lab-tools";
       }
-    }, 100);
+
+      // If scrollId is a sub-tool in Advanced ninja tools
+      if (["docker", "nginx", "cron", "quiz", "bandwidth", "card"].includes(scrollId)) {
+        window.dispatchEvent(new CustomEvent("launch-ninja-tool", { detail: scrollId }));
+        finalScrollId = "advanced-ninja-tools";
+      }
+
+      setTimeout(() => {
+        const element = document.getElementById(finalScrollId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+          element.classList.add("ring-2", "ring-cyan-500/80");
+          setTimeout(() => element.classList.remove("ring-2", "ring-cyan-500/80"), 2000);
+        }
+      }, 200);
+    }
+  }, []);
+
+  const handleScrollTo = (id) => {
+    navigateToTab("roadmap", id);
     setSidebarOpen(false);
   };
 
@@ -230,6 +253,24 @@ function AppContent() {
 
         <main className="flex-grow w-full lg:max-w-[calc(100%-17rem)] flex flex-col gap-8">
           
+          {/* PAGE 0: OVERVIEW / COMMAND CENTER */}
+          {activeView === "overview" && (
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center min-h-[350px] gap-3 bg-slate-950/40 border border-slate-900 rounded-2xl p-8">
+                <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-bold text-slate-400">جاري تحميل مركز التحكم الرئيسي...</span>
+              </div>
+            }>
+              <NinjaHQ 
+                completedCount={completedCount}
+                totalCheckboxes={totalCheckboxes}
+                globalProgressPercent={globalProgressPercent}
+                navigateToTab={navigateToTab}
+                earnedBadges={earnedBadges}
+              />
+            </Suspense>
+          )}
+
           {/* PAGE 1: ROADMAP & CURRICULUM */}
           {activeView === "roadmap" && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-8">
@@ -302,6 +343,7 @@ function AppContent() {
                   updateNote={updateNote}
                   isOpen={!!expandedPhases[phase.id]}
                   onToggle={() => togglePhaseExpansion(phase.id)}
+                  navigateToTab={navigateToTab}
                 />
               ))}
 

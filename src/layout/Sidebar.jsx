@@ -1,5 +1,5 @@
 import React from "react";
-import { X, CheckCircle, Wrench, Award, Book, BookOpen, LayoutDashboard, Database } from "lucide-react";
+import { X, CheckCircle, Wrench, Award, Book, BookOpen, LayoutDashboard, Database, Compass } from "lucide-react";
 import { roadmapData } from "../data/roadmapData";
 import BadgesSection from "../components/ui/BadgesSection";
 import { motion, AnimatePresence } from "framer-motion";
@@ -45,7 +45,8 @@ export default function Sidebar({
             <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-2 pr-2">أقسام المنصة الرئيسية</div>
             
             {[
-              { id: "roadmap", label: "خريطة الطريق والمسار", icon: LayoutDashboard },
+              { id: "overview", label: "المقر الرئيسي والقيادة", icon: LayoutDashboard },
+              { id: "roadmap", label: "خريطة الطريق والمسار", icon: Compass },
               { id: "tools", label: "أدوات ومحاكيات النينجا", icon: Wrench },
               { id: "reference", label: "الحقيبة المرجعية والأوامر", icon: BookOpen },
               { id: "analytics", label: "تحليلات الأداء واليوميات", icon: Award }

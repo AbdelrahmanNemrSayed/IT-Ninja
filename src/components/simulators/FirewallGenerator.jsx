@@ -67,7 +67,7 @@ const FirewallGenerator = memo(function FirewallGenerator() {
   };
 
   return (
-    <div className="bg-slate-900/60 border border-red-500/20 rounded-xl p-5 shadow-lg backdrop-blur-md">
+    <div id="firewall-generator" className="bg-slate-900/60 border border-red-500/20 rounded-xl p-5 shadow-lg backdrop-blur-md scroll-mt-28">
       <div className="flex items-center gap-2 mb-4 border-b border-slate-800 pb-3">
         <ShieldCheck className="w-5 h-5 text-rose-455 animate-pulse" />
         <h3 className="font-bold text-lg text-slate-100">مولد أوامر جدران الحماية (Firewall Command Generator)</h3>

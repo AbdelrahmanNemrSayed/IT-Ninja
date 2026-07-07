@@ -8,6 +8,17 @@ import {
 export default function SysAdminLabTools() {
   const [activeTab, setActiveTab] = useState("dns");
 
+  useEffect(() => {
+    const handleLaunchTool = (e) => {
+      const toolId = e.detail;
+      if (["dns", "ssh", "gpo", "binary", "yaml"].includes(toolId)) {
+        setActiveTab(toolId);
+      }
+    };
+    window.addEventListener("launch-ninja-tool", handleLaunchTool);
+    return () => window.removeEventListener("launch-ninja-tool", handleLaunchTool);
+  }, []);
+
   const tabs = [
     { id: "dns", label: "محاكي ومولد DNS", icon: <Globe className="w-4 h-4" /> },
     { id: "ssh", label: "مستند SSH Config", icon: <Server className="w-4 h-4" /> },
@@ -17,7 +28,7 @@ export default function SysAdminLabTools() {
   ];
 
   return (
-    <div className="bg-slate-900/40 backdrop-blur-md border border-purple-500/20 rounded-2xl p-6 flex flex-col gap-6 shadow-lg text-right">
+    <div id="sysadmin-lab-tools" className="bg-slate-900/40 backdrop-blur-md border border-purple-500/20 rounded-2xl p-6 flex flex-col gap-6 shadow-lg text-right scroll-mt-28">
       {/* Header */}
       <div className="border-b border-slate-800/80 pb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
