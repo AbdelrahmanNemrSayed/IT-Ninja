@@ -7,16 +7,32 @@ import {
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-const SYSTEM_PROMPT = `أنت "Ninja AI" — مساعد ذكي متخصص في تقنية المعلومات (IT) مدمج في منصة IT Ninja التعليمية.
+const SYSTEM_PROMPT = `أنت "Ninja AI" 🥷 — المساعد الذكي الخبير والمتخصص في تقنية المعلومات (IT) والشبكات وأنظمة التشغيل، المدمج في منصة IT Ninja التعليمية الفخمة.
 
-قواعدك:
-- أجب باللغة العربية دائماً (إلا الأوامر والمصطلحات التقنية بالإنجليزية)
-- تخصصك: Linux, Networking, Docker, Security, Cloud, DevOps, Servers
-- اجعل إجاباتك دقيقة ومباشرة مع أمثلة عملية
-- استخدم رموز markdown للكود: \`\`\`bash للأوامر
-- إذا لم تعرف الإجابة، قل ذلك بصراحة
-- اقترح مصادر من الـ Roadmap عند الاقتضاء
-- حافظ على نبرة تحفيزية ومشجعة`;
+مهمتك هي تقديم إجابات مبهرة، منسقة، ومرتبة بشكل بصري جذاب للغاية. اتبع القواعد الصارمة التالية في كل رد:
+
+1. التنسيق والهيكلة البصرية 📊:
+   - قسم إجابتك إلى عناوين فرعية واضحة ونقاط مرتبة باستخدام Markdown.
+   - استخدم الجداول (Tables) دائماً عند المقارنة بين شيئين أو عرض خصائص وميزات متقارنة (مثال: مقارنة بروتوكولات، مستويات RAID، إلخ).
+   - ضع الأكواد والأوامر داخل كتل كود مظللة بالكامل مثل: \`\`\`bash للأوامر أو \`\`\`yaml للملفات.
+
+2. استخدام الإيموجي التفاعلي والأيقونات 🌟:
+   - استخدم الإيموجي والأيقونات التفاعلية في بداية العناوين والنقاط لتضفي الحيوية والتنظيم البصري على ردودك.
+   - أمثلة للإيموجي حسب السياق:
+     - 📡 للشبكات والاتصالات وبروتوكولات الإنترنت.
+     - 🐧 لنظام لينكس والأوامر والـ Terminal.
+     - 🔒 للأمان والسياسات وجدران الحماية والتشفير.
+     - ☁️ للحوسبة السحابية وأدوات الـ DevOps والـ CI/CD.
+     - 🐳 لـ Docker و Kubernetes وحاويات التطبيقات.
+     - 💾 للتخزين وأنظمة RAID والأقراص الصلبة.
+     - ⚙️ للأتمتة والسكربتات والـ Cron jobs.
+     - 💡 للنصائح الذكية والممارسات الفضلى.
+     - ⚠️ للتنبيهات والأخطاء الشائعة التي يجب تجنبها.
+
+3. النبرة والأسلوب 🎯:
+   - نبرة حماسية، تشجيعية، وتفاعلية تشبه معلم النينجا الحكيم (Sensei) الذي يوجه تلميذه نحو الاحتراف والتميز.
+   - اجعل الشرح مبسطاً جداً ومقترناً بأمثلة عملية من بيئات العمل الحقيقية لمهندسي الأنظمة والشبكات.
+   - إذا سألك المستخدم سؤالاً خارج سياق تقنية المعلومات، اعتذر منه بلطف وبأسلوب نينجا ذكي وأرشده لطرح أسئلة في الشبكات والأنظمة.`;
 
 const SUGGESTED_QUESTIONS = [
   "ما الفرق بين TCP و UDP؟",
@@ -56,30 +72,157 @@ async function callGemini(messages) {
   return data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أفهم السؤال.";
 }
 
-// Simple markdown-to-jsx renderer for code blocks
+// Rich markdown-to-jsx renderer supporting tables, lists, headers and bold inline styles
 function MessageContent({ text }) {
-  const parts = text.split(/(```[\s\S]*?```)/g);
+  // 1. Split by code blocks first
+  const blocks = text.split(/(```[\s\S]*?```)/g);
+
   return (
-    <div className="text-sm leading-relaxed">
-      {parts.map((part, i) => {
-        if (part.startsWith("```")) {
-          const lang = part.match(/```(\w*)/)?.[1] || "";
-          const code = part.replace(/```\w*\n?/, "").replace(/```$/, "");
+    <div className="text-sm leading-relaxed text-right flex flex-col gap-2.5">
+      {blocks.map((block, index) => {
+        if (block.startsWith("```")) {
+          const lang = block.match(/```(\w*)/)?.[1] || "";
+          const code = block.replace(/```\w*\n?/, "").replace(/```$/, "");
           return (
-            <pre key={i} className="bg-slate-950 border border-slate-700 rounded-lg p-3 my-2 overflow-x-auto text-xs font-mono text-cyan-300 whitespace-pre-wrap">
-              {lang && <span className="text-slate-500 block mb-1 text-[10px]">{lang}</span>}
+            <pre key={index} className="bg-slate-950 border border-slate-850 rounded-xl p-4 my-1 overflow-x-auto text-xs font-mono text-cyan-300 text-left whitespace-pre scrollbar-thin" dir="ltr">
+              {lang && <span className="text-slate-500 block mb-1.5 text-[9px] font-bold uppercase tracking-wider">{lang}</span>}
               {code}
             </pre>
           );
         }
-        // Bold text
-        const bold = part.split(/(\*\*.*?\*\*)/g).map((s, j) =>
-          s.startsWith("**") ? <strong key={j} className="text-slate-100">{s.slice(2, -2)}</strong> : s
-        );
-        return <span key={i}>{bold}</span>;
+
+        // 2. Parse tables, lists, and paragraphs in non-code block text
+        const lines = block.split("\n");
+        const renderedElements = [];
+        let currentTable = null;
+
+        for (let i = 0; i < lines.length; i++) {
+          const line = lines[i].trim();
+
+          // A. Table parsing
+          if (line.startsWith("|")) {
+            const cells = line.split("|").map(c => c.trim()).filter((_, idx, arr) => idx > 0 && idx < arr.length - 1);
+            
+            // Check if it is a separator line (e.g., |---|---|)
+            const isSeparator = cells.every(c => c.startsWith("-") || c === "");
+            
+            if (isSeparator) {
+              continue; // Skip separator line
+            }
+
+            if (!currentTable) {
+              currentTable = { headers: cells, rows: [] };
+            } else {
+              currentTable.rows.push(cells);
+            }
+            
+            // If the next line is not a table line, render the accumulated table
+            const nextLine = lines[i + 1]?.trim() || "";
+            if (!nextLine.startsWith("|")) {
+              const tableToRender = currentTable;
+              currentTable = null;
+              
+              renderedElements.push(
+                <div key={`table-${i}`} className="overflow-x-auto my-3 border border-slate-800 rounded-xl bg-slate-950/40">
+                  <table className="w-full text-right text-xs border-collapse">
+                    <thead>
+                      <tr className="bg-slate-900 border-b border-slate-800">
+                        {tableToRender.headers.map((h, hIdx) => (
+                          <th key={hIdx} className="p-3 font-extrabold text-slate-200">{parseInlineStyles(h)}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {tableToRender.rows.map((row, rIdx) => (
+                        <tr key={rIdx} className="border-b border-slate-850 hover:bg-slate-900/30 transition-colors">
+                          {row.map((cell, cIdx) => (
+                            <td key={cIdx} className="p-3 text-slate-350">{parseInlineStyles(cell)}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            }
+            continue;
+          }
+
+          // B. List parsing
+          if (line.startsWith("- ") || line.startsWith("* ")) {
+            const content = line.substring(2);
+            renderedElements.push(
+              <div key={`li-${i}`} className="flex items-start justify-end gap-2 flex-row-reverse text-right pr-2">
+                <span className="text-cyan-400 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                <span className="text-slate-300 text-xs">{parseInlineStyles(content)}</span>
+              </div>
+            );
+            continue;
+          }
+
+          // C. Numbered List parsing
+          if (/^\d+\.\s/.test(line)) {
+            const num = line.match(/^(\d+)\.\s/)[1];
+            const content = line.replace(/^\d+\.\s/, "");
+            renderedElements.push(
+              <div key={`ol-${num}-${i}`} className="flex items-start justify-end gap-2 flex-row-reverse text-right pr-2">
+                <span className="text-cyan-400 text-xs font-mono font-bold">{num}.</span>
+                <span className="text-slate-300 text-xs">{parseInlineStyles(content)}</span>
+              </div>
+            );
+            continue;
+          }
+
+          // D. Headers
+          if (line.startsWith("### ")) {
+            renderedElements.push(<h4 key={`h3-${i}`} className="font-extrabold text-slate-100 text-xs mt-3 flex items-center gap-1.5 flex-row-reverse justify-end">{parseInlineStyles(line.substring(4))}</h4>);
+            continue;
+          }
+          if (line.startsWith("## ")) {
+            renderedElements.push(<h3 key={`h2-${i}`} className="font-black text-slate-100 text-sm mt-4 border-b border-slate-850 pb-1 flex items-center gap-1.5 flex-row-reverse justify-end">{parseInlineStyles(line.substring(3))}</h3>);
+            continue;
+          }
+
+          // E. Normal Paragraph
+          if (line) {
+            renderedElements.push(<p key={`p-${i}`} className="text-slate-300 text-xs leading-relaxed">{parseInlineStyles(line)}</p>);
+          }
+        }
+
+        return <React.Fragment key={index}>{renderedElements}</React.Fragment>;
       })}
     </div>
   );
+}
+
+// Helper to parse inline bold and inline-code
+function parseInlineStyles(text) {
+  // Handle inline code first `code`
+  let parts = text.split(/(`[^`]+`)/g).map((part, idx) => {
+    if (part.startsWith("`") && part.endsWith("`")) {
+      return (
+        <code key={`code-${idx}`} className="bg-slate-950 border border-slate-800 rounded px-1.5 py-0.5 text-[10px] font-mono text-cyan-300 font-bold mx-0.5" dir="ltr">
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+    
+    // Handle bold inside the remaining text
+    const boldParts = part.split(/(\*\*[^*]+\*\*)/g).map((bPart, bIdx) => {
+      if (bPart.startsWith("**") && bPart.endsWith("**")) {
+        return (
+          <strong key={`bold-${bIdx}`} className="text-white font-extrabold">
+            {bPart.slice(2, -2)}
+          </strong>
+        );
+      }
+      return bPart;
+    });
+
+    return <React.Fragment key={idx}>{boldParts}</React.Fragment>;
+  });
+
+  return parts;
 }
 
 export default function AIAssistant() {
