@@ -255,7 +255,8 @@ export default function NetworkTopology() {
         {/* Center Interactive SVG workspace */}
         <div 
           ref={containerRef}
-          className="lg:col-span-3 bg-slate-950/80 border border-slate-850 rounded-xl relative overflow-hidden h-[340px]"
+          onClick={() => setSelectedNode(null)}
+          className="lg:col-span-3 bg-slate-950/80 border border-slate-850 rounded-xl relative overflow-hidden h-[340px] cursor-default"
         >
           <svg className="absolute inset-0 w-full h-full pointer-events-none">
             {/* Draw Cable Connections */}
@@ -302,7 +303,10 @@ export default function NetworkTopology() {
                   setDraggingId(node.id);
                   setSelectedNode(node);
                 }}
-                onClick={() => handleNodeClick(node.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNodeClick(node.id);
+                }}
                 className={`absolute w-14 h-14 rounded-2xl flex flex-col items-center justify-center border cursor-grab active:cursor-grabbing transition-shadow select-none ${
                   isConnectSource
                     ? "bg-cyan-500/20 border-cyan-400 animate-pulse shadow-[0_0_15px_rgba(6,182,212,0.4)]"
