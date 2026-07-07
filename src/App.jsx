@@ -32,6 +32,7 @@ const ReferenceHub = lazy(() => import("./components/roadmap/ReferenceHub"));
 const CheatSheetsHub = lazy(() => import("./components/roadmap/CheatSheetsHub"));
 const HomeLabHub = lazy(() => import("./components/roadmap/HomeLabHub"));
 const PracticePlatformsGrid = lazy(() => import("./components/roadmap/PracticePlatformsGrid"));
+const AutomationScriptHub = lazy(() => import("./components/roadmap/AutomationScriptHub"));
 
 const AnalyticsDashboard = lazy(() => import("./components/dashboard/AnalyticsDashboard"));
 const DailyTodo = lazy(() => import("./components/dashboard/DailyTodo"));
