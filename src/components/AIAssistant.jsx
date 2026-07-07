@@ -74,6 +74,7 @@ async function callGemini(messages) {
 
 // Rich markdown-to-jsx renderer supporting tables, lists, headers and bold inline styles
 function MessageContent({ text }) {
+  if (!text || typeof text !== "string") return null;
   // 1. Split by code blocks first
   const blocks = text.split(/(```[\s\S]*?```)/g);
 
