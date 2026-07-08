@@ -33,6 +33,9 @@ const CheatSheetsHub = lazy(() => import("./components/roadmap/CheatSheetsHub"))
 const HomeLabHub = lazy(() => import("./components/roadmap/HomeLabHub"));
 const PracticePlatformsGrid = lazy(() => import("./components/roadmap/PracticePlatformsGrid"));
 const AutomationScriptHub = lazy(() => import("./components/roadmap/AutomationScriptHub"));
+const SkillTree = lazy(() => import("./components/roadmap/SkillTree"));
+const ITBattles = lazy(() => import("./components/dashboard/ITBattles"));
+const AICodeReviewer = lazy(() => import("./components/roadmap/AICodeReviewer"));
 
 const AnalyticsDashboard = lazy(() => import("./components/dashboard/AnalyticsDashboard"));
 const DailyTodo = lazy(() => import("./components/dashboard/DailyTodo"));
@@ -375,6 +378,42 @@ function AppContent() {
                 </div>
               </section>
             </motion.div>
+          )}
+
+          {/* PAGE 1.1: RPG SKILL TREE */}
+          {activeView === "skill_tree" && (
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center min-h-[300px] gap-3 bg-slate-950/40 border border-slate-900 rounded-2xl p-8">
+                <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-bold text-slate-400">جاري تحميل شجرة المهارات التفاعلية...</span>
+              </div>
+            }>
+              <SkillTree completedCount={completedCount} navigateToTab={navigateToTab} />
+            </Suspense>
+          )}
+
+          {/* PAGE 1.2: PVP IT BATTLES */}
+          {activeView === "pvp_battles" && (
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center min-h-[300px] gap-3 bg-slate-950/40 border border-slate-900 rounded-2xl p-8">
+                <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-bold text-slate-400">جاري تحميل حلبة المبارزة الفورية...</span>
+              </div>
+            }>
+              <ITBattles />
+            </Suspense>
+          )}
+
+          {/* PAGE 1.3: AI CODE REVIEWER */}
+          {activeView === "code_reviewer" && (
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center min-h-[300px] gap-3 bg-slate-950/40 border border-slate-900 rounded-2xl p-8">
+                <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-bold text-slate-400">جاري تحميل فاحص ومراجع السكربتات الذكي...</span>
+              </div>
+            }>
+              <AICodeReviewer />
+            </Suspense>
           )}
 
           {/* PAGE 2: INTERACTIVE TOOLS & SIMULATORS */}

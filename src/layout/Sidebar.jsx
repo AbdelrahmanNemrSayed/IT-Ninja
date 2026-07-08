@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { X, CheckCircle, Wrench, Award, Book, BookOpen, LayoutDashboard, Database, Compass } from "lucide-react";
+import { X, CheckCircle, Wrench, Award, Book, BookOpen, LayoutDashboard, Database, Compass, Swords, Sparkles } from "lucide-react";
 import { roadmapData } from "../data/roadmapData";
 import BadgesSection from "../components/ui/BadgesSection";
 import { motion, AnimatePresence } from "framer-motion";
@@ -47,9 +47,12 @@ const Sidebar = memo(function Sidebar({
             {[
               { id: "overview", label: "المقر الرئيسي والقيادة", icon: LayoutDashboard },
               { id: "roadmap", label: "خريطة الطريق والمسار", icon: Compass },
+              { id: "skill_tree", label: "شجرة المهارات RPG", icon: Award },
+              { id: "pvp_battles", label: "حلبة التحديات PvP", icon: Swords },
+              { id: "code_reviewer", label: "مراجعة السكربتات AI", icon: Sparkles },
               { id: "tools", label: "أدوات ومحاكيات النينجا", icon: Wrench },
               { id: "reference", label: "الحقيبة المرجعية والأوامر", icon: BookOpen },
-              { id: "analytics", label: "تحليلات الأداء واليوميات", icon: Award }
+              { id: "analytics", label: "تحليلات الأداء واليوميات", icon: Database }
             ].map(tab => (
               <motion.button
                 key={tab.id}
