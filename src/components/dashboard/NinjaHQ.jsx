@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Terminal, Shield, Server, Network, Trophy, Star, 
@@ -47,7 +47,7 @@ const DAILY_QUESTIONS = [
   }
 ];
 
-export default function NinjaHQ({ 
+const NinjaHQ = memo(function NinjaHQ({
   completedCount, 
   totalCheckboxes, 
   globalProgressPercent,
@@ -382,4 +382,6 @@ export default function NinjaHQ({
 
     </div>
   );
-}
+});
+
+export default NinjaHQ;

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import { X, CheckCircle, Wrench, Award, Book, BookOpen, LayoutDashboard, Database, Compass } from "lucide-react";
 import { roadmapData } from "../data/roadmapData";
 import BadgesSection from "../components/ui/BadgesSection";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Sidebar({
+const Sidebar = memo(function Sidebar({
   sidebarOpen,
   setSidebarOpen,
   getPhaseCompletionStats,
@@ -138,4 +138,6 @@ export default function Sidebar({
       </motion.aside>
     </AnimatePresence>
   );
-}
+});
+
+export default Sidebar;
