@@ -44,10 +44,13 @@ const SUGGESTED_QUESTIONS = [
 async function callGemini(messages) {
   if (!GEMINI_API_KEY) throw new Error("NO_KEY");
 
-  const history = messages.slice(0, -1).map((m) => ({
-    role: m.role === "user" ? "user" : "model",
-    parts: [{ text: m.content }],
-  }));
+  const history = messages
+    .slice(0, -1)
+    .filter((m, idx) => !(idx === 0 && m.role === "assistant")) // ignore first welcome message
+    .map((m) => ({
+      role: m.role === "user" ? "user" : "model",
+      parts: [{ text: m.content }],
+    }));
 
   const lastMsg = messages[messages.length - 1];
 
@@ -69,7 +72,9 @@ async function callGemini(messages) {
 
   if (!res.ok) throw new Error(await res.text());
   const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || "عذراً، لم أفهم السؤال.";
+  const parts = data.candidates?.[0]?.content?.parts || [];
+  const replyText = parts.map((p) => p.text || "").join("");
+  return replyText || "عذراً، لم أفهم السؤال.";
 }
 
 // Rich markdown-to-jsx renderer supporting tables, lists, headers and bold inline styles
@@ -175,12 +180,20 @@ function MessageContent({ text }) {
           }
 
           // D. Headers
-          if (line.startsWith("### ")) {
-            renderedElements.push(<h4 key={`h3-${i}`} className="font-extrabold text-slate-100 text-xs mt-3 flex items-center gap-1.5 flex-row-reverse justify-end">{parseInlineStyles(line.substring(4))}</h4>);
+          if (line.startsWith("# ")) {
+            renderedElements.push(<h2 key={`h1-${i}`} className="font-black text-slate-100 text-base mt-4 border-b border-slate-800 pb-1.5 flex items-center gap-1.5 flex-row-reverse justify-end">{parseInlineStyles(line.substring(2))}</h2>);
             continue;
           }
           if (line.startsWith("## ")) {
             renderedElements.push(<h3 key={`h2-${i}`} className="font-black text-slate-100 text-sm mt-4 border-b border-slate-850 pb-1 flex items-center gap-1.5 flex-row-reverse justify-end">{parseInlineStyles(line.substring(3))}</h3>);
+            continue;
+          }
+          if (line.startsWith("### ")) {
+            renderedElements.push(<h4 key={`h3-${i}`} className="font-extrabold text-slate-100 text-xs mt-3 flex items-center gap-1.5 flex-row-reverse justify-end">{parseInlineStyles(line.substring(4))}</h4>);
+            continue;
+          }
+          if (line.startsWith("#### ")) {
+            renderedElements.push(<h5 key={`h4-${i}`} className="font-bold text-slate-200 text-xs mt-2.5 flex items-center gap-1.5 flex-row-reverse justify-end">{parseInlineStyles(line.substring(5))}</h5>);
             continue;
           }
 
@@ -266,9 +279,10 @@ export default function AIAssistant() {
       const reply = await callGemini(newMessages);
       setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     } catch (err) {
+      console.error("Ninja AI Chatbot Error:", err);
       const errMsg = err.message === "NO_KEY"
         ? "⚠️ لم يتم إعداد Gemini API Key بعد."
-        : "⚠️ حدث خطأ في الاتصال. حاول مرة أخرى.";
+        : "⚠️ حدث خطأ في الاتصال. حاول مرة أخرى (إذا كنت تستخدم مانع إعلانات AdBlocker، يرجى تعطيله للموقع حيث قد يمنع الاتصال بخدمات جوجل).";
       setMessages((prev) => [...prev, { role: "assistant", content: errMsg }]);
     } finally {
       setLoading(false);

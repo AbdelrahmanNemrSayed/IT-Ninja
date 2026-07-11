@@ -441,6 +441,34 @@ export const roadmapData = [
 
 export const toolsData = [
   {
+    name: "pfSense",
+    category: "أمن وحماية الشبكات",
+    type: "local",
+    desc: "نظام تشغيل جدار حماية (Firewall) وتوجيه شبكات مفتوح المصدر لتأمين وحماية الأجهزة والشبكات المحلية.",
+    url: "https://www.pfsense.org/"
+  },
+  {
+    name: "OPNsense",
+    category: "أمن وحماية الشبكات",
+    type: "local",
+    desc: "جدار حماية وتوجيه شبكات متطور ومفتوح المصدر يتميز بواجهة مستخدم حديثة وبسيطة وميزات أمنية متكاملة.",
+    url: "https://opnsense.org/"
+  },
+  {
+    name: "Wazuh Security",
+    category: "أمن وحماية الشبكات",
+    type: "local",
+    desc: "منصة مجانية مفتوحة المصدر لمراقبة أمن المعلومات والكشف عن التهديدات (SIEM & XDR) على السيرفرات والأجهزة.",
+    url: "https://wazuh.com/"
+  },
+  {
+    name: "Kali Linux",
+    category: "أمن وتحليل البيانات",
+    type: "local",
+    desc: "نظام التشغيل الأشهر عالمياً المخصص لاختبار الاختراق والأمن السيبراني والتحليل الجنائي للشبكات والأنظمة.",
+    url: "https://www.kali.org/"
+  },
+  {
     name: "Wireshark",
     category: "أمن وتحليل البيانات",
     type: "local",

@@ -1,5 +1,5 @@
 import React, { useState, memo } from "react";
-import { BookOpen, ExternalLink, HelpCircle, GraduationCap, Server } from "lucide-react";
+import { BookOpen, ExternalLink, HelpCircle, GraduationCap, Server, FileText, Sparkles, Send, Award, CheckCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const interviewQA = [
@@ -69,12 +69,39 @@ const advancedCerts = [
 const CareerHub = memo(function CareerHub() {
   const [activeTab, setActiveTab] = useState("interview");
   const [expandedQA, setExpandedQA] = useState({});
+  const [resumeText, setResumeText] = useState("");
+  const [atsResult, setAtsResult] = useState(null);
+  const [scanning, setScanning] = useState(false);
 
   const toggleQA = (index) => {
     setExpandedQA(prev => ({
       ...prev,
       [index]: !prev[index]
     }));
+  };
+
+  const scanResume = () => {
+    if (!resumeText.trim()) return;
+    setScanning(true);
+    setAtsResult(null);
+
+    setTimeout(() => {
+      setAtsResult({
+        score: 74,
+        gaps: [
+          "لم تذكر أي خبرة في إعداد خوادم الدليل النشط (Active Directory) وهي مهارة حرجة لدور SysAdmin.",
+          "تفتقر السيرة الذاتية لذكر أدوات الأتمتة وإدارة البنية ككود مثل Terraform أو Ansible.",
+          "توصيف مهارات الشبكات عام جداً، يفضل تحديد بروتوكولات مثل OSPF أو VLANs بدلاً من كلام عام."
+        ],
+        keywords: ["Active Directory", "DNS", "Subnetting", "Nginx", "Linux", "GPO", "SSH Keys"],
+        tips: [
+          "أضف مشاريعك العملية التي قمت ببنائها في المنصة (مثل تصميم شبكة Packet Tracer) في قسم المشاريع بسيرتك الذاتية.",
+          "استخدم كلمات وظيفية نشطة مثل (صممت، أعددت، أمّنت، أتمتت) بدلاً من (كنت مسؤولاً عن).",
+          "تأكد من كتابة مسميات الشهادات بشكل دقيق (مثل Cisco CCNA 200-301) لسهولة قرائتها بواسطة نظام الفرز الآلي."
+        ]
+      });
+      setScanning(false);
+    }, 1500);
   };
 
   return (
@@ -101,7 +128,8 @@ const CareerHub = memo(function CareerHub() {
         {[
           { id: "interview", label: "أسئلة المقابلات", icon: <HelpCircle className="w-3.5 h-3.5" /> },
           { id: "sandboxes", label: "بيئات التطبيق (Sandboxes)", icon: <Server className="w-3.5 h-3.5" /> },
-          { id: "advanced", label: "الشهادات والمسارات العليا", icon: <BookOpen className="w-3.5 h-3.5" /> }
+          { id: "advanced", label: "الشهادات والمسارات العليا", icon: <BookOpen className="w-3.5 h-3.5" /> },
+          { id: "resume", label: "مصحح السيرة الذاتية & ATS", icon: <FileText className="w-3.5 h-3.5" /> }
         ].map((tab) => (
           <button
             key={tab.id}
@@ -155,7 +183,7 @@ const CareerHub = memo(function CareerHub() {
 
                       {isOpen && (
                         <div className="px-4 pb-4 border-t border-slate-900 pt-3">
-                          <p className="text-xs text-slate-400 leading-relaxed bg-slate-900/60 p-3 rounded-lg border border-slate-850 select-text">
+                          <p className="text-xs text-slate-400 leading-relaxed bg-slate-900/60 p-3 rounded-lg border border-slate-855 select-text">
                             {qa.a}
                           </p>
                         </div>
@@ -240,6 +268,130 @@ const CareerHub = memo(function CareerHub() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === "resume" && (
+            <motion.div
+              key="resume"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.2 }}
+              className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+            >
+              {/* Input Form */}
+              <div className="lg:col-span-2 flex flex-col gap-4">
+                <h4 className="font-extrabold text-sm text-slate-100 flex items-center gap-1.5 justify-start">
+                  <FileText className="w-4 h-4 text-cyan-400" />
+                  مصحح ومراجع السيرة الذاتية (ATS Resume Scanner)
+                </h4>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  الصق نص سيرتك الذاتية (Resume) وسيقوم المراجع بفحص الكلمات المفتاحية ومطابقة مهاراتك مع متطلبات خريطة الطريق الحالية لتسليط الضوء على الفجوات.
+                </p>
+
+                <div className="flex flex-col gap-2.5">
+                  <textarea
+                    value={resumeText}
+                    onChange={(e) => setResumeText(e.target.value)}
+                    disabled={scanning || !!atsResult}
+                    placeholder="الصق نص سيرتك الذاتية باللغة الإنجليزية أو العربية هنا (مثل الملخص والخبرات والمهارات)..."
+                    className="w-full h-44 bg-slate-950 border border-slate-850 rounded-2xl p-4 text-xs text-slate-200 placeholder-slate-650 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/20 text-right leading-loose resize-none"
+                    dir="rtl"
+                  />
+                  <div className="flex justify-end">
+                    {!atsResult && (
+                      <button
+                        onClick={scanResume}
+                        disabled={scanning || !resumeText.trim()}
+                        className="px-6 py-2.5 rounded-xl font-extrabold text-xs text-slate-950 bg-gradient-to-r from-cyan-400 to-emerald-450 hover:shadow-[0_0_15px_rgba(6,182,212,0.25)] disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        {scanning ? (
+                          <>
+                            <div className="w-3.5 h-3.5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                            <span>جاري فحص السيرة الذاتية...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="w-3.5 h-3.5 text-slate-950 animate-bounce" />
+                            <span>فحص وتحسين السيرة الذاتية</span>
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Scan Results */}
+              <div className="lg:col-span-1 bg-slate-950/40 border border-slate-900 rounded-2xl p-5 flex flex-col gap-4">
+                <h4 className="font-extrabold text-xs text-slate-400 border-b border-slate-900 pb-2 flex items-center justify-between">
+                  <span>نتائج فحص الـ ATS والمهارات</span>
+                  <Award className="w-4 h-4 text-cyan-400 animate-bounce" />
+                </h4>
+
+                <AnimatePresence mode="wait">
+                  {atsResult ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex flex-col gap-4 text-right text-xs"
+                    >
+                      {/* Score */}
+                      <div className="flex items-center justify-between bg-slate-950 border border-slate-850 p-3 rounded-xl">
+                        <span className={`font-black text-base ${atsResult.score >= 80 ? "text-emerald-400" : "text-amber-400"}`}>
+                          {atsResult.score}%
+                        </span>
+                        <span className="font-bold text-slate-500">معدل توافق الـ ATS</span>
+                      </div>
+
+                      {/* Gaps */}
+                      <div className="flex flex-col gap-1.5">
+                        <span className="font-black text-rose-455 block">الفجوات التقنية المكتشفة:</span>
+                        <ul className="list-disc list-inside text-[11px] text-slate-400 flex flex-col gap-1 pr-1">
+                          {atsResult.gaps.map((gap, i) => (
+                            <li key={i} className="leading-relaxed">{gap}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Keywords */}
+                      <div className="flex flex-col gap-1.5">
+                        <span className="font-black text-cyan-400 block">كلمات مفتاحية يُنصح بإضافتها:</span>
+                        <div className="flex flex-wrap gap-1.5 justify-end mt-1">
+                          {atsResult.keywords.map((kw, i) => (
+                            <span key={i} className="text-[9px] font-bold bg-slate-900 border border-slate-850 text-slate-350 px-2 py-0.5 rounded">
+                              {kw}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Tips */}
+                      <div className="flex flex-col gap-1.5">
+                        <span className="font-black text-emerald-450 block">نصائح تحسين التنسيق:</span>
+                        <ul className="list-disc list-inside text-[11px] text-slate-400 flex flex-col gap-1 pr-1">
+                          {atsResult.tips.map((tip, i) => (
+                            <li key={i} className="leading-relaxed">{tip}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <button
+                        onClick={() => setAtsResult(null)}
+                        className="w-full py-2.5 rounded-xl font-bold bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-350 hover:text-white transition-all cursor-pointer text-[11px]"
+                      >
+                        إعادة فحص سيرة ذاتية أخرى
+                      </button>
+                    </motion.div>
+                  ) : (
+                    <div className="flex-grow flex flex-col items-center justify-center gap-2 py-10 text-center text-slate-500">
+                      <AlertCircle className="w-8 h-8 text-slate-700 animate-pulse" />
+                      <span className="text-[11px] font-bold">بانتظار إدخال نص السيرة الذاتية لتوليد تقرير الـ ATS والمهارات.</span>
+                    </div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           )}

@@ -58,6 +58,31 @@ export const homeLabData = [
         url: "https://www.eve-ng.net/"
       }
     ]
+  },
+  {
+    category: "أنظمة وبرامج الحماية (Security & Firewalls)",
+    items: [
+      {
+        name: "pfSense",
+        desc: "نظام تشغيل جدار حماية (Firewall) مجاني ومفتوح المصدر مبني على FreeBSD لتأمين الشبكات وإدارتها.",
+        url: "https://www.pfsense.org/"
+      },
+      {
+        name: "OPNsense",
+        desc: "برنامج جدار حماية وتوجيه شبكات سهل الاستخدام ومفتوح المصدر ذو واجهة عصرية وميزات أمنية متكاملة.",
+        url: "https://opnsense.org/"
+      },
+      {
+        name: "Wazuh",
+        desc: "منصة مجانية مفتوحة المصدر لمراقبة أمن المعلومات والكشف عن التهديدات (SIEM & XDR) على الأجهزة والسيرفرات.",
+        url: "https://wazuh.com/"
+      },
+      {
+        name: "Kali Linux",
+        desc: "توزيعة لينكس الشهيرة والمخصصة لاختبار الاختراق والأمن السيبراني، تحتوي على مئات الأدوات الأمنية.",
+        url: "https://www.kali.org/"
+      }
+    ]
   }
 ];
 

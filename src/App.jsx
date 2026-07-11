@@ -36,6 +36,9 @@ const AutomationScriptHub = lazy(() => import("./components/roadmap/AutomationSc
 const SkillTree = lazy(() => import("./components/roadmap/SkillTree"));
 const ITBattles = lazy(() => import("./components/dashboard/ITBattles"));
 const AICodeReviewer = lazy(() => import("./components/roadmap/AICodeReviewer"));
+const AIStudyPlanner = lazy(() => import("./components/roadmap/AIStudyPlanner"));
+const AIMockInterview = lazy(() => import("./components/roadmap/AIMockInterview"));
+const ITProjectsPortfolio = lazy(() => import("./components/roadmap/ITProjectsPortfolio"));
 
 const AnalyticsDashboard = lazy(() => import("./components/dashboard/AnalyticsDashboard"));
 const DailyTodo = lazy(() => import("./components/dashboard/DailyTodo"));
@@ -201,9 +204,11 @@ function AppContent() {
   if (recoveryMode) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
-        <AnimatePresence>
-          <AuthModal key="auth-modal" />
-        </AnimatePresence>
+        <Suspense fallback={null}>
+          <AnimatePresence>
+            <AuthModal key="auth-modal" />
+          </AnimatePresence>
+        </Suspense>
       </div>
     );
   }
@@ -218,9 +223,11 @@ function AppContent() {
       />
 
       {/* Auth Modal */}
-      <AnimatePresence>
-        {authModal && <AuthModal key="auth-modal" />}
-      </AnimatePresence>
+      <Suspense fallback={null}>
+        <AnimatePresence>
+          {authModal && <AuthModal key="auth-modal" />}
+        </AnimatePresence>
+      </Suspense>
 
       {/* User Profile Modal */}
       <Suspense fallback={null}>
@@ -413,6 +420,42 @@ function AppContent() {
               </div>
             }>
               <AICodeReviewer />
+            </Suspense>
+          )}
+
+          {/* PAGE 1.4: AI STUDY PLANNER */}
+          {activeView === "ai_planner" && (
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center min-h-[300px] gap-3 bg-slate-950/40 border border-slate-900 rounded-2xl p-8">
+                <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-bold text-slate-400">جاري تحميل مخطط الدراسة الذكي...</span>
+              </div>
+            }>
+              <AIStudyPlanner />
+            </Suspense>
+          )}
+
+          {/* PAGE 1.5: AI MOCK INTERVIEW */}
+          {activeView === "mock_interview" && (
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center min-h-[300px] gap-3 bg-slate-950/40 border border-slate-900 rounded-2xl p-8">
+                <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-bold text-slate-400">جاري تحميل محاكي المقابلات الافتراضية...</span>
+              </div>
+            }>
+              <AIMockInterview />
+            </Suspense>
+          )}
+
+          {/* PAGE 1.6: IT PROJECTS PORTFOLIO */}
+          {activeView === "portfolio_projects" && (
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center min-h-[300px] gap-3 bg-slate-950/40 border border-slate-900 rounded-2xl p-8">
+                <div className="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-sm font-bold text-slate-400">جاري تحميل أكاديمية المشاريع الفنية...</span>
+              </div>
+            }>
+              <ITProjectsPortfolio />
             </Suspense>
           )}
 

@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { X, CheckCircle, Wrench, Award, Book, BookOpen, LayoutDashboard, Database, Compass, Swords, Sparkles } from "lucide-react";
+import { X, CheckCircle, Wrench, Award, Book, BookOpen, LayoutDashboard, Database, Compass, Swords, Sparkles, Calendar, Mic, FolderGit } from "lucide-react";
 import { roadmapData } from "../data/roadmapData";
 import BadgesSection from "../components/ui/BadgesSection";
 import { motion, AnimatePresence } from "framer-motion";
@@ -47,6 +47,9 @@ const Sidebar = memo(function Sidebar({
             {[
               { id: "overview", label: "المقر الرئيسي والقيادة", icon: LayoutDashboard },
               { id: "roadmap", label: "خريطة الطريق والمسار", icon: Compass },
+              { id: "ai_planner", label: "مخطط الدراسة الذكي AI", icon: Calendar },
+              { id: "mock_interview", label: "المقابلات الافتراضية AI", icon: Mic },
+              { id: "portfolio_projects", label: "أكاديمية المشاريع", icon: FolderGit },
               { id: "skill_tree", label: "شجرة المهارات RPG", icon: Award },
               { id: "pvp_battles", label: "حلبة التحديات PvP", icon: Swords },
               { id: "code_reviewer", label: "مراجعة السكربتات AI", icon: Sparkles },
@@ -70,7 +73,7 @@ const Sidebar = memo(function Sidebar({
                 <span>{tab.label}</span>
               </motion.button>
             ))}
-
+ 
             <div className="w-full h-px bg-slate-800/60 my-4" />
 
             {/* Render Roadmap Phases shortcuts only if in Roadmap tab */}

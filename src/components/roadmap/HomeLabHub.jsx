@@ -1,18 +1,19 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Server, ExternalLink, Download, Layers } from "lucide-react";
+import { Server, ExternalLink, Download, Layers, Shield } from "lucide-react";
 import { homeLabData } from "../../data/hubsData";
-
+ 
 export default function HomeLabHub() {
   const getIconForCategory = (cat) => {
     switch (cat) {
       case "أنظمة التشغيل الوهمية (Hypervisors)": return <Layers className="w-4.5 h-4.5 text-indigo-400" />;
       case "تحميل نسخ الأنظمة الرسمية (OS ISOs)": return <Download className="w-4.5 h-4.5 text-indigo-400" />;
       case "برامج محاكاة الشبكات (Network Simulation)": return <Server className="w-4.5 h-4.5 text-indigo-400" />;
+      case "أنظمة وبرامج الحماية (Security & Firewalls)": return <Shield className="w-4.5 h-4.5 text-indigo-400" />;
       default: return <Server className="w-4.5 h-4.5 text-indigo-400" />;
     }
   };
-
+ 
   return (
     <motion.section 
       initial={{ opacity: 0, y: 20 }}
@@ -30,7 +31,7 @@ export default function HomeLabHub() {
         </p>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-right">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 text-right">
         {homeLabData.map((categoryGroup, index) => (
           <div key={index} className="flex flex-col gap-3 bg-slate-950/40 p-4 rounded-xl border border-slate-800/60">
             <h4 className="font-bold text-xs text-indigo-300 flex items-center justify-start gap-2 border-b border-slate-800/50 pb-2">
