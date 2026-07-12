@@ -2,6 +2,62 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Target, Clock, BookOpen, Sparkles, CheckSquare, Download, Share2 } from "lucide-react";
 
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+async function callGeminiStudyPlanner(level, hours, goal) {
+  if (!GEMINI_API_KEY) throw new Error("NO_KEY");
+
+  const goalNames = {
+    helpdesk: "الدعم الفني والـ A+",
+    sysadmin: "إدارة الأنظمة والـ Active Directory",
+    network: "هندسة الشبكات والـ CCNA",
+    devops: "السحابة والـ DevOps"
+  };
+
+  const levelNames = {
+    beginner: "مبتدئ",
+    intermediate: "متوسط",
+    advanced: "متقدم"
+  };
+
+  const prompt = `أنت مهندس أنظمة وشبكات وخبير تعليمي في تكنولوجيا المعلومات (IT Curriculum Designer).
+يرغب طالب في الحصول على خطة دراسية مخصصة لمدة 7 أيام بالكامل للوصول للهدف المهني التالي:
+الهدف المهني: "${goalNames[goal] || goal}"
+المستوى الحالي للطالب: "${levelNames[level] || level}"
+عدد ساعات المذاكرة اليومية المتاحة: "${hours} ساعات يومياً"
+
+يجب أن تقوم بالرد بصيغة JSON فقط، بدون أي نصوص تمهيدية أو ختامية، ولا تضع ردك داخل كتل كود مثل \`\`\`json.
+صيغة الـ JSON المطلوبة بدقة:
+[
+  {
+    "day": "اليوم 1",
+    "title": "عنوان اليوم الرئيسي باللغة العربية",
+    "tasks": [
+      "مهمة 1 تفصيلية وعملية باللغة العربية",
+      "مهمة 2 تفصيلية وعملية باللغة العربية"
+    ],
+    "duration": "ساعتان"
+  }
+]`;
+
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: { responseMimeType: "application/json", temperature: 0.2 }
+      })
+    }
+  );
+
+  if (!res.ok) throw new Error(await res.text());
+  const data = await res.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  return JSON.parse(text.trim());
+}
+
 export default function AIStudyPlanner() {
   const [level, setLevel] = useState("beginner");
   const [hours, setHours] = useState("2");
@@ -9,11 +65,40 @@ export default function AIStudyPlanner() {
   const [loading, setLoading] = useState(false);
   const [generatedPlan, setGeneratedPlan] = useState(null);
 
-  const generatePlan = () => {
+  const generatePlan = async () => {
     setLoading(true);
     setGeneratedPlan(null);
 
-    // Simulate AI thinking and plan generation
+    const goalNames = {
+      helpdesk: "الدعم الفني والـ A+",
+      sysadmin: "إدارة الأنظمة والـ Active Directory",
+      network: "هندسة الشبكات والـ CCNA",
+      devops: "السحابة والـ DevOps"
+    };
+
+    const levelNames = {
+      beginner: "مبتدئ",
+      intermediate: "متوسط",
+      advanced: "متقدم"
+    };
+
+    if (GEMINI_API_KEY) {
+      try {
+        const schedule = await callGeminiStudyPlanner(level, hours, goal);
+        setGeneratedPlan({
+          level: levelNames[level] || level,
+          hours: `${hours} ساعات`,
+          goal: goalNames[goal] || goal,
+          schedule: schedule
+        });
+        setLoading(false);
+        return;
+      } catch (err) {
+        console.error("Gemini study planner error:", err);
+      }
+    }
+
+    // Fallback to local simulation when key is missing or failed
     setTimeout(() => {
       let schedule = [];
       

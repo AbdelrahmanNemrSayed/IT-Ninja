@@ -28,7 +28,7 @@ export default function SysAdminLabTools() {
   ];
 
   return (
-    <div id="sysadmin-lab-tools" className="bg-slate-900/40 backdrop-blur-md border border-purple-500/20 rounded-2xl p-6 flex flex-col gap-6 shadow-lg text-right scroll-mt-28">
+    <div id="sysadmin-lab-tools" className="glass-card rounded-2xl p-6 flex flex-col gap-6 shadow-lg text-right scroll-mt-28">
       {/* Header */}
       <div className="border-b border-slate-800/80 pb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>

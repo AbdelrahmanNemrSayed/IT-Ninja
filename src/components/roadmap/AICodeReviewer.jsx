@@ -30,6 +30,54 @@ Get-WmiObject -Class Win32_OperatingSystem -Credential $cred`,
         enabled: yes`
 };
 
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+async function callGeminiCodeReview(code, lang) {
+  if (!GEMINI_API_KEY) throw new Error("NO_KEY");
+
+  const prompt = `أنت مهندس أمن شبكات وأنظمة خبير (Senior DevSecOps & Security Auditor).
+قم بمراجعة الكود التالي المكتوب بلغة (${lang})، وابحث عن أي ثغرات أمنية، ممارسات برمجية خاطئة، أو إعدادات غير آمنة.
+الكود المراد فحصه:
+\`\`\`${lang}
+${code}
+\`\`\`
+
+يجب أن تقوم بالرد بصيغة JSON فقط، بدون أي نصوص تمهيدية أو ختامية، ولا تضع ردك داخل كتل كود مثل \`\`\`json.
+صيغة الـ JSON المطلوبة بدقة:
+{
+  "score": 85,
+  "status": "danger" | "warning" | "success",
+  "vulns": [
+    {
+      "title": "عنوان الثغرة باللغة العربية",
+      "desc": "شرح الثغرة ولماذا تشكل خطراً باللغة العربية",
+      "fix": "طريقة الحل والإصلاح بالتفصيل باللغة العربية"
+    }
+  ],
+  "bestPractices": [
+    "نصيحة إضافية باللغة العربية لتحسين جودة الكود"
+  ],
+  "optimizedCode": "نسخة كاملة من الكود بعد إصلاح الثغرات وتطبيق أفضل الممارسات مع الحفاظ على نفس الوظيفة"
+}`;
+
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: { responseMimeType: "application/json", temperature: 0.2 }
+      })
+    }
+  );
+
+  if (!res.ok) throw new Error(await res.text());
+  const data = await res.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  return JSON.parse(text.trim());
+}
+
 export default function AICodeReviewer() {
   const [lang, setLang] = useState("bash");
   const [code, setCode] = useState(INITIAL_CODE_TEMPLATES.bash);
@@ -43,36 +91,35 @@ export default function AICodeReviewer() {
     setReviewResult(null);
   };
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     setAnalyzing(true);
     setReviewResult(null);
 
-    // Simulate AI deep analysis delay
-    setTimeout(() => {
-      let result = {};
+    if (!GEMINI_API_KEY) {
+      // Simulation/Fallback Mode when API key is missing
+      setTimeout(() => {
+        let result = {};
 
-      if (lang === "bash") {
-        result = {
-          score: 45,
-          status: "danger",
-          vulns: [
-            {
-              type: "critical",
-              title: "تخزين كلمة سر مكشوفة (Hardcoded Plaintext Credentials)",
-              desc: "تم العثور على كلمة مرور مكشوفة مباشرة داخل السكربت (PASSWORD=\"SuperSecret123\"). أي شخص يملك صلاحية قراءة الملف يمكنه سرقتها.",
-              fix: "استخدم متغيرات البيئة (Environment Variables) أو مدير سريات مثل Vault أو AWS Secrets Manager."
-            },
-            {
-              type: "warning",
-              title: "بروتوكول FTP غير مشفر",
-              desc: "يتم استخدام بروتوكول ftp:// لنقل البيانات والنسخ الاحتياطي، وهو يرسل كلمة المرور والبيانات بنصوص مكشوفة في الشبكة مما يسمح بـ Sniffing.",
-              fix: "استخدم بروتوكول آمن مثل SFTP أو HTTPS."
-            }
-          ],
-          bestPractices: [
-            "أضف خيار set -e في بداية السكربت ليتوقف التنفيذ فوراً إذا فشل أي أمر، لتجنب حدوث أخطاء تراكمية."
-          ],
-          optimizedCode: `#!/bin/bash
+        if (code.trim() === INITIAL_CODE_TEMPLATES.bash.trim()) {
+          result = {
+            score: 45,
+            status: "danger",
+            vulns: [
+              {
+                title: "تخزين كلمة سر مكشوفة (Hardcoded Plaintext Credentials)",
+                desc: "تم العثور على كلمة مرور مكشوفة مباشرة داخل السكربت (PASSWORD=\"SuperSecret123\"). أي شخص يملك صلاحية قراءة الملف يمكنه سرقتها.",
+                fix: "استخدم متغيرات البيئة (Environment Variables) أو مدير سريات مثل Vault أو AWS Secrets Manager."
+              },
+              {
+                title: "بروتوكول FTP غير مشفر",
+                desc: "يتم استخدام بروتوكول ftp:// لنقل البيانات والنسخ الاحتياطي، وهو يرسل كلمة المرور والبيانات بنصوص مكشوفة في الشبكة مما يسمح بـ Sniffing.",
+                fix: "استخدم بروتوكول آمن مثل SFTP أو HTTPS."
+              }
+            ],
+            bestPractices: [
+              "أضف خيار set -e في بداية السكربت ليتوقف التنفيذ فوراً إذا فشل أي أمر، لتجنب حدوث أخطاء تراكمية."
+            ],
+            optimizedCode: `#!/bin/bash
 # تفعيل التوقف الفوري عند حدوث أخطاء
 set -euo pipefail
 
@@ -92,43 +139,41 @@ put "$BACKUP_DIR/data.tar.gz" /upload
 EOF
 
 echo "تم النسخ الاحتياطي بأمان عبر القنوات المشفرة"`
-        };
-      } else if (lang === "powershell") {
-        result = {
-          score: 55,
-          status: "warning",
-          vulns: [
-            {
-              type: "critical",
-              title: "تخزين كلمات سر في نصوص صريحة (Hardcoded Passwords)",
-              desc: "تم استخدام كلمة سر واضحة $pass = \"NinjaAdminPwd!\". يسهل كشفها من خلال فحص الكود أو ملفات الـ log.",
-              fix: "استخدم ملفات الاعتماد المشفرة (Get-Credential) أو Windows Credential Manager."
-            },
-            {
-              type: "warning",
-              title: "استخدام أمر WmiObject القديم",
-              desc: "أوامر Get-WmiObject أصبحت مهجورة في الإصدارات الحديثة من PowerShell وتعتبر بطيئة وغير آمنة.",
-              fix: "استخدم أوامر Get-CimInstance البديلة والأكثر أماناً وحداثة."
-            }
-          ],
-          bestPractices: [
-            "تجنب تشغيل السكربت بصلاحيات المسؤول الكاملة إلا للضرورة القصوى وتأكد من تطبيق مبدأ الـ Least Privilege."
-          ],
-          optimizedCode: `# استدعاء الاعتمادات المؤمنة من الـ Credential Store
+          };
+        } else if (code.trim() === INITIAL_CODE_TEMPLATES.powershell.trim()) {
+          result = {
+            score: 55,
+            status: "warning",
+            vulns: [
+              {
+                title: "تخزين كلمات سر في نصوص صريحة (Hardcoded Passwords)",
+                desc: "تم استخدام كلمة سر واضحة $pass = \"NinjaAdminPwd!\". يسهل كشفها من خلال فحص الكود أو ملفات الـ log.",
+                fix: "استخدم ملفات الاعتماد المشفرة (Get-Credential) أو Windows Credential Manager."
+              },
+              {
+                title: "استخدم Get-CimInstance بدلاً من Get-WmiObject",
+                desc: "أوامر Get-WmiObject أصبحت مهجورة في الإصدارات الحديثة من PowerShell وتعتبر بطيئة وغير آمنة.",
+                fix: "استخدم أوامر Get-CimInstance البديلة والأكثر أماناً وحداثة."
+              }
+            ],
+            bestPractices: [
+              "تجنب تشغيل السكربت بصلاحيات المسؤول الكاملة إلا للضرورة القصوى وتأكد من تطبيق مبدأ الـ Least Privilege."
+            ],
+            optimizedCode: `# استدعاء الاعتمادات المؤمنة من الـ Credential Store
 $cred = Get-Credential -UserName "Administrator" -Message "الرجاء إدخال كلمة مرور المسؤول الآمنة"
 
 # استخدام CIM Cmdlets الحديثة والبديلة عن Get-WmiObject القديمة
 Get-CimInstance -ClassName Win32_OperatingSystem -Credential $cred`
-        };
-      } else {
-        result = {
-          score: 90,
-          status: "success",
-          vulns: [],
-          bestPractices: [
-            "السكربت يتبع أفضل الممارسات الموثوقة. يمكنك استخدام متغيرات ديناميكية (Variables) لاسم الـ package لزيادة مرونة الاستخدام مع أنظمة التشغيل الأخرى (مثل RedHat/CentOS)."
-          ],
-          optimizedCode: `---
+          };
+        } else if (code.trim() === INITIAL_CODE_TEMPLATES.ansible.trim()) {
+          result = {
+            score: 90,
+            status: "success",
+            vulns: [],
+            bestPractices: [
+              "السكربت يتبع أفضل الممارسات الموثوقة. يمكنك استخدام متغيرات ديناميكية (Variables) لاسم الـ package لزيادة مرونة الاستخدام مع أنظمة التشغيل الأخرى (مثل RedHat/CentOS)."
+            ],
+            optimizedCode: `---
 - name: Setup Web Server
   hosts: webservers
   vars:
@@ -144,12 +189,53 @@ Get-CimInstance -ClassName Win32_OperatingSystem -Credential $cred`
         name: "{{ web_service }}"
         state: started
         enabled: yes`
-        };
-      }
+          };
+        } else {
+          // Custom code mock notice when no API key
+          result = {
+            score: 70,
+            status: "warning",
+            vulns: [
+              {
+                title: "تحذير: لم يتم تكوين مفتاح Gemini API Key",
+                desc: "أنت تقوم بمراجعة كود مخصص ولكن مفتاح Gemini API غير متاح في بيئة المنصة للقيام بفحص حقيقي نشط.",
+                fix: "أضف VITE_GEMINI_API_KEY في ملف .env لتفعيل الذكاء الاصطناعي لفحص كودك المخصص وحساب الثغرات ديناميكياً."
+              }
+            ],
+            bestPractices: [
+              "قم بإعداد مفتاح المطورين المجاني من Google AI Studio لتتمتع بكامل القوة التحليلية للمنصة."
+            ],
+            optimizedCode: code
+          };
+        }
 
+        setReviewResult(result);
+        setAnalyzing(false);
+      }, 1500);
+      return;
+    }
+
+    try {
+      const result = await callGeminiCodeReview(code, lang);
       setReviewResult(result);
+    } catch (err) {
+      console.error("Gemini analysis error:", err);
+      setReviewResult({
+        score: 0,
+        status: "danger",
+        vulns: [
+          {
+            title: "فشل الاتصال بالذكاء الاصطناعي",
+            desc: "حدث خطأ أثناء معالجة أو طلب الفحص من Gemini API. قد يكون هذا بسبب تنسيق الكود أو انتهاء صلاحية المفتاح.",
+            fix: "تحقق من اتصالك بالإنترنت وصلاحية مفتاح VITE_GEMINI_API_KEY في ملف .env ثم حاول مجدداً."
+          }
+        ],
+        bestPractices: [],
+        optimizedCode: code
+      });
+    } finally {
       setAnalyzing(false);
-    }, 2000);
+    }
   };
 
   const copyOptimized = () => {

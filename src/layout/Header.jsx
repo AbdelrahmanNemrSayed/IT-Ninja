@@ -1,27 +1,39 @@
 import React, { useState } from "react";
-import { X, Menu, Download, Upload, RotateCcw, LogIn, User, Star, ChevronDown, Zap, Search } from "lucide-react";
+import { X, Menu, Download, Upload, RotateCcw, LogIn, User, Star, ChevronDown, Zap, Search, Palette } from "lucide-react";
 import { totalCheckboxes } from "../utils/constants";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProfile } from "../context/ProfileContext";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
+import { useProgressContext } from "../context/ProgressContext";
 
 export default function Header({
-  globalProgressPercent,
-  completedCount,
   sidebarOpen,
   setSidebarOpen,
   activeFilter,
   setActiveFilter,
-  exportBackup,
-  importBackup,
-  resetAllProgress,
   onOpenProfileModal,
   onOpenUserProfile,
   onSearchClick,
 }) {
   const { activeProfile } = useProfile();
   const { user, profile, setAuthModal, isConfigured } = useAuth();
+  const {
+    completedCount,
+    globalProgressPercent,
+    exportBackup,
+    importBackup,
+    resetAllProgress
+  } = useProgressContext();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+
+  const themeNames = {
+    stealth: "صامت",
+    matrix: "ماتريكس",
+    cyberpunk: "سايبربانك"
+  };
 
   const xp = profile?.total_xp || 0;
   const rank = profile?.rank || "Ninja Rookie";
@@ -31,7 +43,7 @@ export default function Header({
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/50 shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
+      className="sticky top-0 z-40 theme-header shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
     >
       {/* Top shimmer line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
@@ -214,6 +226,45 @@ export default function Header({
               <span className="text-sm leading-none">{activeProfile.avatar}</span>
               <span className="hidden sm:inline">{activeProfile.name}</span>
             </motion.button>
+
+            {/* زر تبديل المظهر */}
+            <div className="relative">
+              <motion.button
+                whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                onClick={() => setThemeMenuOpen(!themeMenuOpen)}
+                title="تغيير مظهر المنصة"
+                className="text-[11px] px-2.5 py-1 rounded-lg border border-slate-800/60 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors flex items-center gap-1.5 cursor-pointer font-bold"
+              >
+                <Palette className="w-3.5 h-3.5" />
+                <span>{themeNames[theme] || "المظهر"}</span>
+              </motion.button>
+
+              <AnimatePresence>
+                {themeMenuOpen && (
+                  <>
+                    <div className="absolute top-full left-0 mt-1.5 w-36 bg-slate-900/95 border border-slate-800 rounded-xl shadow-xl z-50 py-1 overflow-hidden backdrop-blur-md">
+                      {Object.keys(themeNames).map(t => (
+                        <button
+                          key={t}
+                          onClick={() => {
+                            setTheme(t);
+                            setThemeMenuOpen(false);
+                          }}
+                          className={`w-full px-3 py-2 text-right text-[10px] font-bold hover:bg-slate-850 hover:text-cyan-400 flex items-center justify-between cursor-pointer ${
+                            theme === t ? "text-cyan-400 bg-slate-850/40" : "text-slate-400"
+                          }`}
+                        >
+                          <span>{themeNames[t]}</span>
+                          {theme === t && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
+                        </button>
+                      ))}
+                    </div>
+                    {/* Backdrop click to close */}
+                    <div className="fixed inset-0 z-45" onClick={() => setThemeMenuOpen(false)} />
+                  </>
+                )}
+              </AnimatePresence>
+            </div>
 
             <motion.button
               whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}

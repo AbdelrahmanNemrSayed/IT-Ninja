@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { roadmapData } from "./data/roadmapData";
 import { totalCheckboxes, accentColors, getPlatformIcon } from "./utils/constants";
-import { useProgress } from "./hooks/useProgress";
-import { useUserData } from "./hooks/useUserData";
-import { useBackup } from "./hooks/useBackup";
 
 import Header from "./layout/Header";
 import Sidebar from "./layout/Sidebar";
@@ -27,6 +24,9 @@ const RaidCalculator = lazy(() => import("./components/simulators/RaidCalculator
 const RAIDVisualizer = lazy(() => import("./components/simulators/RAIDVisualizer"));
 const SubnetCalculator = lazy(() => import("./components/simulators/SubnetCalculator"));
 const FirewallGenerator = lazy(() => import("./components/simulators/FirewallGenerator"));
+const PipelineVisualizer = lazy(() => import("./components/simulators/PipelineVisualizer"));
+const SpacedRepetitionFlashcards = lazy(() => import("./components/simulators/SpacedRepetitionFlashcards"));
+const IncidentResponseGame = lazy(() => import("./components/simulators/IncidentResponseGame"));
 
 const ReferenceHub = lazy(() => import("./components/roadmap/ReferenceHub"));
 const CheatSheetsHub = lazy(() => import("./components/roadmap/CheatSheetsHub"));
@@ -56,12 +56,18 @@ import { Trophy, Award, Book, ExternalLink, Star, Wrench } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProfileProvider, useProfile } from "./context/ProfileContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import { ProgressProvider, useProgressContext } from "./context/ProgressContext";
 
 export default function App() {
   return (
     <AuthProvider>
       <ProfileProvider>
-        <AppContent />
+        <ThemeProvider>
+          <ProgressProvider>
+            <AppContent />
+          </ProgressProvider>
+        </ThemeProvider>
       </ProfileProvider>
     </AuthProvider>
   );
@@ -79,38 +85,22 @@ function AppContent() {
 
   const {
     completedItems,
-    setCompletedItems,
     certProgress,
-    setCertProgress,
     toggleItem,
     togglePhaseMaster,
     getPhaseCompletionStats,
-    handleCertChange
-  } = useProgress();
-
-  const {
+    handleCertChange,
     starredResources,
-    setStarredResources,
     notebookNotes,
-    setNotebookNotes,
     earnedBadges,
     setEarnedBadges,
     toggleStar,
     updateNote,
-    bookmarkedItems
-  } = useUserData();
-
-  const {
+    bookmarkedItems,
     exportBackup,
     importBackup,
     resetAllProgress
-  } = useBackup(
-    completedItems, setCompletedItems,
-    certProgress, setCertProgress,
-    starredResources, setStarredResources,
-    notebookNotes, setNotebookNotes,
-    earnedBadges, setEarnedBadges
-  );
+  } = useProgressContext();
 
   const [activeFilter, setActiveFilter] = useState("all");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -135,6 +125,15 @@ function AppContent() {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleTriggerConfetti = () => {
+      setConfettiActive(true);
+      setTimeout(() => setConfettiActive(false), 5000);
+    };
+    window.addEventListener("trigger-confetti", handleTriggerConfetti);
+    return () => window.removeEventListener("trigger-confetti", handleTriggerConfetti);
   }, []);
 
   const completedCount = Object.keys(completedItems).length;
@@ -237,15 +236,10 @@ function AppContent() {
       </Suspense>
 
       <Header
-        globalProgressPercent={globalProgressPercent}
-        completedCount={completedCount}
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
-        exportBackup={exportBackup}
-        importBackup={importBackup}
-        resetAllProgress={resetAllProgress}
         onOpenProfileModal={() => setProfileModalOpen(true)}
         onOpenUserProfile={() => setUserProfileOpen(true)}
         onSearchClick={() => setSearchOpen(true)}
@@ -255,8 +249,6 @@ function AppContent() {
         <Sidebar 
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
-          getPhaseCompletionStats={getPhaseCompletionStats}
-          earnedBadges={earnedBadges}
           handleScrollTo={handleScrollTo}
           activeView={activeView}
           setActiveView={setActiveView}
@@ -469,6 +461,9 @@ function AppContent() {
             }>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-8">
                 <NetworkTopology />
+                <PipelineVisualizer />
+                <IncidentResponseGame />
+                <SpacedRepetitionFlashcards />
                 <SysAdminLabTools />
                 <AdvancedNinjaTools />
                 <LinuxTerminal />

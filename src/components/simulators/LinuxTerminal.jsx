@@ -82,6 +82,8 @@ export default function LinuxTerminal() {
     ""
   ]);
   const [input, setInput] = useState("");
+  const [cmdHistory, setCmdHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
   const [currentPath, setCurrentPath] = useState(["home", "it_ninja"]);
   const [fs, setFs] = useState(INITIAL_FS);
   const [currentTask, setCurrentTask] = useState(0);
@@ -115,20 +117,151 @@ export default function LinuxTerminal() {
     return "/" + currentPath.join("/");
   };
 
-  const handleCommand = () => {
-    const cmd = input.trim();
-    if (!cmd) return;
-
-    let reply = [];
-    const parts = cmd.split(/\s+/);
-    const mainCommand = parts[0].toLowerCase();
-    const args = parts.slice(1);
-
-    reply.push(`it_ninja@linux:${getPathString()}$ ${cmd}`);
+  const handleTabComplete = () => {
+    if (!input) return;
 
     const currentDir = getDirFromPath(currentPath);
+    const availableItems = currentDir?.children ? Object.keys(currentDir.children) : [];
+    const availableCommands = ["help", "clear", "pwd", "whoami", "date", "ls", "cd", "mkdir", "touch", "cat", "rm", "ping", "nano"];
 
-    switch (mainCommand) {
+    const parts = input.split(/\s+/);
+    if (parts.length === 1) {
+      // Complete command
+      const partialCmd = parts[0].toLowerCase();
+      const matches = availableCommands.filter(c => c.startsWith(partialCmd));
+      if (matches.length === 1) {
+        setInput(matches[0] + " ");
+      } else if (matches.length > 1) {
+        // Show options in history
+        setHistory(prev => [...prev, `it_ninja@linux:${getPathString()}$ ${input}`, matches.join("   "), ""]);
+      }
+    } else {
+      // Complete filename or dirname for commands like cd, cat, rm, nano
+      const cmd = parts[0].toLowerCase();
+      const partialPath = parts[parts.length - 1];
+
+      if (["cd", "cat", "rm", "nano"].includes(cmd)) {
+        const matches = availableItems.filter(item => {
+          const itemObj = currentDir.children[item];
+          if (cmd === "cd") {
+            return item.startsWith(partialPath) && itemObj.type === "dir";
+          }
+          return item.startsWith(partialPath);
+        });
+
+        if (matches.length === 1) {
+          // Replace last part of input with matching item
+          parts[parts.length - 1] = matches[0];
+          setInput(parts.join(" "));
+        } else if (matches.length > 1) {
+          // Show options in history
+          setHistory(prev => [...prev, `it_ninja@linux:${getPathString()}$ ${input}`, matches.join("   "), ""]);
+        }
+      }
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleCommand();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (cmdHistory.length === 0) return;
+
+      let newIdx = historyIndex;
+      if (historyIndex === -1) {
+        newIdx = cmdHistory.length - 1;
+      } else if (historyIndex > 0) {
+        newIdx = historyIndex - 1;
+      }
+      setHistoryIndex(newIdx);
+      setInput(cmdHistory[newIdx]);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (historyIndex === -1) return;
+
+      let newIdx = historyIndex + 1;
+      if (newIdx >= cmdHistory.length) {
+        setHistoryIndex(-1);
+        setInput("");
+      } else {
+        setHistoryIndex(newIdx);
+        setInput(cmdHistory[newIdx]);
+      }
+    } else if (e.key === "Tab") {
+      e.preventDefault();
+      handleTabComplete();
+    }
+  };
+
+  const getDirFromPathInFs = (pathArray, fsRoot) => {
+    let curr = fsRoot;
+    for (const p of pathArray) {
+      if (curr.children && curr.children[p]) {
+        curr = curr.children[p];
+      } else {
+        return null;
+      }
+    }
+    return curr;
+  };
+
+  const writeOrAppendInFs = (filename, content, append, targetDir) => {
+    if (!targetDir.children) targetDir.children = {};
+    const existingFile = targetDir.children[filename];
+    if (existingFile && existingFile.type === "file") {
+      targetDir.children[filename] = {
+        ...existingFile,
+        content: append ? (existingFile.content + "\n" + content) : content
+      };
+    } else {
+      targetDir.children[filename] = {
+        name: filename,
+        type: "file",
+        content: content,
+        executable: false
+      };
+    }
+  };
+
+  const runCoreCommand = (cmdStr, currentDir, fsCopy) => {
+    let reply = [];
+    const parts = cmdStr.split(/\s+/);
+    const mainCommand = parts[0];
+    const args = parts.slice(1);
+
+    if (!mainCommand) return { success: true, output: [] };
+
+    // 1. Check if it's a script execution like `./script.sh`
+    if (mainCommand.startsWith("./")) {
+      const scriptFile = mainCommand.substring(2);
+      const fileObj = currentDir.children ? currentDir.children[scriptFile] : null;
+      if (fileObj && fileObj.type === "file") {
+        if (fileObj.executable) {
+          const lines = (fileObj.content || "").split("\n").map(l => l.trim()).filter(l => l && !l.startsWith("#"));
+          reply.push(`[ تشغيل السكربت '${scriptFile}'... ]`);
+          lines.forEach(line => {
+            if (line.startsWith("./")) {
+              reply.push(`> ${line}`);
+              reply.push("خطأ: لا يمكن تشغيل سكربتات متداخلة.");
+            } else {
+              reply.push(`> ${line}`);
+              const subResult = runCoreCommand(line, currentDir, fsCopy);
+              reply.push(...subResult.output);
+            }
+          });
+          reply.push(`[ تم الانتهاء من تشغيل السكربت '${scriptFile}' بنجاح ]`);
+        } else {
+          reply.push(`bash: ./${scriptFile}: Permission denied (الملف غير قابل للتشغيل، استخدم chmod +x)`);
+        }
+      } else {
+        reply.push(`bash: ./${scriptFile}: No such file or directory`);
+      }
+      return { success: true, output: reply };
+    }
+
+    // 2. Standard commands switch
+    switch (mainCommand.toLowerCase()) {
       case "help":
         reply.push("📋 الأوامر المتاحة في النظام:");
         reply.push("  ls              - عرض الملفات والمجلدات الحالية");
@@ -138,17 +271,14 @@ export default function LinuxTerminal() {
         reply.push("  touch <name>    - إنشاء ملف فارغ جديد");
         reply.push("  nano <filename> - محرر نصوص تفاعلي متقدم لإنشاء وتعديل الملفات");
         reply.push("  cat <file>      - قراءة وعرض محتوى ملف نصي");
+        reply.push("  echo <text>     - طباعة نصوص (تدعم إعادة التوجيه > و >>)");
+        reply.push("  chmod +x <file> - تعديل صلاحيات الملف ليصبح تنفيذي");
         reply.push("  rm <file>       - حذف ملف معين");
-        reply.push("  ping <ip>       - فحص اتصال شبكي حقيقي بأجهزة التوبولوجيا");
+        reply.push("  ping <ip>       - فحص اتصال شبكي حقيقي");
         reply.push("  whoami          - عرض اسم المستخدم النشط");
         reply.push("  clear           - مسح شاشة الـ Terminal");
         reply.push("  date            - عرض التاريخ والوقت الحالي");
         break;
-
-      case "clear":
-        setHistory([]);
-        setInput("");
-        return;
 
       case "pwd":
         reply.push(getPathString());
@@ -166,7 +296,10 @@ export default function LinuxTerminal() {
         if (currentDir && currentDir.children) {
           const items = Object.values(currentDir.children).map(item => {
             if (item.type === "dir") {
-              return `📁 \u001b[34m${item.name}\u001b[0m`; // ANSI blue for directories
+              return `📁 \u001b[34m${item.name}\u001b[0m`;
+            }
+            if (item.executable) {
+              return `⚙️ \u001b[32m${item.name}*\u001b[0m`;
             }
             return `📄 ${item.name}`;
           });
@@ -191,17 +324,15 @@ export default function LinuxTerminal() {
             setCurrentPath(currentPath.slice(0, -1));
           }
         } else {
-          // Resolve relative target paths
           const segments = target.split("/");
           let newPath = [...currentPath];
           let valid = true;
-
           for (const seg of segments) {
             if (!seg || seg === ".") continue;
             if (seg === "..") {
               if (newPath.length > 0) newPath.pop();
             } else {
-              const testDir = getDirFromPath(newPath);
+              const testDir = getDirFromPathInFs(newPath, fsCopy);
               if (testDir && testDir.children && testDir.children[seg] && testDir.children[seg].type === "dir") {
                 newPath.push(seg);
               } else {
@@ -210,7 +341,6 @@ export default function LinuxTerminal() {
               }
             }
           }
-
           if (valid) {
             setCurrentPath(newPath);
           } else {
@@ -226,18 +356,12 @@ export default function LinuxTerminal() {
         } else if (currentDir.children && currentDir.children[dirName]) {
           reply.push(`خطأ: المجلد أو الملف '${dirName}' موجود بالفعل.`);
         } else {
-          // Update filesystem tree
-          const newFs = { ...fs };
-          let temp = newFs;
-          for (const p of currentPath) {
-            temp = temp.children[p];
-          }
-          temp.children[dirName] = {
+          if (!currentDir.children) currentDir.children = {};
+          currentDir.children[dirName] = {
             name: dirName,
             type: "dir",
             children: {}
           };
-          setFs(newFs);
           reply.push(`📂 تم إنشاء المجلد '${dirName}' بنجاح.`);
         }
         break;
@@ -249,18 +373,37 @@ export default function LinuxTerminal() {
         } else if (currentDir.children && currentDir.children[fileToCreate]) {
           reply.push(`خطأ: الملف أو المجلد '${fileToCreate}' موجود بالفعل.`);
         } else {
-          const newFs = { ...fs };
-          let temp = newFs;
-          for (const p of currentPath) {
-            temp = temp.children[p];
-          }
-          temp.children[fileToCreate] = {
+          if (!currentDir.children) currentDir.children = {};
+          currentDir.children[fileToCreate] = {
             name: fileToCreate,
             type: "file",
-            content: ""
+            content: "",
+            executable: false
           };
-          setFs(newFs);
           reply.push(`📄 تم إنشاء ملف فارغ '${fileToCreate}' بنجاح.`);
+        }
+        break;
+
+      case "echo":
+        let echoText = args.join(" ");
+        echoText = echoText.replace(/^["']|["']$/g, "");
+        reply.push(echoText);
+        break;
+
+      case "chmod":
+        const permission = args[0];
+        const targetFile = args[1];
+        if (!permission || !targetFile) {
+          reply.push("خطأ: يجب تحديد الصلاحيات والملف. مثال: chmod +x script.sh");
+        } else {
+          const fileObj = currentDir.children ? currentDir.children[targetFile] : null;
+          if (fileObj && fileObj.type === "file") {
+            const isExecutable = permission === "+x" || permission === "755";
+            fileObj.executable = isExecutable;
+            reply.push(`🔓 تم تعديل صلاحيات الملف '${targetFile}' ليصبح ${isExecutable ? "تنفيذياً (+x)" : "عادياً"}.`);
+          } else {
+            reply.push(`bash: chmod: ${targetFile}: الملف غير موجود.`);
+          }
         }
         break;
 
@@ -285,13 +428,7 @@ export default function LinuxTerminal() {
         } else {
           const fileObj = currentDir.children ? currentDir.children[fileToDelete] : null;
           if (fileObj && fileObj.type === "file") {
-            const newFs = { ...fs };
-            let temp = newFs;
-            for (const p of currentPath) {
-              temp = temp.children[p];
-            }
-            delete temp.children[fileToDelete];
-            setFs(newFs);
+            delete currentDir.children[fileToDelete];
             reply.push(`🗑️ تم حذف الملف '${fileToDelete}' بنجاح.`);
           } else {
             reply.push(`bash: rm: ${fileToDelete}: الملف غير موجود.`);
@@ -309,7 +446,7 @@ export default function LinuxTerminal() {
           setNanoContent(fileObj && fileObj.type === "file" ? fileObj.content : "");
           setNanoMode(true);
           setInput("");
-          return; // exit command execution to open nano view
+          return { success: false, output: [] };
         }
         break;
 
@@ -319,7 +456,6 @@ export default function LinuxTerminal() {
           reply.push("خطأ: يجب كتابة عنوان IP. مثال: ping 192.168.1.15");
         } else {
           reply.push(`PING ${ip} (56 octets of data)...`);
-          // simulate active network responses if it matches topology subnet
           if (ip.startsWith("192.168.1.")) {
             reply.push(`64 bytes from ${ip}: icmp_seq=1 ttl=64 time=0.45 ms`);
             reply.push(`64 bytes from ${ip}: icmp_seq=2 ttl=64 time=0.38 ms`);
@@ -343,39 +479,91 @@ export default function LinuxTerminal() {
     // Check Task Completion
     if (currentTask !== null && EXERCISES[currentTask]) {
       const exercise = EXERCISES[currentTask];
-      // match command
-      if (cmd.toLowerCase().replace(/\s+/g, " ") === exercise.cmd) {
+      if (cmdStr.toLowerCase().replace(/\s+/g, " ") === exercise.cmd) {
         reply.push("");
         reply.push(exercise.successMsg);
         setCurrentTask(exercise.nextIdx);
+        if (exercise.nextIdx === null) {
+          window.dispatchEvent(new CustomEvent("trigger-confetti"));
+        }
       }
     }
 
-    setHistory([...history, ...reply, ""]);
+    return { success: true, output: reply };
+  };
+
+  const handleCommand = () => {
+    const cmd = input.trim();
+    if (!cmd) return;
+
+    setCmdHistory(prev => [...prev, cmd]);
+    setHistoryIndex(-1);
+
+    const promptEcho = `it_ninja@linux:${getPathString()}$ ${cmd}`;
+
+    const fsCopy = JSON.parse(JSON.stringify(fs));
+    const currentDir = getDirFromPathInFs(currentPath, fsCopy);
+
+    let redirectFile = "";
+    let redirectType = null;
+    let cleanCmd = cmd;
+
+    if (cmd.includes(" >> ")) {
+      redirectType = "append";
+      const parts = cmd.split(" >> ");
+      cleanCmd = parts[0].trim();
+      redirectFile = parts[1].trim();
+    } else if (cmd.includes(" > ")) {
+      redirectType = "write";
+      const parts = cmd.split(" > ");
+      cleanCmd = parts[0].trim();
+      redirectFile = parts[1].trim();
+    }
+
+    const result = runCoreCommand(cleanCmd, currentDir, fsCopy);
+
+    if (redirectType && redirectFile) {
+      const fileContent = result.output.join("\n");
+      writeOrAppendInFs(redirectFile, fileContent, redirectType === "append", currentDir);
+      setHistory(prev => [
+        ...prev,
+        promptEcho,
+        `[ تم توجيه المخرجات بنجاح إلى '${redirectFile}' ]`,
+        ""
+      ]);
+    } else {
+      setHistory(prev => [
+        ...prev,
+        promptEcho,
+        ...result.output,
+        ""
+      ]);
+    }
+
+    setFs(fsCopy);
     setInput("");
   };
 
   const saveNanoFile = () => {
-    // Save state to mock fs
     const newFs = { ...fs };
     let temp = newFs;
     for (const p of currentPath) {
       temp = temp.children[p];
     }
+    const wasExecutable = temp.children[nanoFilename]?.executable || false;
     temp.children[nanoFilename] = {
       name: nanoFilename,
       type: "file",
-      content: nanoContent
+      content: nanoContent,
+      executable: wasExecutable
     };
     setFs(newFs);
 
-    // Add logs to console history
     const reply = [
       `it_ninja@linux:${getPathString()}$ nano ${nanoFilename}`,
       `[ تم حفظ الملف '${nanoFilename}' بنجاح في نظام الملفات ]`
     ];
 
-    // Check nano task exercise completion
     if (currentTask === 2 && nanoFilename === "test.txt" && nanoContent.toLowerCase().includes("hello")) {
       reply.push("");
       reply.push(EXERCISES[2].successMsg);
@@ -387,7 +575,7 @@ export default function LinuxTerminal() {
   };
 
   return (
-    <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800/80 rounded-2xl overflow-hidden shadow-lg flex flex-col scroll-mt-28" id="linux-terminal">
+    <div className="glass-card rounded-2xl overflow-hidden shadow-lg flex flex-col scroll-mt-28" id="linux-terminal">
       {/* Header bar */}
       <div className="bg-slate-950 px-4 py-3 flex items-center justify-between border-b border-slate-800">
         <div className="flex items-center gap-2">
@@ -472,7 +660,7 @@ export default function LinuxTerminal() {
                   <input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleCommand()}
+                    onKeyDown={handleKeyDown}
                     className="flex-1 bg-transparent border-none text-slate-100 outline-none font-mono focus:ring-0 p-0 text-left"
                     autoFocus
                   />

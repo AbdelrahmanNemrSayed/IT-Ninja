@@ -340,7 +340,7 @@ const AdvancedNinjaTools = memo(function AdvancedNinjaTools() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="bg-slate-900/40 backdrop-blur-md border border-purple-500/20 rounded-2xl p-6 flex flex-col gap-6 shadow-lg relative overflow-hidden scroll-mt-28"
+      className="glass-card rounded-2xl p-6 flex flex-col gap-6 shadow-lg relative overflow-hidden scroll-mt-28"
     >
       <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full filter blur-3xl pointer-events-none" />
       

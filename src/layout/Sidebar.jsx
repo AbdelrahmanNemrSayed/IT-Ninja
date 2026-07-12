@@ -4,15 +4,16 @@ import { roadmapData } from "../data/roadmapData";
 import BadgesSection from "../components/ui/BadgesSection";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { useProgressContext } from "../context/ProgressContext";
+
 const Sidebar = memo(function Sidebar({
   sidebarOpen,
   setSidebarOpen,
-  getPhaseCompletionStats,
-  earnedBadges,
   handleScrollTo,
   activeView,
   setActiveView
 }) {
+  const { getPhaseCompletionStats, earnedBadges } = useProgressContext();
   return (
     <AnimatePresence>
       <motion.aside 
@@ -23,7 +24,7 @@ const Sidebar = memo(function Sidebar({
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
         className={`
-          fixed inset-y-0 right-0 z-50 w-72 bg-slate-950/80 backdrop-blur-xl border-l border-slate-800/60 p-5 lg:relative lg:inset-auto lg:transform-none lg:w-64 lg:p-0 lg:border-l-0 lg:z-auto lg:translate-x-0 lg:bg-transparent shadow-[-10px_0_30px_rgba(0,0,0,0.5)] lg:shadow-none
+          fixed inset-y-0 right-0 z-50 w-72 theme-sidebar p-5 lg:relative lg:inset-auto lg:transform-none lg:w-64 lg:p-0 lg:border-l-0 lg:z-auto lg:translate-x-0 lg:bg-transparent shadow-[-10px_0_30px_rgba(0,0,0,0.5)] lg:shadow-none
         `}
       >
         <div className="sticky top-28 flex flex-col gap-4">

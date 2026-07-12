@@ -2,6 +2,45 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mic, MessageSquare, Play, RefreshCw, Send, AlertCircle, Award, CheckCircle2, ChevronRight, CheckSquare } from "lucide-react";
 
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+async function callGeminiMockInterviewFeedback(question, userAnswer, modelAnswer) {
+  if (!GEMINI_API_KEY) throw new Error("NO_KEY");
+
+  const prompt = `أنت مهندس مقابلات شخصية خبير (Senior Technical Interviewer).
+لقد قمت بطرح السؤال التالي في مقابلة تقنية:
+السؤال: "${question}"
+الإجابة النموذجية المرجعية: "${modelAnswer}"
+
+وقام المرشح بالإجابة بما يلي:
+إجابة المرشح: "${userAnswer}"
+
+قم بتقييم إجابة المرشح بناءً على مطابقتها الفنية ودقتها ومصطلحاتها التقنية الصحيحة مقارنة بالإجابة النموذجية.
+يجب أن تقوم بالرد بصيغة JSON فقط، بدون أي نصوص تمهيدية أو ختامية، ولا تضع ردك داخل كتل كود مثل \`\`\`json.
+صيغة الـ JSON المطلوبة بدقة:
+{
+  "score": 85,
+  "feedback": "تقييم تفصيلي باللغة العربية لنقاط القوة والضعف في إجابته ونصائح عملية لتحسينها"
+}`;
+
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: { responseMimeType: "application/json", temperature: 0.2 }
+      })
+    }
+  );
+
+  if (!res.ok) throw new Error(await res.text());
+  const data = await res.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  return JSON.parse(text.trim());
+}
+
 const interviewQuestionsData = {
   helpdesk: [
     {
@@ -229,69 +268,98 @@ export default function AIMockInterview() {
     setCurrentReview(null);
   };
 
-  const submitAnswer = () => {
+  const submitAnswer = async () => {
     if (!userAnswer.trim()) return;
     setLoading(true);
 
-    setTimeout(() => {
-      const currentQuestion = interviewQuestionsData[role][currentIdx];
-      const answerLower = userAnswer.toLowerCase();
-      
-      // Calculate matching keywords
-      const matched = currentQuestion.keywords.filter(keyword => 
-        answerLower.includes(keyword.toLowerCase())
-      );
-      
-      // Calculate score based on length and keywords matched
-      const keywordRatio = currentQuestion.keywords.length > 0 ? (matched.length / currentQuestion.keywords.length) : 1;
-      
-      let baseScore = 50; // Starting baseline for writing an answer
-      
-      // Length factor (encourages detailed answers)
-      const wordCount = userAnswer.trim().split(/\s+/).length;
-      let lengthBonus = 0;
-      if (wordCount >= 30) {
-        lengthBonus = 15;
-      } else if (wordCount >= 15) {
-        lengthBonus = 8;
-      } else if (wordCount >= 5) {
-        lengthBonus = 3;
-      }
-      
-      // Keyword matching factor
-      const keywordBonus = Math.min(35, Math.round(keywordRatio * 35));
-      
-      let finalScore = baseScore + lengthBonus + keywordBonus;
-      
-      // Cap at 98% for realistic grading, min at 40% if they just wrote gibberish
-      if (wordCount < 4) {
-        finalScore = Math.max(30, Math.min(50, wordCount * 10));
-      } else {
-        finalScore = Math.min(98, Math.max(40, finalScore));
-      }
+    const currentQuestion = interviewQuestionsData[role][currentIdx];
 
-      // Generate dynamic feedback
-      let feedback = "";
-      if (finalScore >= 85) {
-        feedback = `${currentQuestion.feedbackTemplate} إجابة غنية بالتفاصيل والمصطلحات التقنية الصحيحة (تم رصد الكلمات المفتاحية: ${matched.slice(0, 5).join(", ")}).`;
-      } else if (finalScore >= 70) {
-        feedback = `إجابة جيدة تغطي المفاهيم الأساسية، ولكنها تحتاج إلى المزيد من التفصيل العملي أو استخدام مصطلحات تقنية أكثر دقة. (المصطلحات التي رصدت: ${matched.join(", ") || "لا يوجد"}).`;
-      } else {
-        feedback = `الإجابة مختصرة جداً أو تفتقر إلى الكلمات المفتاحية الأساسية اللازمة لشرح الموضوع بشكل وافٍ ومقنع للمقابل التقني. يرجى الاطلاع على الإجابة النموذجية المرفقة لتوسيع معلوماتك.`;
-      }
+    if (!GEMINI_API_KEY) {
+      // Local fallback mode when API key is missing
+      setTimeout(() => {
+        const answerLower = userAnswer.toLowerCase();
+        const matched = currentQuestion.keywords.filter(keyword => 
+          answerLower.includes(keyword.toLowerCase())
+        );
+        const keywordRatio = currentQuestion.keywords.length > 0 ? (matched.length / currentQuestion.keywords.length) : 1;
+        let baseScore = 50;
+        const wordCount = userAnswer.trim().split(/\s+/).length;
+        let lengthBonus = 0;
+        if (wordCount >= 30) {
+          lengthBonus = 15;
+        } else if (wordCount >= 15) {
+          lengthBonus = 8;
+        } else if (wordCount >= 5) {
+          lengthBonus = 3;
+        }
+        const keywordBonus = Math.min(35, Math.round(keywordRatio * 35));
+        let finalScore = baseScore + lengthBonus + keywordBonus;
+
+        if (wordCount < 4) {
+          finalScore = Math.max(30, Math.min(50, wordCount * 10));
+        } else {
+          finalScore = Math.min(98, Math.max(40, finalScore));
+        }
+
+        let feedback = "";
+        if (finalScore >= 85) {
+          feedback = `${currentQuestion.feedbackTemplate} إجابة غنية بالتفاصيل والمصطلحات التقنية الصحيحة (تم رصد الكلمات المفتاحية: ${matched.slice(0, 5).join(", ")}).`;
+        } else if (finalScore >= 70) {
+          feedback = `إجابة جيدة تغطي المفاهيم الأساسية، ولكنها تحتاج إلى المزيد من التفصيل العملي أو استخدام مصطلحات تقنية أكثر دقة. (المصطلحات التي رصدت: ${matched.join(", ") || "لا يوجد"}).`;
+        } else {
+          feedback = `الإجابة مختصرة جداً أو تفتقر إلى الكلمات المفتاحية الأساسية اللازمة لشرح الموضوع بشكل وافٍ ومقنع للمقابل التقني. يرجى الاطلاع على الإجابة النموذجية المرفقة لتوسيع معلوماتك.`;
+        }
+
+        // Add simulation notice
+        feedback += " (ملاحظة: تم التقييم محلياً لعدم توفر VITE_GEMINI_API_KEY في ملف البيئة)";
+
+        const review = {
+          question: currentQuestion.question,
+          userAnswer: userAnswer,
+          score: finalScore,
+          feedback: feedback,
+          modelAnswer: currentQuestion.modelAnswer
+        };
+
+        setAnswersLog(prev => [...prev, review]);
+        setCurrentReview(review);
+        setLoading(false);
+      }, 1500);
+      return;
+    }
+
+    try {
+      const result = await callGeminiMockInterviewFeedback(
+        currentQuestion.question,
+        userAnswer,
+        currentQuestion.modelAnswer
+      );
 
       const review = {
         question: currentQuestion.question,
         userAnswer: userAnswer,
-        score: finalScore,
-        feedback: feedback,
+        score: result.score || 70,
+        feedback: result.feedback || "تم مراجعة إجابتك بالذكاء الاصطناعي بنجاح.",
         modelAnswer: currentQuestion.modelAnswer
       };
 
       setAnswersLog(prev => [...prev, review]);
       setCurrentReview(review);
+    } catch (err) {
+      console.error("Gemini interview rating error:", err);
+      // Fallback on HTTP/API errors
+      const review = {
+        question: currentQuestion.question,
+        userAnswer: userAnswer,
+        score: 50,
+        feedback: "حدث خطأ أثناء الاتصال بالذكاء الاصطناعي لتقييم إجابتك. تم حفظ الإجابة مؤقتاً بالحد الأدنى للدرجات.",
+        modelAnswer: currentQuestion.modelAnswer
+      };
+      setAnswersLog(prev => [...prev, review]);
+      setCurrentReview(review);
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   const nextQuestion = () => {
