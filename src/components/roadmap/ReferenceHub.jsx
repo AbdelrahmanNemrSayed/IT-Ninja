@@ -1,6 +1,6 @@
 import React, { useState, memo } from "react";
-import { interviewQuestions, troubleshootingLog } from "../../data/referenceData";
-import { BookOpen, Search } from "lucide-react";
+import { interviewQuestions, troubleshootingLog, itCertifications } from "../../data/referenceData";
+import { BookOpen, Search, Award, GraduationCap, ExternalLink } from "lucide-react";
 
 const ReferenceHub = memo(function ReferenceHub() {
   const [refTab, setRefTab] = useState("interview");
@@ -16,9 +16,9 @@ const ReferenceHub = memo(function ReferenceHub() {
       <div className="border-b border-slate-800 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <h3 className="font-extrabold text-base text-slate-100 flex items-center gap-2">
           <BookOpen className="w-5 h-5 text-emerald-450" />
-          حقيبة النينجا المرجعية (IT Interview Prep & Troubleshooting Hub)
+          حقيبة النينجا المرجعية (IT Interview Prep & Troubleshooting)
         </h3>
-        <div className="flex gap-1.5 self-end sm:self-auto">
+        <div className="flex gap-1.5 self-end sm:self-auto flex-wrap justify-end">
           <button
             onClick={() => setRefTab("interview")}
             className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
@@ -39,10 +39,20 @@ const ReferenceHub = memo(function ReferenceHub() {
           >
             كتيب الأخطاء الشائعة (Troubleshooting Log)
           </button>
+          <button
+            onClick={() => setRefTab("certifications")}
+            className={`text-xs px-3.5 py-1.5 rounded-xl font-bold transition-all cursor-pointer ${
+              refTab === "certifications"
+                ? "bg-gradient-to-r from-purple-500 to-pink-500 text-slate-950 shadow-md shadow-purple-500/10 scale-105"
+                : "bg-slate-950 border border-slate-900 text-slate-400 hover:text-slate-200"
+            }`}
+          >
+            الكورسات والشهادات الاحترافية (Certs & Courses)
+          </button>
         </div>
       </div>
 
-      {refTab === "interview" ? (
+      {refTab === "interview" && (
         <div className="flex flex-col gap-4">
           {/* Role Filters */}
           <div className="flex gap-2 overflow-x-auto pb-2 border-b border-slate-900 scrollbar-none">
@@ -110,7 +120,9 @@ const ReferenceHub = memo(function ReferenceHub() {
               ))}
           </div>
         </div>
-      ) : (
+      )}
+
+      {refTab === "troubleshoot" && (
         <div className="flex flex-col gap-4">
           {/* Troubleshooting search */}
           <div className="relative">
@@ -151,6 +163,51 @@ const ReferenceHub = memo(function ReferenceHub() {
                   </div>
                 </div>
               ))}
+          </div>
+        </div>
+      )}
+
+      {refTab === "certifications" && (
+        <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[500px] overflow-y-auto pr-1">
+            {itCertifications.map((cat, idx) => (
+              <div key={idx} className="bg-slate-950/40 border border-slate-900 rounded-xl p-5 flex flex-col gap-4">
+                <span className="font-black text-xs text-purple-400 border-b border-slate-900 pb-2 flex items-center justify-start gap-1 flex-row-reverse">
+                  <GraduationCap className="w-4 h-4 text-purple-455" />
+                  {cat.category}
+                </span>
+                <div className="flex flex-col gap-4">
+                  {cat.certs.map((cert, cIdx) => (
+                    <div key={cIdx} className="bg-slate-950/60 p-4 rounded-xl border border-slate-900 flex flex-col gap-2.5">
+                      <div className="flex items-center justify-between flex-row-reverse">
+                        <span className="font-extrabold text-[11px] text-slate-200">{cert.name}</span>
+                        <Award className="w-3.5 h-3.5 text-pink-400" />
+                      </div>
+                      <p className="text-[10px] text-slate-400 leading-relaxed text-right">{cert.desc}</p>
+                      
+                      {/* Course resources */}
+                      <div className="flex flex-col gap-1.5 border-t border-slate-900/50 pt-2">
+                        <span className="text-[8px] text-slate-500 font-bold block text-right">المصادر الموصى بها:</span>
+                        <div className="flex flex-wrap gap-2 justify-end">
+                          {cert.resources.map((res, rIdx) => (
+                            <a
+                              key={rIdx}
+                              href={res.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[9px] px-2.5 py-1 rounded bg-purple-500/10 border border-purple-500/20 text-purple-350 hover:bg-purple-500/25 transition-all flex items-center gap-1 flex-row-reverse font-bold"
+                            >
+                              <ExternalLink className="w-2.5 h-2.5" />
+                              {res.name}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}

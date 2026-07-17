@@ -32,7 +32,10 @@ export default function Header({
   const themeNames = {
     stealth: "صامت",
     matrix: "ماتريكس",
-    cyberpunk: "سايبربانك"
+    cyberpunk: "سايبربانك",
+    dracula: "دراكولا",
+    sunset: "غروب الشمس",
+    ocean: "أزرق المحيط"
   };
 
   const xp = profile?.total_xp || 0;

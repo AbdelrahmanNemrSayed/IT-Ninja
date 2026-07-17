@@ -12,7 +12,9 @@ export function ThemeProvider({ children }) {
     
     // Apply class to HTML root
     const root = document.documentElement;
-    root.classList.remove("theme-stealth", "theme-matrix", "theme-cyberpunk");
+    // Remove any existing theme- classes dynamically
+    const themeClasses = Array.from(root.classList).filter(c => c.startsWith("theme-"));
+    themeClasses.forEach(c => root.classList.remove(c));
     root.classList.add(`theme-${theme}`);
   }, [theme]);
 

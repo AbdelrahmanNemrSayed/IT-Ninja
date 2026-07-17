@@ -350,3 +350,84 @@ export const troubleshootingLog = [
     solution: "1. إجبار تحديث السياسات فوراً على جهاز الموظف:\n   `gpupdate /force`\n2. إذا استمرت المشكلة، قم بفحص الأخطاء عبر:\n   `gpresult /h gpreport.html` (يولد تقريراً شاملاً بصيغة HTML لمشاهدة سبب الرفض)"
   }
 ];
+
+export const itCertifications = [
+  {
+    category: "الشبكات (Networking)",
+    certs: [
+      {
+        name: "Cisco CCNA (200-301)",
+        desc: "الشهادة التأسيسية الأقوى عالمياً لفهم الشبكات، التوجيه والتبديل (Routing & Switching)، وبروتوكول IP.",
+        resources: [
+          { name: "كورس Jeremy's IT Lab (يوتيوب مجاني)", url: "https://www.youtube.com/playlist?list=PLxbwEAP-dxIdgMcBAAEJnDI7cI63GzF4" },
+          { name: "شبكة سيسكو الأكاديمية (NetAcad)", url: "https://www.netacad.com/" }
+        ]
+      },
+      {
+        name: "CompTIA Network+",
+        desc: "شهادة محايدة تركز على المفاهيم والبروتوكولات العامة للشبكات دون التقيد بشركة معينة.",
+        resources: [
+          { name: "كورس Professor Messer (مجاني)", url: "https://www.professormesser.com/network-plus/n10-008/n10-008-video/" }
+        ]
+      }
+    ]
+  },
+  {
+    category: "إدارة الأنظمة والخدمات (SysAdmin)",
+    certs: [
+      {
+        name: "Red Hat Certified System Administrator (RHCSA)",
+        desc: "الشهادة العملية الأهم لإثبات كفاءتك في إدارة أنظمة لينكس ريد هات ومحطات العمل بيئات الإنتاج.",
+        resources: [
+          { name: "سلسلة تعلم Linux Administration (يوتيوب)", url: "https://www.youtube.com/playlist?list=PLtK75qoxjaQ-D-XF2_N4N2A5U-zP4Q_Hn" }
+        ]
+      },
+      {
+        name: "Windows Server Administration",
+        desc: "تعلم خدمات Active Directory و DNS و Group Policy لإدارة بيئات عمل مايكروسوفت.",
+        resources: [
+          { name: "دليل إعداد Active Directory (مايكروسوفت)", url: "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/active-directory-domain-services" }
+        ]
+      }
+    ]
+  },
+  {
+    category: "السحابة والعمليات (Cloud & DevOps)",
+    certs: [
+      {
+        name: "AWS Certified Solutions Architect",
+        desc: "تصميم وإدارة الأنظمة الموزعة عالية الاعتمادية على سحابة Amazon Web Services الشهيرة.",
+        resources: [
+          { name: "كورس Architect Associate (FreeCodeCamp)", url: "https://www.youtube.com/watch?v=Ia-gTOyJkn4" }
+        ]
+      },
+      {
+        name: "HashiCorp Certified: Terraform Associate",
+        desc: "أتمتة بناء البنية التحتية ككود (Infrastructure as Code) على مختلف البيئات السحابية.",
+        resources: [
+          { name: "كورس تعلم Terraform للمبتدئين (يوتيوب)", url: "https://www.youtube.com/watch?v=SLB_c_ayRCo" }
+        ]
+      }
+    ]
+  },
+  {
+    category: "الأمن السيبراني (Cyber Security)",
+    certs: [
+      {
+        name: "CompTIA Security+",
+        desc: "الشهادة المدخلية الأفضل لفهم أساسيات أمن المعلومات، التشفير، وإدارة التهديدات والمخاطر.",
+        resources: [
+          { name: "كورس Professor Messer Security+ (مجاني)", url: "https://www.professormesser.com/security-plus/sy0-701/sy0-701-video/" }
+        ]
+      },
+      {
+        name: "Certified Ethical Hacker (CEH)",
+        desc: "فهم تقنيات الاختراق الهجومي والتصدي لها وتطبيق أدوات الأمن في اختبار الاختراق الفعلي.",
+        resources: [
+          { name: "مسار تعلم الاختراق التفاعلي (TryHackMe)", url: "https://tryhackme.com/" }
+        ]
+      }
+    ]
+  }
+];
+

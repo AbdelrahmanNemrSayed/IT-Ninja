@@ -14,6 +14,7 @@ import ConfettiEffect from "./components/ui/ConfettiEffect";
 import CelebrationModal from "./components/ui/CelebrationModal";
 import NinjaAchievements from "./components/dashboard/NinjaAchievements";
 import Leaderboard from "./components/dashboard/Leaderboard";
+import PWAInstaller from "./components/ui/PWAInstaller";
 
 // Heavy components / Simulators / Utilities (Lazy Loaded for maximum initial load performance)
 const NetworkTopology = lazy(() => import("./components/simulators/NetworkTopology"));
@@ -27,6 +28,12 @@ const FirewallGenerator = lazy(() => import("./components/simulators/FirewallGen
 const PipelineVisualizer = lazy(() => import("./components/simulators/PipelineVisualizer"));
 const SpacedRepetitionFlashcards = lazy(() => import("./components/simulators/SpacedRepetitionFlashcards"));
 const IncidentResponseGame = lazy(() => import("./components/simulators/IncidentResponseGame"));
+const PenetrationTestingSandbox = lazy(() => import("./components/simulators/PenetrationTestingSandbox"));
+const IaCVisualBuilder = lazy(() => import("./components/simulators/IaCVisualBuilder"));
+const DisasterRecoverySimulator = lazy(() => import("./components/simulators/DisasterRecoverySimulator"));
+const VisualPacketInspector = lazy(() => import("./components/simulators/VisualPacketInspector"));
+const CommandVisualizer = lazy(() => import("./components/simulators/CommandVisualizer"));
+const SystemArchitectureSimulator = lazy(() => import("./components/simulators/SystemArchitectureSimulator"));
 
 const ReferenceHub = lazy(() => import("./components/roadmap/ReferenceHub"));
 const CheatSheetsHub = lazy(() => import("./components/roadmap/CheatSheetsHub"));
@@ -215,6 +222,7 @@ function AppContent() {
   return (
     <div key={activeProfileId} className="min-h-screen ninja-bg text-slate-100 flex flex-col select-none">
       <ConfettiEffect active={confettiActive} />
+      <PWAInstaller />
       
       <CelebrationModal 
         celebratedPhase={celebratedPhase} 
@@ -461,6 +469,12 @@ function AppContent() {
             }>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col gap-8">
                 <NetworkTopology />
+                <VisualPacketInspector />
+                <CommandVisualizer />
+                <SystemArchitectureSimulator />
+                <PenetrationTestingSandbox />
+                <IaCVisualBuilder />
+                <DisasterRecoverySimulator />
                 <PipelineVisualizer />
                 <IncidentResponseGame />
                 <SpacedRepetitionFlashcards />
